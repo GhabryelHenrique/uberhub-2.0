@@ -1,0 +1,89 @@
+<div class="vagas-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span class="breadcrumb-item">Home</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Vagas</span>
+    </div>
+    <h1 class="page-title">
+      🔥 Vagas & Oportunidades de Inovação 🔥
+    </h1>
+  </div>
+
+  <!-- Filtros de Categoria -->
+  <div class="categories-section">
+    <button
+      class="category-chip"
+      [class.active]="categoriaSelecionada === 'Todas'"
+      (click)="selecionarCategoria('Todas')">
+      Todas
+    </button>
+    <button
+      *ngFor="let categoria of categorias"
+      class="category-chip"
+      [class.active]="categoriaSelecionada === categoria"
+      (click)="selecionarCategoria(categoria)">
+      {{ categoria }}
+    </button>
+  </div>
+
+  <!-- Grid de Vagas -->
+  <div class="vagas-grid">
+    <div
+      *ngFor="let vaga of vagasFiltradas"
+      class="vaga-card"
+      [class.destacada]="vaga.destacada"
+      (click)="abrirVaga(vaga.link)">
+
+      <!-- Header do Card -->
+      <div class="card-header">
+        <div class="card-badges">
+          <span class="badge badge-tipo">{{ vaga.tipo }}</span>
+          <span *ngIf="vaga.destacada" class="badge badge-destaque">⭐ Destaque</span>
+        </div>
+      </div>
+
+      <!-- Conteúdo do Card -->
+      <div class="card-body">
+        <h3 class="vaga-titulo">
+          <i class="fas fa-map-marker-alt"></i>
+          {{ vaga.titulo }}
+        </h3>
+
+        <div class="vaga-empresa">
+          <i class="fas fa-building"></i>
+          <span>{{ vaga.empresa }}</span>
+        </div>
+
+        <p *ngIf="vaga.descricao" class="vaga-descricao">
+          {{ vaga.descricao }}
+        </p>
+
+        <!-- Categorias da Vaga -->
+        <div class="vaga-categorias">
+          <span *ngFor="let cat of vaga.categorias" class="tag">{{ cat }}</span>
+        </div>
+      </div>
+
+      <!-- Footer do Card -->
+      <div class="card-footer">
+        <a [href]="vaga.link" target="_blank" class="btn-match" (click)="$event.stopPropagation()">
+          <i class="fas fa-heart"></i>
+          Match
+        </a>
+        <span class="card-info">
+          <i class="fas fa-external-link-alt"></i>
+          Ver detalhes
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem quando não há vagas -->
+  <div *ngIf="vagasFiltradas.length === 0" class="empty-state">
+    <i class="fas fa-search"></i>
+    <h3>Nenhuma vaga encontrada</h3>
+    <p>Não há vagas disponíveis para a categoria selecionada.</p>
+  </div>
+</div>

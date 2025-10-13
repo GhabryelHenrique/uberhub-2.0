@@ -1,0 +1,139 @@
+<div class="noticias-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span class="breadcrumb-item">Home</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Notícias</span>
+    </div>
+    <h1 class="page-title">
+      📰 Notícias & Atualizações
+    </h1>
+    <p class="page-subtitle">Fique por dentro das últimas novidades do ecossistema de inovação</p>
+  </div>
+
+  <!-- Filtros de Categoria -->
+  <div class="categories-section">
+    <button
+      *ngFor="let categoria of categorias"
+      class="category-chip"
+      [class.active]="categoriaSelecionada === categoria"
+      (click)="selecionarCategoria(categoria)">
+      {{ categoria }}
+    </button>
+  </div>
+
+  <!-- Notícia em Destaque -->
+  <div *ngIf="noticiaDestaque" class="destaque-section">
+    <div class="noticia-destaque" (click)="abrirNoticia(noticiaDestaque.link)">
+      <div class="destaque-badge">
+        <i class="fas fa-star"></i>
+        Destaque
+      </div>
+
+      <div class="destaque-content">
+        <div class="destaque-categoria">
+          <i class="fas fa-tag"></i>
+          {{ noticiaDestaque.categoria }}
+        </div>
+
+        <h2 class="destaque-titulo">{{ noticiaDestaque.titulo }}</h2>
+
+        <p class="destaque-subtitulo" *ngIf="noticiaDestaque.subtitulo">
+          {{ noticiaDestaque.subtitulo }}
+        </p>
+
+        <p class="destaque-conteudo">
+          {{ truncateText(noticiaDestaque.conteudo, 200) }}
+        </p>
+
+        <div class="destaque-footer">
+          <div class="autor-info">
+            <i class="fas fa-user-circle"></i>
+            <span>{{ noticiaDestaque.autor }}</span>
+          </div>
+          <div class="data-info">
+            <i class="fas fa-clock"></i>
+            <span>{{ getTempoPublicacao(noticiaDestaque.dataPublicacao) }}</span>
+          </div>
+        </div>
+
+        <button class="btn-ler-mais" *ngIf="noticiaDestaque.link" (click)="abrirNoticia(noticiaDestaque.link); $event.stopPropagation()">
+          <i class="fas fa-arrow-right"></i>
+          Ler mais
+        </button>
+      </div>
+
+      <div class="destaque-image" *ngIf="noticiaDestaque.imagem">
+        <img [src]="noticiaDestaque.imagem" [alt]="noticiaDestaque.titulo" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid de Notícias -->
+  <div *ngIf="noticiasRegulares.length > 0" class="noticias-section">
+    <h2 class="section-title">
+      <i class="fas fa-newspaper"></i>
+      Todas as Notícias
+    </h2>
+
+    <div class="noticias-grid">
+      <div
+        *ngFor="let noticia of noticiasRegulares"
+        class="noticia-card"
+        (click)="abrirNoticia(noticia.link)">
+
+        <!-- Imagem -->
+        <div class="card-image" *ngIf="noticia.imagem">
+          <img [src]="noticia.imagem" [alt]="noticia.titulo" />
+          <div class="image-overlay">
+            <span class="categoria-badge">{{ noticia.categoria }}</span>
+          </div>
+        </div>
+
+        <div class="card-image-placeholder" *ngIf="!noticia.imagem">
+          <i class="fas fa-newspaper"></i>
+          <span class="categoria-badge">{{ noticia.categoria }}</span>
+        </div>
+
+        <!-- Conteúdo -->
+        <div class="card-content">
+          <h3 class="noticia-titulo">{{ noticia.titulo }}</h3>
+
+          <p class="noticia-subtitulo" *ngIf="noticia.subtitulo">
+            {{ noticia.subtitulo }}
+          </p>
+
+          <p class="noticia-preview">
+            {{ truncateText(noticia.conteudo, 120) }}
+          </p>
+
+          <div class="card-footer">
+            <div class="autor-info">
+              <i class="fas fa-user"></i>
+              <span>{{ noticia.autor }}</span>
+            </div>
+            <div class="data-info">
+              <i class="fas fa-calendar"></i>
+              <span>{{ getTempoPublicacao(noticia.dataPublicacao) }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions" *ngIf="noticia.link">
+            <button class="btn-ler" (click)="abrirNoticia(noticia.link); $event.stopPropagation()">
+              Ler notícia
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado Vazio -->
+  <div *ngIf="noticiasFiltradas.length === 0" class="empty-state">
+    <i class="fas fa-newspaper"></i>
+    <h3>Nenhuma notícia encontrada</h3>
+    <p>Não há notícias disponíveis para a categoria selecionada.</p>
+  </div>
+</div>

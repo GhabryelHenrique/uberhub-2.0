@@ -1,0 +1,265 @@
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #6200ea 0%, #4a00c8 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  // Estado Colapsado
+  &.collapsed {
+    width: 80px;
+
+    .logo {
+      h2 {
+        text-align: center;
+        font-size: 18px;
+      }
+    }
+
+    .toggle-btn {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-item {
+      justify-content: center;
+      padding: 12px 10px;
+
+      i {
+        margin-right: 0;
+      }
+
+      span {
+        display: none;
+      }
+
+      &.active::before {
+        width: 3px;
+      }
+    }
+
+    .sidebar-footer .nav-item {
+      justify-content: center;
+      padding: 12px 10px;
+
+      i {
+        margin-right: 0;
+      }
+
+      span {
+        display: none;
+      }
+    }
+  }
+
+  .logo {
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .logo-short {
+      text-align: center;
+    }
+  }
+
+  // Botão de Toggle
+  .toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+
+    i {
+      font-size: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .nav-menu {
+    flex: 1;
+    padding: 20px 0;
+  }
+
+  .menu-section {
+    margin-bottom: 30px;
+
+    .section-title {
+      padding: 8px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 5px;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+
+      i {
+        width: 24px;
+        margin-right: 12px;
+        font-size: 16px;
+        flex-shrink: 0;
+        transition: margin 0.3s ease;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.2);
+        font-weight: 500;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 4px;
+          background: white;
+        }
+      }
+    }
+  }
+
+  .sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 0;
+
+    .nav-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+
+      i {
+        width: 24px;
+        margin-right: 12px;
+        font-size: 16px;
+        flex-shrink: 0;
+        transition: margin 0.3s ease;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.2);
+        font-weight: 500;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 4px;
+          background: white;
+        }
+      }
+    }
+  }
+}
+
+// Animações
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Responsividade para telas pequenas
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px;
+    transform: translateX(-100%);
+
+    &.collapsed {
+      transform: translateX(0);
+      width: 0;
+    }
+  }
+}

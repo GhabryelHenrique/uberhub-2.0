@@ -1,0 +1,394 @@
+<div class="admin-container">
+  <!-- Header -->
+  <div class="admin-header">
+    <h1><i class="fas fa-cog"></i> Painel de Administração</h1>
+    <p>Gerencie vagas, eventos e notícias da plataforma UBER4HUB</p>
+  </div>
+
+  <!-- Navegação de Abas -->
+  <div class="tabs">
+    <button
+      class="tab"
+      [class.active]="abaAtiva === 'vagas'"
+      (click)="selecionarAba('vagas')">
+      <i class="fas fa-briefcase"></i>
+      Vagas
+      <span class="badge">{{ vagas.length }}</span>
+    </button>
+    <button
+      class="tab"
+      [class.active]="abaAtiva === 'eventos'"
+      (click)="selecionarAba('eventos')">
+      <i class="fas fa-calendar-alt"></i>
+      Eventos
+      <span class="badge">{{ eventos.length }}</span>
+    </button>
+    <button
+      class="tab"
+      [class.active]="abaAtiva === 'noticias'"
+      (click)="selecionarAba('noticias')">
+      <i class="fas fa-newspaper"></i>
+      Notícias
+      <span class="badge">{{ noticias.length }}</span>
+    </button>
+  </div>
+
+  <!-- Conteúdo das Abas -->
+  <div class="tab-content">
+    <!-- ABA VAGAS -->
+    <div *ngIf="abaAtiva === 'vagas'" class="content-section">
+      <div class="form-card">
+        <h2>
+          <i class="fas fa-plus-circle"></i>
+          {{ modoEdicao ? 'Editar Vaga' : 'Nova Vaga' }}
+        </h2>
+        <form [formGroup]="vagaForm" (ngSubmit)="salvarVaga()">
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label>Título da Vaga *</label>
+              <input type="text" formControlName="titulo" placeholder="Ex: Desenvolvedor Full Stack" />
+              <span class="error" *ngIf="vagaForm.get('titulo')?.invalid && vagaForm.get('titulo')?.touched">
+                Campo obrigatório
+              </span>
+            </div>
+            <div class="form-group">
+              <label>Empresa *</label>
+              <input type="text" formControlName="empresa" placeholder="Ex: TQI" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tipo *</label>
+              <select formControlName="tipo">
+                <option value="">Selecione</option>
+                <option *ngFor="let tipo of tiposVagas" [value]="tipo">{{ tipo }}</option>
+              </select>
+            </div>
+            <div class="form-group flex-2">
+              <label>Link *</label>
+              <input type="url" formControlName="link" placeholder="https://exemplo.com/vaga" />
+              <span class="error" *ngIf="vagaForm.get('link')?.invalid && vagaForm.get('link')?.touched">
+                URL válida obrigatória
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea formControlName="descricao" rows="3" placeholder="Descreva a vaga..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Categorias * (selecione uma ou mais)</label>
+            <div class="chips-container">
+              <button
+                type="button"
+                *ngFor="let cat of categoriasVagas"
+                class="chip"
+                [class.active]="isCategoriaVagaSelecionada(cat)"
+                (click)="toggleCategoriaVaga(cat)">
+                {{ cat }}
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="destacada" />
+              <span>Marcar como vaga em destaque</span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="vagaForm.invalid">
+              <i class="fas fa-save"></i>
+              {{ modoEdicao ? 'Atualizar' : 'Cadastrar' }}
+            </button>
+            <button type="button" class="btn btn-secondary" *ngIf="modoEdicao" (click)="cancelarEdicao()">
+              <i class="fas fa-times"></i>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Lista de Vagas -->
+      <div class="list-section">
+        <h3><i class="fas fa-list"></i> Vagas Cadastradas ({{ vagas.length }})</h3>
+        <div class="table-responsive">
+          <table *ngIf="vagas.length > 0">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Empresa</th>
+                <th>Tipo</th>
+                <th>Categorias</th>
+                <th>Destaque</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vaga of vagas">
+                <td>{{ vaga.titulo }}</td>
+                <td>{{ vaga.empresa }}</td>
+                <td><span class="badge-tipo">{{ vaga.tipo }}</span></td>
+                <td>
+                  <span class="tag" *ngFor="let cat of vaga.categorias">{{ cat }}</span>
+                </td>
+                <td>
+                  <span class="badge-destaque" *ngIf="vaga.destacada">⭐ Sim</span>
+                  <span *ngIf="!vaga.destacada">-</span>
+                </td>
+                <td class="actions">
+                  <button class="btn-edit" (click)="editarVaga(vaga)" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn-delete" (click)="excluirVaga(vaga.id)" title="Excluir">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="vagas.length === 0">
+            <i class="fas fa-inbox"></i>
+            <p>Nenhuma vaga cadastrada ainda</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA EVENTOS -->
+    <div *ngIf="abaAtiva === 'eventos'" class="content-section">
+      <div class="form-card">
+        <h2>
+          <i class="fas fa-plus-circle"></i>
+          {{ modoEdicao ? 'Editar Evento' : 'Novo Evento' }}
+        </h2>
+        <form [formGroup]="eventoForm" (ngSubmit)="salvarEvento()">
+          <div class="form-group">
+            <label>Título do Evento *</label>
+            <input type="text" formControlName="titulo" placeholder="Ex: Tech Innovation Summit 2025" />
+          </div>
+
+          <div class="form-group">
+            <label>Descrição *</label>
+            <textarea formControlName="descricao" rows="3" placeholder="Descreva o evento..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Data *</label>
+              <input type="date" formControlName="data" />
+            </div>
+            <div class="form-group">
+              <label>Horário *</label>
+              <input type="time" formControlName="horario" />
+            </div>
+            <div class="form-group">
+              <label>Vagas Disponíveis</label>
+              <input type="number" formControlName="vagas" placeholder="Ex: 100" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label>Local *</label>
+              <input type="text" formControlName="local" placeholder="Ex: Centro de Convenções" />
+            </div>
+            <div class="form-group">
+              <label>Organizador *</label>
+              <input type="text" formControlName="organizador" placeholder="Ex: UBER4HUB" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Categoria *</label>
+              <select formControlName="categoria">
+                <option value="">Selecione</option>
+                <option *ngFor="let cat of categoriasEventos" [value]="cat">{{ cat }}</option>
+              </select>
+            </div>
+            <div class="form-group flex-2">
+              <label>Link (Inscrições)</label>
+              <input type="url" formControlName="link" placeholder="https://exemplo.com/evento" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>URL da Imagem</label>
+            <input type="url" formControlName="imagem" placeholder="https://exemplo.com/imagem.jpg" />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="eventoForm.invalid">
+              <i class="fas fa-save"></i>
+              {{ modoEdicao ? 'Atualizar' : 'Cadastrar' }}
+            </button>
+            <button type="button" class="btn btn-secondary" *ngIf="modoEdicao" (click)="cancelarEdicao()">
+              <i class="fas fa-times"></i>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Lista de Eventos -->
+      <div class="list-section">
+        <h3><i class="fas fa-list"></i> Eventos Cadastrados ({{ eventos.length }})</h3>
+        <div class="table-responsive">
+          <table *ngIf="eventos.length > 0">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Local</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let evento of eventos">
+                <td>{{ evento.titulo }}</td>
+                <td>{{ evento.data | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ evento.horario }}</td>
+                <td>{{ evento.local }}</td>
+                <td><span class="badge-tipo">{{ evento.categoria }}</span></td>
+                <td class="actions">
+                  <button class="btn-edit" (click)="editarEvento(evento)" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn-delete" (click)="excluirEvento(evento.id)" title="Excluir">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="eventos.length === 0">
+            <i class="fas fa-inbox"></i>
+            <p>Nenhum evento cadastrado ainda</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA NOTÍCIAS -->
+    <div *ngIf="abaAtiva === 'noticias'" class="content-section">
+      <div class="form-card">
+        <h2>
+          <i class="fas fa-plus-circle"></i>
+          {{ modoEdicao ? 'Editar Notícia' : 'Nova Notícia' }}
+        </h2>
+        <form [formGroup]="noticiaForm" (ngSubmit)="salvarNoticia()">
+          <div class="form-group">
+            <label>Título *</label>
+            <input type="text" formControlName="titulo" placeholder="Ex: UBER4HUB lança novo hub de inovação" />
+          </div>
+
+          <div class="form-group">
+            <label>Subtítulo</label>
+            <input type="text" formControlName="subtitulo" placeholder="Breve resumo da notícia..." />
+          </div>
+
+          <div class="form-group">
+            <label>Conteúdo *</label>
+            <textarea formControlName="conteudo" rows="5" placeholder="Escreva o conteúdo completo da notícia..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Autor *</label>
+              <input type="text" formControlName="autor" placeholder="Ex: Redação UBER4HUB" />
+            </div>
+            <div class="form-group">
+              <label>Data de Publicação *</label>
+              <input type="date" formControlName="dataPublicacao" />
+            </div>
+            <div class="form-group">
+              <label>Categoria *</label>
+              <select formControlName="categoria">
+                <option value="">Selecione</option>
+                <option *ngFor="let cat of categoriasNoticias" [value]="cat">{{ cat }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>URL da Imagem</label>
+            <input type="url" formControlName="imagem" placeholder="https://exemplo.com/imagem.jpg" />
+          </div>
+
+          <div class="form-group">
+            <label>Link Externo</label>
+            <input type="url" formControlName="link" placeholder="https://exemplo.com/noticia" />
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="destaque" />
+              <span>Marcar como notícia em destaque</span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="noticiaForm.invalid">
+              <i class="fas fa-save"></i>
+              {{ modoEdicao ? 'Atualizar' : 'Cadastrar' }}
+            </button>
+            <button type="button" class="btn btn-secondary" *ngIf="modoEdicao" (click)="cancelarEdicao()">
+              <i class="fas fa-times"></i>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Lista de Notícias -->
+      <div class="list-section">
+        <h3><i class="fas fa-list"></i> Notícias Cadastradas ({{ noticias.length }})</h3>
+        <div class="table-responsive">
+          <table *ngIf="noticias.length > 0">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Data</th>
+                <th>Categoria</th>
+                <th>Destaque</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let noticia of noticias">
+                <td>{{ noticia.titulo }}</td>
+                <td>{{ noticia.autor }}</td>
+                <td>{{ noticia.dataPublicacao | date: 'dd/MM/yyyy' }}</td>
+                <td><span class="badge-tipo">{{ noticia.categoria }}</span></td>
+                <td>
+                  <span class="badge-destaque" *ngIf="noticia.destaque">⭐ Sim</span>
+                  <span *ngIf="!noticia.destaque">-</span>
+                </td>
+                <td class="actions">
+                  <button class="btn-edit" (click)="editarNoticia(noticia)" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn-delete" (click)="excluirNoticia(noticia.id)" title="Excluir">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="noticias.length === 0">
+            <i class="fas fa-inbox"></i>
+            <p>Nenhuma notícia cadastrada ainda</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

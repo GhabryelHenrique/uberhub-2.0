@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Custom theme colors matching the design
+$primary-purple: #6200ea;
+$dark-purple: #4a00c8;
+$light-purple: #7722ff;
+$accent-purple: #bb86fc;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
+}
+
+* {
+  box-sizing: border-box;
+}

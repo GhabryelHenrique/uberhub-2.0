@@ -1,0 +1,11 @@
+<div class="app-container" [class.with-layout]="showLayout">
+  <app-sidebar *ngIf="showLayout"></app-sidebar>
+  <div class="main-content"
+       [class.full-width]="!showLayout"
+       [class.sidebar-collapsed]="sidebarCollapsed">
+    <app-header *ngIf="showLayout"></app-header>
+    <div class="content-wrapper" [class.no-margin]="!showLayout">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="stats-container">
+  <div class="stat-card" *ngFor="let stat of stats">
+    <div class="stat-content">
+      <div class="stat-info">
+        <h3 class="stat-title">{{ stat.title }}</h3>
+        <h2 class="stat-value">{{ stat.value }}</h2>
+        <div class="stat-trend">
+          <i class="fas" [ngClass]="stat.isPositive ? 'fa-arrow-up' : 'fa-arrow-down'"
+             [style.color]="stat.isPositive ? '#4caf50' : '#f44336'"></i>
+          <span [style.color]="stat.isPositive ? '#4caf50' : '#f44336'">{{ stat.trendValue }}</span>
+          <span class="trend-text">{{ stat.trend }}</span>
+        </div>
+      </div>
+      <div class="stat-icon" [style.background-color]="stat.iconBg">
+        <i class="fas" [ngClass]="stat.icon"></i>
+      </div>
+    </div>
+  </div>
+</div>

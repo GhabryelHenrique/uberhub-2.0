@@ -1,0 +1,44 @@
+.dashboard-page {
+  padding: 30px;
+  max-width: 100%;
+
+  .page-header {
+    margin-bottom: 30px;
+
+    .breadcrumb {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 8px;
+
+      .breadcrumb-item {
+        &.active {
+          color: #333;
+          font-weight: 500;
+        }
+      }
+
+      .breadcrumb-separator {
+        margin: 0 8px;
+      }
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: 20px 15px;
+
+    .page-header {
+      .page-title {
+        font-size: 22px;
+      }
+    }
+  }
+}

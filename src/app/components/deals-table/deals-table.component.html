@@ -1,0 +1,48 @@
+<div class="table-container">
+  <div class="table-header">
+    <h3>Deals Details</h3>
+    <select class="time-selector">
+      <option>October</option>
+      <option>November</option>
+      <option>December</option>
+    </select>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="deals-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Location</th>
+          <th>Date - Time</th>
+          <th>Price</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let deal of deals">
+          <td>
+            <div class="product-cell">
+              <img [src]="deal.productImage" [alt]="deal.productName" class="product-img">
+              <span>{{ deal.productName }}</span>
+            </div>
+          </td>
+          <td>{{ deal.location }}</td>
+          <td>{{ deal.dateTime }}</td>
+          <td>{{ deal.price }}</td>
+          <td class="amount">{{ deal.amount }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="{
+              'status-delivered': deal.status === 'Delivered',
+              'status-pending': deal.status === 'Pending',
+              'status-cancelled': deal.status === 'Cancelled'
+            }">
+              {{ deal.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

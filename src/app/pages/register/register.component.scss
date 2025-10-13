@@ -1,0 +1,271 @@
+.register-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  .register-card {
+    flex: 1;
+    max-width: 650px;
+    background: white;
+    padding: 50px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 35px;
+
+      .logo {
+        margin-bottom: 25px;
+
+        h1 {
+          font-size: 32px;
+          font-weight: 700;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin: 0;
+        }
+      }
+
+      h2 {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 10px 0;
+      }
+
+      p {
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+      }
+    }
+
+    .register-form {
+      .full-width {
+        width: 100%;
+        margin-bottom: 18px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 18px;
+
+        .half-width {
+          flex: 1;
+        }
+      }
+
+      .password-requirements {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+
+        .requirements-title {
+          font-size: 13px;
+          font-weight: 600;
+          color: #333;
+          margin: 0 0 12px 0;
+        }
+
+        .requirements-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+
+            i {
+              font-size: 14px;
+              color: #e0e0e0;
+            }
+
+            &.valid {
+              color: #4caf50;
+
+              i {
+                color: #4caf50;
+              }
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+
+      .terms-checkbox {
+        margin-bottom: 25px;
+
+        ::ng-deep .mat-mdc-checkbox-label {
+          font-size: 13px;
+          color: #666;
+          line-height: 1.6;
+
+          a {
+            color: #6200ea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: #7722ff;
+            }
+          }
+        }
+
+        .terms-error {
+          font-size: 12px;
+          color: #f44336;
+          margin-top: 8px;
+          display: block;
+        }
+      }
+
+      .register-button {
+        width: 100%;
+        height: 48px;
+        font-size: 16px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        margin-bottom: 25px;
+
+        &:disabled {
+          opacity: 0.6;
+        }
+      }
+
+      .login-link {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+
+        a {
+          color: #6200ea;
+          text-decoration: none;
+          font-weight: 600;
+          margin-left: 5px;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #7722ff;
+          }
+        }
+      }
+    }
+  }
+
+  .register-illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    .illustration-content {
+      text-align: center;
+      color: white;
+
+      i {
+        font-size: 100px;
+        margin-bottom: 40px;
+        opacity: 0.9;
+      }
+
+      h3 {
+        font-size: 36px;
+        font-weight: 700;
+        margin: 0 0 20px 0;
+      }
+
+      p {
+        font-size: 18px;
+        opacity: 0.9;
+        line-height: 1.6;
+        max-width: 450px;
+        margin: 0 auto 50px;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 50px;
+
+        .stat-item {
+          text-align: center;
+
+          h4 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+          }
+
+          span {
+            font-size: 14px;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .register-container {
+    .register-illustration {
+      display: none;
+    }
+
+    .register-card {
+      max-width: 100%;
+      padding: 40px 30px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .register-container {
+    .register-card {
+      padding: 30px 20px;
+
+      .register-header {
+        .logo h1 {
+          font-size: 28px;
+        }
+
+        h2 {
+          font-size: 24px;
+        }
+      }
+
+      .register-form {
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+
+          .half-width {
+            width: 100%;
+            margin-bottom: 18px;
+          }
+        }
+      }
+    }
+  }
+}
