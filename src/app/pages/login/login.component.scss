@@ -2,6 +2,7 @@
   display: flex;
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow-x: hidden;
 
   .login-card {
     flex: 1;
@@ -164,36 +165,10 @@
 
   .login-illustration {
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-    .illustration-content {
-      text-align: center;
-      color: white;
-
-      i {
-        font-size: 120px;
-        margin-bottom: 40px;
-        opacity: 0.9;
-      }
-
-      h3 {
-        font-size: 36px;
-        font-weight: 700;
-        margin: 0 0 20px 0;
-      }
-
-      p {
-        font-size: 18px;
-        opacity: 0.9;
-        line-height: 1.6;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-    }
+    width: 50%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 }
 

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SidebarService {
-  private readonly SIDEBAR_STATE_KEY = 'uber4hub_sidebar_collapsed';
+  private readonly SIDEBAR_STATE_KEY = 'uberhub_sidebar_collapsed';
   private isCollapsedSubject = new BehaviorSubject<boolean>(this.loadState());
   public isCollapsed$ = this.isCollapsedSubject.asObservable();
 

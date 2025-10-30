@@ -6,8 +6,8 @@ interface StatCard {
   value: string;
   icon: string;
   trend: string;
-  trendValue: string;
-  isPositive: boolean;
+  trendValue: string | null;
+  isPositive: boolean | null;
   iconBg: string;
 }
 
@@ -21,37 +21,37 @@ export class StatsCardsComponent {
   stats: StatCard[] = [
     {
       title: 'Membros',
-      value: '40,689',
+      value: '+ 20 mil',
       icon: 'fa-users',
-      trend: 'Up from yesterday',
-      trendValue: '8.5%',
+      trend: 'e crescendo ainda mais',
+      trendValue: null,
       isPositive: true,
       iconBg: '#e3f2fd'
     },
     {
-      title: 'Programação',
-      value: '10293',
+      title: 'Programação Gratuita',
+      value: '+ 5 mil',
       icon: 'fa-code',
-      trend: 'Up from past week',
-      trendValue: '1.3%',
+      trend: 'jovens com acesso à programação',
+      trendValue: null,
       isPositive: true,
       iconBg: '#fff8e1'
     },
     {
       title: 'Vagas',
-      value: '$89,000',
+      value: '+ 1.000',
       icon: 'fa-chart-line',
-      trend: 'Down from yesterday',
-      trendValue: '4.3%',
-      isPositive: false,
+      trend: 'Sendo divulgadas semanalmente',
+      trendValue: null,
+      isPositive: true,
       iconBg: '#fce4ec'
     },
     {
-      title: 'Empresas',
-      value: '2040',
+      title: 'Empresas tech',
+      value: '+ 500',
       icon: 'fa-building',
-      trend: 'Up from yesterday',
-      trendValue: '1.8%',
+      trend: 'empresas de inovação na cidade',
+      trendValue: null,
       isPositive: true,
       iconBg: '#ffe0e6'
     }

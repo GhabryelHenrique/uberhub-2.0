@@ -32,8 +32,8 @@ export interface ContatoMensagem {
   providedIn: 'root'
 })
 export class UserService {
-  private readonly USER_STORAGE_KEY = 'uber4hub_user';
-  private readonly MENSAGENS_STORAGE_KEY = 'uber4hub_mensagens';
+  private readonly USER_STORAGE_KEY = 'uberhub_user';
+  private readonly MENSAGENS_STORAGE_KEY = 'uberhub_mensagens';
 
   private userSubject = new BehaviorSubject<User | null>(this.loadUser());
   public user$ = this.userSubject.asObservable();
@@ -51,10 +51,10 @@ export class UserService {
     // Usuário padrão
     const defaultUser: User = {
       id: 1,
-      nome: 'Usuário UBER4HUB',
-      email: 'usuario@uber4hub.com',
+      nome: 'Usuário UBERHUB',
+      email: 'usuario@uberhub.com',
       telefone: '(34) 99999-9999',
-      empresa: 'UBER4HUB',
+      empresa: 'UBERHUB',
       cargo: 'Desenvolvedor',
       cidade: 'Uberlândia',
       estado: 'MG',

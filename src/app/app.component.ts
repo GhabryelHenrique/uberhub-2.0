@@ -18,7 +18,7 @@ import { filter, Subscription } from 'rxjs';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'uber4hub-dashboard';
+  title = 'uberhub-dashboard';
   showLayout = false;
   sidebarCollapsed = false;
   private subscription = new Subscription();
@@ -27,12 +27,17 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private sidebarService: SidebarService
   ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      // Hide layout for login and register pages
-      this.showLayout = !event.url.includes('/login') && !event.url.includes('/register');
-    });
+    // Verifica a URL atual na inicialização
+    this.checkLayoutVisibility(this.router.url);
+
+    // Subscreve aos eventos de navegação
+    this.subscription.add(
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((event: any) => {
+        this.checkLayoutVisibility(event.url);
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -42,6 +47,11 @@ export class AppComponent implements OnInit, OnDestroy {
         collapsed => this.sidebarCollapsed = collapsed
       )
     );
+  }
+
+  private checkLayoutVisibility(url: string): void {
+    // Hide layout for login and register pages
+    this.showLayout = !url.includes('/login') && !url.includes('/register');
   }
 
   ngOnDestroy(): void {

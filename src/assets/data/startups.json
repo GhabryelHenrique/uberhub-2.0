@@ -1,0 +1,204 @@
+{
+  "startups": [
+    {
+      "id": 1,
+      "nome": "Brasil Cloud Nuvem Corporativa",
+      "logo": "https://ui-avatars.com/api/?name=BC&background=4285f4&color=fff&size=200",
+      "solucao": "Seu parceiro tecnológico para o crescimento do seu Negócio. A Empresa é focada na prestação de serviços de cloud computing corporativa.",
+      "setor_principal": "Cloud computing",
+      "fase_startup": "Escala",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "PaaS (Plataform as a service)"
+    },
+    {
+      "id": 2,
+      "nome": "Zatec Treinamento Profissional Ltda",
+      "logo": "https://ui-avatars.com/api/?name=ZT&background=34a853&color=fff&size=200",
+      "solucao": "Oferecemos soluções personalizadas para aprimorar processos, aumentar a eficiência operacional e fomentar a inovação contínua nas organizações.",
+      "setor_principal": "Tecnologia da Informação",
+      "fase_startup": "Operação",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "Outros"
+    },
+    {
+      "id": 3,
+      "nome": "Artha Finanças Pessoais",
+      "logo": "https://ui-avatars.com/api/?name=AF&background=fbbc04&color=fff&size=200",
+      "solucao": "Ajudamos pessoas e famílias a viverem em paz com as finanças por meio da educação e da tecnologia.",
+      "setor_principal": "Educação",
+      "fase_startup": "Validação",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Clube de assinatura recorrente"
+    },
+    {
+      "id": 4,
+      "nome": "Udikar Tecnologia",
+      "logo": "https://ui-avatars.com/api/?name=UT&background=ea4335&color=fff&size=200",
+      "solucao": "A inovação de transporte urbano e corporativo!",
+      "setor_principal": "Logística e mobilidade urbana",
+      "fase_startup": "Operação",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Outros"
+    },
+    {
+      "id": 5,
+      "nome": "Libre Bank",
+      "logo": "https://ui-avatars.com/api/?name=LB&background=6200ea&color=fff&size=200",
+      "solucao": "Banco digital, com operação de maquininhas de cartão e venda online. Entendemos PF e PJ com as melhores soluções financeiras.",
+      "setor_principal": "Finanças",
+      "fase_startup": "Operação",
+      "publico_alvo": "Empresas e consumidor final B2B2C",
+      "modelo_negocio": "Taxa sobre transações"
+    },
+    {
+      "id": 6,
+      "nome": "Zaper",
+      "logo": "https://ui-avatars.com/api/?name=ZP&background=00acc1&color=fff&size=200",
+      "solucao": "O melhor sistema de gestão para WhatsApp | Organize seus leads, automatize o atendimento, faça disparos em massa e muito mais.",
+      "setor_principal": "Inteligência Artificial",
+      "fase_startup": "Escala",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 7,
+      "nome": "AgroSchool",
+      "logo": "https://ui-avatars.com/api/?name=AS&background=689f38&color=fff&size=200",
+      "solucao": "A AgroSchool é uma escola de negócios e finanças para o mercado do Agronegócio. Oferecemos cursos e mentorias especializadas.",
+      "setor_principal": "Agronegócio",
+      "fase_startup": "Operação",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Taxa sobre transações"
+    },
+    {
+      "id": 8,
+      "nome": "visimob",
+      "logo": "https://ui-avatars.com/api/?name=VM&background=f57c00&color=fff&size=200",
+      "solucao": "A visimob é uma inovadora empresa do setor imobiliário, dedicada a transformar o mercado por meio de tecnologia de ponta.",
+      "setor_principal": "Adtech (advertising)",
+      "fase_startup": "Operação",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "Clube de assinatura recorrente"
+    },
+    {
+      "id": 9,
+      "nome": "Move Ads",
+      "logo": "https://ui-avatars.com/api/?name=MA&background=d32f2f&color=fff&size=200",
+      "solucao": "A Move Ads inova ao integrar publicidade e mobilidade, implementando campanhas em veículos que circulam nas cidades.",
+      "setor_principal": "Adtech (advertising)",
+      "fase_startup": "Operação",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 10,
+      "nome": "Oportunidade Rural",
+      "logo": "https://ui-avatars.com/api/?name=OR&background=7b1fa2&color=fff&size=200",
+      "solucao": "Plataforma de modernização de negociações do agro através de métodos inovadores, facilitando a negociação de terras e imóveis rurais.",
+      "setor_principal": "Agronegócio",
+      "fase_startup": "Operação",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Venda direta - Vendas de produtos"
+    },
+    {
+      "id": 11,
+      "nome": "Agrow",
+      "logo": "https://ui-avatars.com/api/?name=AG&background=388e3c&color=fff&size=200",
+      "solucao": "O aGrow é um software de gestão integrado (ERP) específico para o agronegócio.",
+      "setor_principal": "Agronegócio",
+      "fase_startup": "Operação",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 12,
+      "nome": "Zeus Agrotech",
+      "logo": "https://ui-avatars.com/api/?name=ZA&background=0288d1&color=fff&size=200",
+      "solucao": "A Zeus Agrotech é uma empresa 100% brasileira, totalmente comprometida com o setor agrícola, idealizando soluções tecnológicas inovadoras.",
+      "setor_principal": "Agronegócio",
+      "fase_startup": "Escala",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 13,
+      "nome": "MedTech Solutions",
+      "logo": "https://ui-avatars.com/api/?name=MS&background=e91e63&color=fff&size=200",
+      "solucao": "Plataforma de telemedicina e gestão de prontuários eletrônicos com inteligência artificial para diagnósticos precisos.",
+      "setor_principal": "Saúde e bem-estar",
+      "fase_startup": "Tração",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 14,
+      "nome": "EduPlay",
+      "logo": "https://ui-avatars.com/api/?name=EP&background=ff9800&color=fff&size=200",
+      "solucao": "Plataforma gamificada de ensino à distância com foco em crianças e adolescentes.",
+      "setor_principal": "Educação",
+      "fase_startup": "Ideação",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Clube de assinatura recorrente"
+    },
+    {
+      "id": 15,
+      "nome": "SmartRetail",
+      "logo": "https://ui-avatars.com/api/?name=SR&background=009688&color=fff&size=200",
+      "solucao": "Sistema inteligente de gestão de estoque e vendas com análise preditiva para o varejo.",
+      "setor_principal": "Retailtech (varejo)",
+      "fase_startup": "Validação",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 16,
+      "nome": "FoodHub",
+      "logo": "https://ui-avatars.com/api/?name=FH&background=f44336&color=fff&size=200",
+      "solucao": "Marketplace de alimentos orgânicos conectando produtores locais diretamente aos consumidores.",
+      "setor_principal": "Foodtech (Alimentação)",
+      "fase_startup": "Tração",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Taxa sobre transações"
+    },
+    {
+      "id": 17,
+      "nome": "TalentMatch",
+      "logo": "https://ui-avatars.com/api/?name=TM&background=3f51b5&color=fff&size=200",
+      "solucao": "Plataforma de recrutamento e seleção com IA para matching entre candidatos e vagas.",
+      "setor_principal": "HRtech (Recursos humanos)",
+      "fase_startup": "Operação",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "SaaS (Software as a service)"
+    },
+    {
+      "id": 18,
+      "nome": "GreenCycle",
+      "logo": "https://ui-avatars.com/api/?name=GC&background=4caf50&color=fff&size=200",
+      "solucao": "Solução completa para gestão de resíduos e logística reversa com foco em economia circular.",
+      "setor_principal": "Greentech (gestão de resíduos)",
+      "fase_startup": "Validação",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "Taxa sobre transações"
+    },
+    {
+      "id": 19,
+      "nome": "PetCare+",
+      "logo": "https://ui-avatars.com/api/?name=PC&background=ff5722&color=fff&size=200",
+      "solucao": "Aplicativo para agendamento de serviços veterinários e pet shops com prontuário digital.",
+      "setor_principal": "Pettech (animal)",
+      "fase_startup": "Tração",
+      "publico_alvo": "Consumidor final B2C",
+      "modelo_negocio": "Taxa sobre transações"
+    },
+    {
+      "id": 20,
+      "nome": "LegalTech Pro",
+      "logo": "https://ui-avatars.com/api/?name=LP&background=795548&color=fff&size=200",
+      "solucao": "Automação de processos jurídicos e gestão de escritórios de advocacia com IA.",
+      "setor_principal": "Lawtech (direito)",
+      "fase_startup": "Escala",
+      "publico_alvo": "Empresas B2B",
+      "modelo_negocio": "SaaS (Software as a service)"
+    }
+  ]
+}

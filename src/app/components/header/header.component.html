@@ -13,20 +13,44 @@
         <span class="badge">3</span>
       </div>
 
-      <div class="language-selector">
-        <img src="https://flagcdn.com/w40/gb.png" alt="English" class="flag-icon">
-        <span>English</span>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-
-      <div class="user-profile">
-        <img src="https://ui-avatars.com/api/?name=Moni+Roy&background=6200ea&color=fff" alt="User" class="avatar">
-        <div class="user-info">
-          <span class="user-name">Moni Roy</span>
-          <span class="user-role">Admin</span>
+      <div class="user-profile-wrapper">
+        <div class="user-profile" (click)="toggleDropdown()">
+          <img src="https://ui-avatars.com/api/?name={{userName}}&background=6200ea&color=fff" alt="User" class="avatar">
+          <span class="user-name">Usuário {{ userName }}</span>
+          <i class="fas fa-chevron-down"></i>
         </div>
-        <i class="fas fa-chevron-down"></i>
+
+        <div class="user-dropdown" [class.active]="isDropdownOpen">
+          <div class="dropdown-header">
+            <span class="dropdown-user-name">Usuário {{ userName }}</span>
+          </div>
+
+          <a class="dropdown-item" (click)="navigateTo('/perfil')">
+            <i class="far fa-user"></i>
+            <span>Meus Dados</span>
+          </a>
+
+          <a class="dropdown-item" (click)="navigateTo('/admin')">
+            <i class="far fa-plus-square"></i>
+            <span>Startup ou Empresa</span>
+          </a>
+
+          <a class="dropdown-item" (click)="navigateTo('/perfil')">
+            <i class="far fa-question-circle"></i>
+            <span>Contato</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <a class="dropdown-item logout" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Sair</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Overlay para fechar dropdown ao clicar fora -->
+  <div class="dropdown-overlay" *ngIf="isDropdownOpen" (click)="closeDropdown()"></div>
 </header>

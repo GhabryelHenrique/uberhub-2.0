@@ -1,0 +1,16 @@
+<div class="treemap-container">
+  <div class="treemap-header">
+    <h3>Total de Startups do Ecossistema: {{ totalStartups }}</h3>
+  </div>
+
+  <div class="treemap">
+    <div
+      *ngFor="let setor of setores"
+      class="treemap-item"
+      [style.background-color]="setor.cor"
+      [style.flex]="setor.valor"
+      [title]="setor.nome + ': ' + setor.valor">
+      <span *ngIf="shouldShowText(setor.valor)">{{ setor.nome }}</span>
+    </div>
+  </div>
+</div>

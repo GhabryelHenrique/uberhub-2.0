@@ -20,7 +20,7 @@ export interface Evento {
   providedIn: 'root'
 })
 export class EventosService {
-  private readonly STORAGE_KEY = 'uber4hub_eventos';
+  private readonly STORAGE_KEY = 'uberhub_eventos';
   private eventosSubject = new BehaviorSubject<Evento[]>(this.loadFromStorage());
   public eventos$ = this.eventosSubject.asObservable();
 
@@ -42,7 +42,7 @@ export class EventosService {
         local: 'Centro de Convenções',
         link: 'https://exemplo.com/evento1',
         categoria: 'Tecnologia',
-        organizador: 'UBER4HUB',
+        organizador: 'UBERHUB',
         vagas: 200,
         dataCriacao: new Date()
       }

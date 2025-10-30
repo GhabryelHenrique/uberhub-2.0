@@ -1,12 +1,7 @@
-<div class="sidebar" [class.collapsed]="isCollapsed">
+<div class="sidebar">
   <div class="logo">
-    <img *ngIf="!isCollapsed" src="assets/logoube.png" alt="Logo" class="logo-full">
-    <h2 *ngIf="isCollapsed" class="logo-short">HUB</h2>
+    <img src="assets/logoube.png" alt="Logo" class="logo-full">
   </div>
-
-  <button class="toggle-btn" (click)="toggleSidebar()" title="Expandir/Retrair Menu">
-    <i class="fas" [class.fa-bars]="isCollapsed" [class.fa-times]="!isCollapsed"></i>
-  </button>
 
   <nav class="nav-menu">
     <div class="menu-section">
@@ -17,8 +12,8 @@
     </div>
 
     <div class="menu-section">
-      <div class="section-title" *ngIf="!isCollapsed">ECOSSISTEMA</div>
-      <div class="nav-item" title="Startups">
+      <div class="section-title">ECOSSISTEMA</div>
+      <div class="nav-item" routerLink="/startups" routerLinkActive="active" title="Startups">
         <i class="fas fa-rocket"></i>
         <span>Startups</span>
       </div>
@@ -26,14 +21,14 @@
         <i class="fas fa-building"></i>
         <span>Empresas Tech</span>
       </div>
-      <div class="nav-item" title="Mapa da Inovação">
+      <div class="nav-item" routerLink="/mapa-inovacao" routerLinkActive="active" title="Mapa da Inovação">
         <i class="fas fa-map-marked-alt"></i>
         <span>Mapa da Inovação</span>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="section-title" *ngIf="!isCollapsed">INFORMAÇÕES</div>
+      <div class="section-title">INFORMAÇÕES</div>
       <div class="nav-item" routerLink="/vagas" routerLinkActive="active" title="Vagas">
         <i class="fas fa-briefcase"></i>
         <span>Vagas</span>

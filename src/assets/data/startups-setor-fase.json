@@ -1,0 +1,77 @@
+{
+  "fases": [
+    {
+      "nome": "Escala",
+      "setores": [
+        { "nome": "Agronegócio", "valor": 8, "cor": "#FF6B9D" },
+        { "nome": "Democratização de Talentos", "valor": 5, "cor": "#50E3C2" },
+        { "nome": "Educação", "valor": 6, "cor": "#FF6B6B" },
+        { "nome": "Finanças", "valor": 7, "cor": "#95E1D3" },
+        { "nome": "Gestão", "valor": 4, "cor": "#F5A623" },
+        { "nome": "Saúde e bem-estar", "valor": 5, "cor": "#9B59B6" },
+        { "nome": "Martech", "valor": 3, "cor": "#E94B3C" },
+        { "nome": "Logística", "valor": 4, "cor": "#C7CEEA" },
+        { "nome": "Lawtech", "valor": 2, "cor": "#4A90E2" },
+        { "nome": "IA", "valor": 3, "cor": "#A8E6CF" },
+        { "nome": "Outros", "valor": 8, "cor": "#FF6B9D" }
+      ]
+    },
+    {
+      "nome": "Ideação",
+      "setores": [
+        { "nome": "Agronegócio", "valor": 3, "cor": "#FF6B9D" },
+        { "nome": "Educação", "valor": 4, "cor": "#50E3C2" },
+        { "nome": "Finanças", "valor": 5, "cor": "#4A90E2" },
+        { "nome": "Gestão", "valor": 2, "cor": "#F5A623" }
+      ]
+    },
+    {
+      "nome": "Operação",
+      "setores": [
+        { "nome": "Agronegócio", "valor": 12, "cor": "#F5A623" },
+        { "nome": "Democratização de Talentos", "valor": 15, "cor": "#FF6B9D" },
+        { "nome": "Educação", "valor": 10, "cor": "#50E3C2" },
+        { "nome": "Finanças", "valor": 18, "cor": "#95E1D3" },
+        { "nome": "Gestão", "valor": 8, "cor": "#FF6B6B" },
+        { "nome": "Saúde e bem-estar", "valor": 14, "cor": "#9B59B6" },
+        { "nome": "Martech", "valor": 6, "cor": "#50E3C2" },
+        { "nome": "Logística", "valor": 9, "cor": "#C7CEEA" },
+        { "nome": "Lawtech", "valor": 5, "cor": "#4A90E2" },
+        { "nome": "IA", "valor": 4, "cor": "#A8E6CF" },
+        { "nome": "Outros", "valor": 12, "cor": "#E94B3C" }
+      ]
+    },
+    {
+      "nome": "Tração",
+      "setores": [
+        { "nome": "Agronegócio", "valor": 10, "cor": "#FF6B9D" },
+        { "nome": "Democratização de Talentos", "valor": 8, "cor": "#50E3C2" },
+        { "nome": "Educação", "valor": 7, "cor": "#FF6B6B" },
+        { "nome": "Finanças", "valor": 9, "cor": "#95E1D3" },
+        { "nome": "Gestão", "valor": 6, "cor": "#9B59B6" },
+        { "nome": "Saúde e bem-estar", "valor": 7, "cor": "#E94B3C" },
+        { "nome": "Martech", "valor": 4, "cor": "#50E3C2" },
+        { "nome": "Logística", "valor": 5, "cor": "#4A90E2" },
+        { "nome": "Lawtech", "valor": 3, "cor": "#A8E6CF" },
+        { "nome": "IA", "valor": 2, "cor": "#C7CEEA" },
+        { "nome": "Outros", "valor": 8, "cor": "#F5A623" }
+      ]
+    },
+    {
+      "nome": "Validação",
+      "setores": [
+        { "nome": "Agronegócio", "valor": 12, "cor": "#FF6B9D" },
+        { "nome": "Democratização de Talentos", "valor": 7, "cor": "#50E3C2" },
+        { "nome": "Educação", "valor": 11, "cor": "#FF6B6B" },
+        { "nome": "Finanças", "valor": 8, "cor": "#E8B4B8" },
+        { "nome": "Gestão", "valor": 8, "cor": "#95E1D3" },
+        { "nome": "Saúde e bem-estar", "valor": 6, "cor": "#A8E6CF" },
+        { "nome": "Martech", "valor": 2, "cor": "#F5A623" },
+        { "nome": "Logística", "valor": 4, "cor": "#E94B3C" },
+        { "nome": "Lawtech", "valor": 2, "cor": "#4A90E2" },
+        { "nome": "IA", "valor": 3, "cor": "#50E3C2" },
+        { "nome": "Outros", "valor": 10, "cor": "#9B59B6" }
+      ]
+    }
+  ]
+}

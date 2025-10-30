@@ -29,6 +29,34 @@
       margin: 0;
     }
   }
+
+  .charts-grid {
+    .chart-full {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+
+      .chart-half {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 968px) {
+  .dashboard-page {
+    .charts-grid {
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {

@@ -9,6 +9,19 @@
   </div>
 
   <app-stats-cards></app-stats-cards>
-  <app-sales-chart></app-sales-chart>
-  <app-deals-table></app-deals-table>
+
+  <div class="charts-grid">
+    <div class="chart-full">
+      <app-ecossistema-treemap></app-ecossistema-treemap>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-half">
+        <app-publico-alvo-chart></app-publico-alvo-chart>
+      </div>
+      <div class="chart-half">
+        <app-startups-setor-fase></app-startups-setor-fase>
+      </div>
+    </div>
+  </div>
 </div>

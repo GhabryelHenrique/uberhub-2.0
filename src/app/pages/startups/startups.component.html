@@ -1,0 +1,153 @@
+<div class="startups-page">
+  <div class="pagetitle">
+    <h1>Startups do Ecossistema</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Startups</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-body bg-light">
+          <!-- Filtros -->
+          <form (ngSubmit)="applyFilters()">
+            <div class="row align-items-end">
+              <div class="col-md-3 col-sm-6 mb-3">
+                <label for="nome" class="form-label">Startup:</label>
+                <input
+                  type="text"
+                  id="nome"
+                  name="nome"
+                  class="form-control"
+                  [(ngModel)]="filterNome"
+                  placeholder="Nome da startup">
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <label for="fase_startup" class="form-label">Fase da Startup:</label>
+                <select
+                  id="fase_startup"
+                  name="fase_startup"
+                  class="form-control"
+                  [(ngModel)]="filterFase">
+                  <option value="">Todos</option>
+                  <option *ngFor="let fase of fases" [value]="fase">{{ fase }}</option>
+                </select>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <label for="setor_principal" class="form-label">Setor Principal:</label>
+                <select
+                  id="setor_principal"
+                  name="setor_principal"
+                  class="form-control"
+                  [(ngModel)]="filterSetor">
+                  <option value="">Todos</option>
+                  <option *ngFor="let setor of setores" [value]="setor">{{ setor }}</option>
+                </select>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+              </div>
+            </div>
+          </form>
+
+          <hr>
+
+          <!-- Startups Grid -->
+          <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4" *ngFor="let startup of paginatedStartups">
+              <div class="startup-card h-100">
+                <div class="card-logo-container">
+                  <img [src]="startup.logo" [alt]="'Logo ' + startup.nome" class="startup-logo">
+                </div>
+
+                <div class="card-content">
+                  <h5 class="startup-nome">{{ startup.nome }}</h5>
+                  <hr>
+
+                  <div class="info-section">
+                    <h6 class="info-label">SOLUÇÃO</h6>
+                    <p class="info-text">{{ truncateText(startup.solucao) }}</p>
+                  </div>
+
+                  <div class="info-section">
+                    <h6 class="info-label">SEGMENTO PRINCIPAL</h6>
+                    <p class="info-text">{{ startup.setor_principal }}</p>
+                  </div>
+
+                  <div class="info-section">
+                    <h6 class="info-label">FASE</h6>
+                    <p class="info-text">{{ startup.fase_startup }}</p>
+                  </div>
+
+                  <div class="info-section">
+                    <h6 class="info-label">PÚBLICO-ALVO</h6>
+                    <p class="info-text">{{ startup.publico_alvo }}</p>
+                  </div>
+
+                  <div class="info-section">
+                    <h6 class="info-label">MODELO DE NÉGOCIO</h6>
+                    <p class="info-text">{{ startup.modelo_negocio }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mensagem quando não há resultados -->
+          <div class="row" *ngIf="paginatedStartups.length === 0">
+            <div class="col-12 text-center py-5">
+              <p class="text-muted">Nenhuma startup encontrada com os filtros selecionados.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paginação -->
+      <div class="row mt-4" *ngIf="totalPages > 1">
+        <div class="col-12">
+          <nav aria-label="Paginação">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" (click)="goToPage(1)" [class.disabled]="currentPage === 1">
+                  &laquo; Primeira
+                </a>
+              </li>
+
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" (click)="goToPage(currentPage - 1)" [class.disabled]="currentPage === 1">
+                  Anterior
+                </a>
+              </li>
+
+              <li
+                class="page-item"
+                *ngFor="let page of pages"
+                [class.active]="page === currentPage">
+                <a class="page-link" (click)="goToPage(page)">
+                  {{ page }}
+                  <span class="sr-only" *ngIf="page === currentPage">(atual)</span>
+                </a>
+              </li>
+
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" (click)="goToPage(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+                  Próxima
+                </a>
+              </li>
+
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" (click)="goToPage(totalPages)" [class.disabled]="currentPage === totalPages">
+                  Última &raquo;
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

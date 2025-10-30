@@ -17,7 +17,7 @@ export interface Vaga {
   providedIn: 'root'
 })
 export class VagasService {
-  private readonly STORAGE_KEY = 'uber4hub_vagas';
+  private readonly STORAGE_KEY = 'uberhub_vagas';
   private vagasSubject = new BehaviorSubject<Vaga[]>(this.loadFromStorage());
   public vagas$ = this.vagasSubject.asObservable();
 

@@ -1,0 +1,55 @@
+{
+  "totalStartups": 277,
+  "setores": [
+    {
+      "nome": "Agronegócio",
+      "valor": 45,
+      "cor": "#00E5A0"
+    },
+    {
+      "nome": "Democratização de Talentos",
+      "valor": 35,
+      "cor": "#4A90E2"
+    },
+    {
+      "nome": "Educação",
+      "valor": 38,
+      "cor": "#F5A623"
+    },
+    {
+      "nome": "Finanças",
+      "valor": 42,
+      "cor": "#5B9BD5"
+    },
+    {
+      "nome": "Gestão",
+      "valor": 28,
+      "cor": "#9B59B6"
+    },
+    {
+      "nome": "Saúde e bem-estar",
+      "valor": 32,
+      "cor": "#FF6B9D"
+    },
+    {
+      "nome": "Martech",
+      "valor": 15,
+      "cor": "#50E3C2"
+    },
+    {
+      "nome": "Logística e mobilidade urbana",
+      "valor": 22,
+      "cor": "#4A90E2"
+    },
+    {
+      "nome": "Lawtech (Direito)",
+      "valor": 12,
+      "cor": "#9B59B6"
+    },
+    {
+      "nome": "Inteligência Artificial",
+      "valor": 8,
+      "cor": "#FF6B9D"
+    }
+  ]
+}

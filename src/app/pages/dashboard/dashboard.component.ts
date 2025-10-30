@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { StatsCardsComponent } from '../../components/stats-cards/stats-cards.component';
-import { SalesChartComponent } from '../../components/sales-chart/sales-chart.component';
-import { DealsTableComponent } from '../../components/deals-table/deals-table.component';
+import { EcossistemaTreemapComponent } from '../../components/ecossistema-treemap/ecossistema-treemap.component';
+import { PublicoAlvoChartComponent } from '../../components/publico-alvo-chart/publico-alvo-chart.component';
+import { StartupsSetorFaseComponent } from '../../components/startups-setor-fase/startups-setor-fase.component';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     StatsCardsComponent,
-    SalesChartComponent,
-    DealsTableComponent
+    EcossistemaTreemapComponent,
+    PublicoAlvoChartComponent,
+    StartupsSetorFaseComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

@@ -19,7 +19,7 @@ export interface Noticia {
   providedIn: 'root'
 })
 export class NoticiasService {
-  private readonly STORAGE_KEY = 'uber4hub_noticias';
+  private readonly STORAGE_KEY = 'uberhub_noticias';
   private noticiasSubject = new BehaviorSubject<Noticia[]>(this.loadFromStorage());
   public noticias$ = this.noticiasSubject.asObservable();
 
@@ -34,10 +34,10 @@ export class NoticiasService {
     return [
       {
         id: 1,
-        titulo: 'UBER4HUB lança novo hub de inovação',
+        titulo: 'UBERHUB lança novo hub de inovação',
         subtitulo: 'Espaço colaborativo promete impulsionar startups locais',
-        conteudo: 'A plataforma UBER4HUB anunciou hoje o lançamento de um novo hub de inovação em Uberlândia, com foco em tecnologia e empreendedorismo.',
-        autor: 'Redação UBER4HUB',
+        conteudo: 'A plataforma UBERHUB anunciou hoje o lançamento de um novo hub de inovação em Uberlândia, com foco em tecnologia e empreendedorismo.',
+        autor: 'Redação UBERHUB',
         dataPublicacao: new Date(),
         categoria: 'Inovação',
         destaque: true,
