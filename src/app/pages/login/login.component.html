@@ -1,9 +1,6 @@
 <div class="login-container">
   <div class="login-card">
     <div class="login-header">
-      <div class="logo">
-        <h1>UBERHUB</h1>
-      </div>
       <h2>Bem-vindo de volta!</h2>
       <p>Entre com sua conta para continuar</p>
     </div>
@@ -38,8 +35,8 @@
       </div>
 
       <button mat-raised-button color="primary" type="submit" class="login-button" [disabled]="isLoading">
-        <span *ngIf="!isLoading">Entrar</span>
-        <span *ngIf="isLoading">
+        <span *ngIf="!isLoading" style="color: white;">Entrar</span>
+        <span *ngIf="isLoading" style="color: white;">
           <i class="fas fa-spinner fa-spin"></i> Entrando...
         </span>
       </button>

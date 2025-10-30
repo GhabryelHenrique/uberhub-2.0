@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ngh --dir=dist/uberhub-dashboard/browser",
-    "build-deploy": "ng build --configuration production --base-href=https://ghabryelhenrique.github.io/uberhub-2.0/ && ngh --dir=dist/uberhub-dashboard/browser"
+    "build-deploy": "ng build --configuration production --base-href=/uberhub-2.0/ && ngh --dir=dist/uberhub-dashboard/browser"
   },
   "private": true,
   "dependencies": {

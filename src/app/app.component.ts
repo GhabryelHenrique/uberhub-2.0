@@ -27,9 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private sidebarService: SidebarService
   ) {
-    // Verifica a URL atual na inicialização
-    this.checkLayoutVisibility(this.router.url);
-
     // Subscreve aos eventos de navegação
     this.subscription.add(
       this.router.events.pipe(
@@ -41,6 +38,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Verifica a URL atual na inicialização (após o componente estar completamente inicializado)
+    this.checkLayoutVisibility(this.router.url);
+
     // Subscrever ao estado da sidebar
     this.subscription.add(
       this.sidebarService.isCollapsed$.subscribe(
@@ -51,7 +51,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private checkLayoutVisibility(url: string): void {
     // Hide layout for login and register pages
-    this.showLayout = !url.includes('/login') && !url.includes('/register');
+    const authRoutes = ['/login', '/register', 'login', 'register', '/', ''];
+    const isAuthRoute = authRoutes.some(route => url === route || url.includes('/login') || url.includes('/register'));
+    this.showLayout = !isAuthRoute;
+    console.log('URL atual:', url, 'showLayout:', this.showLayout);
   }
 
   ngOnDestroy(): void {

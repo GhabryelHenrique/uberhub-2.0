@@ -14,36 +14,65 @@
       <!-- Filtros -->
       <div class="card mb-4">
         <div class="card-body">
-          <div class="row align-items-end">
+          <div class="row align-items-start">
             <div class="col-md-4 mb-3">
-              <label for="setor" class="form-label">
-                <i class="fas fa-briefcase"></i> Filtrar por Setor:
+              <label class="form-label">
+                <i class="fas fa-briefcase"></i> Filtrar por Setor (múltipla seleção):
               </label>
-              <select
-                id="setor"
-                class="form-control"
-                [(ngModel)]="selectedSetor"
-                (change)="applyFilters()">
-                <option value="">Todos os setores</option>
-                <option *ngFor="let setor of setores" [value]="setor">{{ setor }}</option>
-              </select>
+              <div class="multi-select-wrapper">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary w-100 dropdown-toggle-custom"
+                  (click)="toggleSetorDropdown()">
+                  <span *ngIf="selectedSetores.length === 0">Todos os setores</span>
+                  <span *ngIf="selectedSetores.length > 0">{{ selectedSetores.length }} selecionado(s)</span>
+                  <i class="fas" [class.fa-chevron-down]="!showSetorDropdown" [class.fa-chevron-up]="showSetorDropdown"></i>
+                </button>
+
+                <div class="multi-select-dropdown" *ngIf="showSetorDropdown">
+                  <div class="dropdown-item-custom" *ngFor="let setor of setores">
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        [checked]="isSetorSelected(setor)"
+                        (change)="toggleSetor(setor)">
+                      <span>{{ setor }}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-4 mb-3">
-              <label for="fase" class="form-label">
-                <i class="fas fa-rocket"></i> Filtrar por Fase:
+              <label class="form-label">
+                <i class="fas fa-rocket"></i> Filtrar por Fase (múltipla seleção):
               </label>
-              <select
-                id="fase"
-                class="form-control"
-                [(ngModel)]="selectedFase"
-                (change)="applyFilters()">
-                <option value="">Todas as fases</option>
-                <option *ngFor="let fase of fases" [value]="fase">{{ fase }}</option>
-              </select>
+              <div class="multi-select-wrapper">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary w-100 dropdown-toggle-custom"
+                  (click)="toggleFaseDropdown()">
+                  <span *ngIf="selectedFases.length === 0">Todas as fases</span>
+                  <span *ngIf="selectedFases.length > 0">{{ selectedFases.length }} selecionada(s)</span>
+                  <i class="fas" [class.fa-chevron-down]="!showFaseDropdown" [class.fa-chevron-up]="showFaseDropdown"></i>
+                </button>
+
+                <div class="multi-select-dropdown" *ngIf="showFaseDropdown">
+                  <div class="dropdown-item-custom" *ngFor="let fase of fases">
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        [checked]="isFaseSelected(fase)"
+                        (change)="toggleFase(fase)">
+                      <span>{{ fase }}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-4 mb-3">
+              <label class="form-label d-none d-md-block">&nbsp;</label>
               <button
                 type="button"
                 class="btn btn-secondary w-100"
@@ -64,6 +93,182 @@
         </div>
       </div>
 
+      <!-- Botão Flutuante de Rotas -->
+      <button
+        class="btn-generate-route"
+        (click)="toggleRoutesPanel()"
+        [class.active]="showRoutesPanel"
+        title="Gerar Rota Inteligente">
+        <i class="fas fa-route"></i>
+        <span>Rotas IA</span>
+      </button>
+
+      <!-- Painel de Rotas -->
+      <div class="routes-panel" [class.open]="showRoutesPanel">
+        <div class="routes-panel-header">
+          <h5><i class="fas fa-robot"></i> Rotas Inteligentes</h5>
+          <button class="btn-close-panel" (click)="toggleRoutesPanel()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="routes-panel-body">
+          @if (!currentRoute) {
+            <!-- Seleção de Modo -->
+            <div class="mode-selector">
+              <button
+                class="mode-btn"
+                [class.active]="!showChatMode"
+                (click)="showChatMode = false">
+                <i class="fas fa-sliders-h"></i>
+                Configuração
+              </button>
+              <button
+                class="mode-btn"
+                [class.active]="showChatMode"
+                (click)="toggleChatMode()">
+                <i class="fas fa-comments"></i>
+                Chat IA
+              </button>
+            </div>
+
+            @if (!showChatMode) {
+              <!-- Configuração da Rota -->
+              <div class="route-config">
+                <p class="info-text">
+                  <i class="fas fa-magic"></i>
+                  Use IA para criar rotas otimizadas de visitação às startups
+                </p>
+
+                <div class="form-group">
+                  <label><i class="fas fa-sliders-h"></i> Prioridade:</label>
+                  <select class="form-select" [(ngModel)]="routePriority">
+                    <option value="balanced">🎯 Balanceada</option>
+                    <option value="distance">📏 Menor Distância</option>
+                    <option value="sector">🏢 Por Setor</option>
+                    <option value="phase">🚀 Por Fase</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label><i class="fas fa-map-pin"></i> Número de Paradas:</label>
+                  <input
+                    type="range"
+                    min="3"
+                    max="10"
+                    [(ngModel)]="maxStops"
+                    class="form-range">
+                  <span class="range-value">{{ maxStops }} startups</span>
+                </div>
+
+                <button
+                  class="btn btn-primary w-100"
+                  (click)="generateIntelligentRoute()"
+                  [disabled]="isGeneratingRoute || filteredStartups.length < 3">
+                  @if (isGeneratingRoute) {
+                    <i class="fas fa-spinner fa-spin"></i> Gerando Rota...
+                  } @else {
+                    <i class="fas fa-magic"></i> Gerar Rota com IA
+                  }
+                </button>
+
+                @if (filteredStartups.length < 3) {
+                  <p class="warning-text">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Selecione pelo menos 3 startups usando os filtros
+                  </p>
+                }
+              </div>
+            } @else {
+              <!-- Chat de Prompt -->
+              <div class="chat-mode">
+                <p class="info-text">
+                  <i class="fas fa-lightbulb"></i>
+                  Descreva a rota que você quer em linguagem natural
+                </p>
+
+                <div class="prompt-examples">
+                  <p class="examples-label">💡 Exemplos:</p>
+                  @for (example of promptExamples; track example) {
+                    <button
+                      class="example-chip"
+                      (click)="selectPromptExample(example)">
+                      {{ example }}
+                    </button>
+                  }
+                </div>
+
+                <div class="chat-input-group">
+                  <textarea
+                    class="chat-input"
+                    [(ngModel)]="userPrompt"
+                    placeholder="Ex: Quero visitar 4 startups no centro de Uberlândia..."
+                    rows="4"
+                    [disabled]="isGeneratingRoute"></textarea>
+
+                  <button
+                    class="btn btn-primary w-100 mt-3"
+                    (click)="generateRouteFromChat()"
+                    [disabled]="isGeneratingRoute || !userPrompt.trim()">
+                    @if (isGeneratingRoute) {
+                      <i class="fas fa-spinner fa-spin"></i> Gerando Rota...
+                    } @else {
+                      <i class="fas fa-paper-plane"></i> Gerar Rota
+                    }
+                  </button>
+                </div>
+              </div>
+            }
+
+          } @else {
+            <!-- Rota Gerada -->
+            <div class="route-result">
+              <div class="route-header">
+                <h6><i class="fas fa-check-circle"></i> Rota Gerada!</h6>
+                <button class="btn-clear-route" (click)="clearRoute()">
+                  <i class="fas fa-times-circle"></i> Limpar
+                </button>
+              </div>
+
+              <div class="route-info">
+                <div class="info-badge">
+                  <i class="fas fa-road"></i>
+                  <span>{{ currentRoute.totalDistance }}</span>
+                </div>
+                <div class="info-badge">
+                  <i class="fas fa-clock"></i>
+                  <span>{{ currentRoute.estimatedTime }}</span>
+                </div>
+              </div>
+
+              <p class="route-description">{{ currentRoute.description }}</p>
+
+              <div class="route-highlights">
+                <strong><i class="fas fa-star"></i> Destaques:</strong>
+                <ul>
+                  @for (highlight of currentRoute.highlights; track highlight) {
+                    <li>{{ highlight }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="route-stops">
+                <strong><i class="fas fa-list-ol"></i> Sequência de Visitas:</strong>
+                @for (point of currentRoute.route; track point.order) {
+                  <div class="route-stop">
+                    <div class="stop-number">{{ point.order }}</div>
+                    <div class="stop-info">
+                      <strong>{{ point.startup.nome }}</strong>
+                      <small>{{ point.reason }}</small>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
       <!-- Mapa -->
       <div class="card">
         <div class="card-body p-0">
@@ -76,24 +281,118 @@
                 width="100%"
                 height="100%">
 
-                @for (markerData of markers; track markerData.startup.nome) {
-                  <map-marker
-                    [position]="markerData.position"
-                    [title]="markerData.title"
-                    [options]="markerData.options"
-                    (mapClick)="openInfoWindow(markerData)">
-                  </map-marker>
+                <!-- Renderizar rota se existir -->
+                @if (directionsResult) {
+                  <map-directions-renderer [directions]="directionsResult" [options]="{
+                    suppressMarkers: false,
+                    polylineOptions: {
+                      strokeColor: '#6200ea',
+                      strokeWeight: 5,
+                      strokeOpacity: 0.8
+                    }
+                  }">
+                  </map-directions-renderer>
+                }
+
+                <!-- Marcadores (esconder se houver rota ativa) -->
+                @if (!directionsResult) {
+                  @for (markerData of markers; track markerData.id; let i = $index) {
+                    <map-marker
+                      [position]="markerData.position"
+                      [title]="markerData.title"
+                      [options]="markerData.options"
+                      (mapClick)="openInfoWindow(i)"
+                      (markerClick)="openInfoWindow(i)">
+                    </map-marker>
+                  }
                 }
 
                 @if (selectedMarker && infoWindowPosition) {
-                  <map-info-window [position]="infoWindowPosition">
+                  <map-info-window #infoWindow [position]="infoWindowPosition">
                     <div class="info-window-content">
-                      <h6 class="startup-name">{{ selectedMarker.nome }}</h6>
+                      <button class="close-btn" (click)="closeInfoWindow()" title="Fechar">
+                        <i class="fas fa-times"></i>
+                      </button>
+
+                      <div class="startup-header">
+                        <img [src]="selectedMarker.logo" [alt]="selectedMarker.nome" class="startup-logo">
+                        <h6 class="startup-name">{{ selectedMarker.nome }}</h6>
+                      </div>
+
                       <div class="startup-info">
-                        <p><strong>Setor:</strong> {{ selectedMarker.segmento_copy || selectedMarker.setor_principal }}</p>
-                        <p><strong>Fase:</strong> {{ selectedMarker.fase_startup }}</p>
-                        <p><strong>Público:</strong> {{ selectedMarker.publico_alvo }}</p>
-                        <p class="startup-description">{{ truncate(selectedMarker.solucao, 120) }}</p>
+                        <div class="info-item">
+                          <i class="fas fa-briefcase info-icon"></i>
+                          <div>
+                            <strong>Setor:</strong>
+                            <span>{{ selectedMarker.segmento_copy || selectedMarker.setor_principal || 'Não informado' }}</span>
+                          </div>
+                        </div>
+
+                        <div class="info-item">
+                          <i class="fas fa-rocket info-icon"></i>
+                          <div>
+                            <strong>Fase:</strong>
+                            <span class="badge-fase" [style.background-color]="getFaseColor(selectedMarker.fase_startup)">
+                              {{ selectedMarker.fase_startup || 'Não informado' }}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="info-item" *ngIf="selectedMarker.publico_alvo">
+                          <i class="fas fa-users info-icon"></i>
+                          <div>
+                            <strong>Público-alvo:</strong>
+                            <span>{{ selectedMarker.publico_alvo }}</span>
+                          </div>
+                        </div>
+
+                        <div class="info-item" *ngIf="selectedMarker.colaboradores">
+                          <i class="fas fa-user-friends info-icon"></i>
+                          <div>
+                            <strong>Colaboradores:</strong>
+                            <span>{{ selectedMarker.colaboradores }}</span>
+                          </div>
+                        </div>
+
+                        <div class="info-item" *ngIf="selectedMarker.modelo_negocio">
+                          <i class="fas fa-chart-line info-icon"></i>
+                          <div>
+                            <strong>Modelo de Negócio:</strong>
+                            <span>{{ selectedMarker.modelo_negocio }}</span>
+                          </div>
+                        </div>
+
+                        <div class="info-item" *ngIf="selectedMarker.recebeu_investimento">
+                          <i class="fas fa-dollar-sign info-icon"></i>
+                          <div>
+                            <strong>Investimento:</strong>
+                            <span>{{ selectedMarker.recebeu_investimento }}</span>
+                            <span *ngIf="selectedMarker.investidor_origem" class="text-muted"> ({{ selectedMarker.investidor_origem }})</span>
+                          </div>
+                        </div>
+
+                        <div class="info-item" *ngIf="selectedMarker.endereco">
+                          <i class="fas fa-map-marker-alt info-icon"></i>
+                          <div>
+                            <strong>Endereço:</strong>
+                            <span>{{ selectedMarker.endereco }}</span>
+                          </div>
+                        </div>
+
+                        <div class="startup-description" *ngIf="selectedMarker.solucao">
+                          <i class="fas fa-lightbulb info-icon"></i>
+                          <div>
+                            <strong>Solução:</strong>
+                            <p>{{ selectedMarker.solucao }}</p>
+                          </div>
+                        </div>
+
+                        <div class="startup-actions" *ngIf="selectedMarker.site">
+                          <a [href]="selectedMarker.site" target="_blank" rel="noopener noreferrer" class="btn-visit-site">
+                            <i class="fas fa-external-link-alt"></i>
+                            Visitar Site
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </map-info-window>
@@ -103,9 +402,24 @@
               <div class="map-loading">
                 <i class="fas fa-spinner fa-spin fa-3x"></i>
                 <p>Carregando mapa e startups...</p>
-                @if (markers.length === 0 && isGoogleMapsLoaded) {
-                  <p style="font-size: 0.9rem; color: #999;">Nenhuma startup encontrada com coordenadas</p>
-                }
+
+                <!-- Debug Info -->
+                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 0.85rem; text-align: left; max-width: 500px;">
+                  <strong>🐛 Debug Info:</strong><br>
+                  <div style="margin-top: 8px;">
+                    <strong>Google Maps carregado:</strong> {{ isGoogleMapsLoaded ? '✅ Sim' : '❌ Não' }}<br>
+                    <strong>Total de startups:</strong> {{ startups.length }}<br>
+                    <strong>Startups filtradas:</strong> {{ filteredStartups.length }}<br>
+                    <strong>Marcadores criados:</strong> {{ markers.length }}<br>
+                    <strong>Tentativas de carregamento:</strong> {{ waitAttempts }}/{{ maxWaitAttempts }}<br>
+                  </div>
+                  @if (markers.length === 0 && isGoogleMapsLoaded) {
+                    <p style="margin-top: 10px; color: #e74c3c;">⚠️ Nenhuma startup encontrada com coordenadas válidas</p>
+                  }
+                  @if (!isGoogleMapsLoaded && waitAttempts >= maxWaitAttempts) {
+                    <p style="margin-top: 10px; color: #e74c3c;">⚠️ Timeout: Google Maps não carregou. Verifique o console.</p>
+                  }
+                </div>
               </div>
             }
           </div>
