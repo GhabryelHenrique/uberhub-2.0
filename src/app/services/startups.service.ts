@@ -52,7 +52,7 @@ export class StartupsService {
   }
 
   private loadStartups(): void {
-    this.http.get<AirtableStartup[]>('/assets/data/airtable_startups.json')
+    this.http.get<AirtableStartup[]>('assets/data/airtable_startups.json')
       .subscribe(data => {
         const mappedStartups: Startup[] = data.map(item => {
           const nome = item.STARTUP?.trim() || '';
