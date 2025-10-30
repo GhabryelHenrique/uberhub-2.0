@@ -1,0 +1,29 @@
+{
+  "total": 277,
+  "segmentos": [
+    {
+      "nome": "B2B",
+      "valor": 120,
+      "cor": "#00E5A0",
+      "percentual": 43.3
+    },
+    {
+      "nome": "B2C",
+      "valor": 85,
+      "cor": "#4A90E2",
+      "percentual": 30.7
+    },
+    {
+      "nome": "B2G",
+      "valor": 42,
+      "cor": "#F5A623",
+      "percentual": 15.2
+    },
+    {
+      "nome": "B2B2C",
+      "valor": 30,
+      "cor": "#9B59B6",
+      "percentual": 10.8
+    }
+  ]
+}
