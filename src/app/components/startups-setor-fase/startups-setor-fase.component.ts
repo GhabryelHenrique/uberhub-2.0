@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { StartupsService } from '../../services/startups.service';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -16,10 +16,6 @@ interface Fase {
   setores: SetorValor[];
 }
 
-interface StartupsSetorFaseData {
-  fases: Fase[];
-}
-
 @Component({
   selector: 'app-startups-setor-fase',
   imports: [CommonModule],
@@ -31,15 +27,20 @@ export class StartupsSetorFaseComponent implements OnInit {
 
   chart: Chart | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(private startupsService: StartupsService) {}
 
   ngOnInit(): void {
-    this.http.get<StartupsSetorFaseData>('/assets/data/startups-setor-fase.json').subscribe(data => {
-      this.createChart(data);
+    this.startupsService.getFasesPorSetor().subscribe(fases => {
+      // Destruir gráfico existente antes de criar um novo
+      if (this.chart) {
+        this.chart.destroy();
+      }
+
+      this.createChart({ fases });
     });
   }
 
-  createChart(data: StartupsSetorFaseData): void {
+  createChart(data: { fases: Fase[] }): void {
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
     if (!ctx) return;
 

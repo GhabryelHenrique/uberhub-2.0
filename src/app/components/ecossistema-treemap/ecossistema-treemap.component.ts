@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { StartupsService } from '../../services/startups.service';
+import { combineLatest } from 'rxjs';
 
 interface Setor {
   nome: string;
   valor: number;
   cor: string;
-}
-
-interface EcossistemaData {
-  totalStartups: number;
-  setores: Setor[];
 }
 
 @Component({
@@ -23,12 +19,15 @@ export class EcossistemaTreemapComponent implements OnInit {
   totalStartups: number = 0;
   setores: Setor[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private startupsService: StartupsService) {}
 
   ngOnInit(): void {
-    this.http.get<EcossistemaData>('/assets/data/startups-ecossistema.json').subscribe(data => {
-      this.totalStartups = data.totalStartups;
-      this.setores = data.setores;
+    combineLatest([
+      this.startupsService.getTotalStartups(),
+      this.startupsService.getSetoresDistribution()
+    ]).subscribe(([total, setores]) => {
+      this.totalStartups = total;
+      this.setores = setores;
     });
   }
 

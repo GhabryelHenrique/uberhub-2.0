@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { StartupsService } from '../../services/startups.service';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import { combineLatest } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -10,11 +11,6 @@ interface Segmento {
   valor: number;
   cor: string;
   percentual: number;
-}
-
-interface PublicoAlvoData {
-  total: number;
-  segmentos: Segmento[];
 }
 
 @Component({
@@ -29,16 +25,25 @@ export class PublicoAlvoChartComponent implements OnInit {
   chart: Chart | undefined;
   total: number = 0;
 
-  constructor(private http: HttpClient) {}
+  constructor(private startupsService: StartupsService) {}
 
   ngOnInit(): void {
-    this.http.get<PublicoAlvoData>('/assets/data/publico-alvo.json').subscribe(data => {
-      this.total = data.total;
-      this.createChart(data);
+    combineLatest([
+      this.startupsService.getTotalStartups(),
+      this.startupsService.getPublicoAlvoDistribution()
+    ]).subscribe(([total, segmentos]) => {
+      this.total = total;
+
+      // Destruir gráfico existente antes de criar um novo
+      if (this.chart) {
+        this.chart.destroy();
+      }
+
+      this.createChart({ total, segmentos });
     });
   }
 
-  createChart(data: PublicoAlvoData): void {
+  createChart(data: { total: number; segmentos: Segmento[] }): void {
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
     if (!ctx) return;
 

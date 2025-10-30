@@ -26,55 +26,31 @@ export class StartupsComponent implements OnInit {
   totalPages: number = 1;
 
   // Opções de filtros
-  fases: string[] = ['Ideação', 'Validação', 'Operação', 'Tração', 'Escala'];
-  setores: string[] = [
-    'Tecnologia da Informação',
-    'HRtech (Recursos humanos)',
-    'Eventstech (Eventos)',
-    'Insurtech (seguros)',
-    'Agronegócio',
-    'Educação',
-    'E-commerce / marketplace',
-    'Meio ambiente',
-    'Beauty Tech (moda e beleza)',
-    'Indústria',
-    'Desenvolvimento de software',
-    'Finanças',
-    'Retailtech (varejo)',
-    'Logística e mobilidade urbana',
-    'Foodtech (Alimentação)',
-    'Cloud computing',
-    'Greentech (gestão de resíduos)',
-    'Salestech (vendas)',
-    'Adtech (advertising)',
-    'Pettech (animal)',
-    'Autotech (Automotivo)',
-    'Big data',
-    'Casa e família',
-    'Comunicação e mídia',
-    'Construção civil',
-    'CRM',
-    'Entretenimento',
-    'Games',
-    'Gestão',
-    'Govtech (gestão pública)',
-    'Hardware',
-    'Imobiliário',
-    'Lawtech (direito)',
-    'Óleo e gás',
-    'Saúde e bem-estar',
-    'Serviços profissionais',
-    'Smart Cities',
-    'Social tech (impacto social)',
-    'Inteligência Artificial',
-    'Outros'
-  ];
+  fases: string[] = [];
+  setores: string[] = [];
 
   constructor(private startupsService: StartupsService) {}
 
   ngOnInit(): void {
     this.startupsService.getStartups().subscribe(startups => {
       this.startups = startups;
+
+      // Gera opções de filtros dinamicamente a partir dos dados
+      const fasesSet = new Set<string>();
+      const setoresSet = new Set<string>();
+
+      startups.forEach(startup => {
+        if (startup.fase_startup) {
+          fasesSet.add(startup.fase_startup);
+        }
+        if (startup.segmento_copy || startup.setor_principal) {
+          setoresSet.add(startup.segmento_copy || startup.setor_principal);
+        }
+      });
+
+      this.fases = Array.from(fasesSet).sort();
+      this.setores = Array.from(setoresSet).sort();
+
       this.applyFilters();
     });
   }

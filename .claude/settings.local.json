@@ -3,7 +3,10 @@
     "allow": [
       "Bash(ng generate component:*)",
       "Bash(ng generate service:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": [],
     "ask": []

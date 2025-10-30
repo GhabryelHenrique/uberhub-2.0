@@ -1,6 +1,6 @@
 <div class="mapa-page">
   <div class="pagetitle">
-    <h1>Mapa Uberhub</h1>
+    <h1>Mapa de Startups - Uberlândia</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
@@ -11,37 +11,122 @@
 
   <section class="section">
     <div class="container">
-      <div class="card">
+      <!-- Filtros -->
+      <div class="card mb-4">
         <div class="card-body">
-          <div class="map-container">
-            <iframe
-              [src]="mapUrl"
-              width="100%"
-              height="600"
-              frameborder="0"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy"
-              title="Mapa do Ecossistema de Inovação de Uberlândia">
-            </iframe>
+          <div class="row align-items-end">
+            <div class="col-md-4 mb-3">
+              <label for="setor" class="form-label">
+                <i class="fas fa-briefcase"></i> Filtrar por Setor:
+              </label>
+              <select
+                id="setor"
+                class="form-control"
+                [(ngModel)]="selectedSetor"
+                (change)="applyFilters()">
+                <option value="">Todos os setores</option>
+                <option *ngFor="let setor of setores" [value]="setor">{{ setor }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="fase" class="form-label">
+                <i class="fas fa-rocket"></i> Filtrar por Fase:
+              </label>
+              <select
+                id="fase"
+                class="form-control"
+                [(ngModel)]="selectedFase"
+                (change)="applyFilters()">
+                <option value="">Todas as fases</option>
+                <option *ngFor="let fase of fases" [value]="fase">{{ fase }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <button
+                type="button"
+                class="btn btn-secondary w-100"
+                (click)="resetFilters()">
+                <i class="fas fa-redo"></i> Limpar Filtros
+              </button>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="alert alert-info mb-0">
+                <i class="fas fa-info-circle"></i>
+                <strong>{{ filteredStartups.length }}</strong> startups sendo exibidas no mapa
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- Mapa -->
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="map-container">
+            @if (isGoogleMapsLoaded && markers.length > 0) {
+              <google-map
+                [center]="center"
+                [zoom]="zoom"
+                [options]="mapOptions"
+                width="100%"
+                height="100%">
+
+                @for (markerData of markers; track markerData.startup.nome) {
+                  <map-marker
+                    [position]="markerData.position"
+                    [title]="markerData.title"
+                    [options]="markerData.options"
+                    (mapClick)="openInfoWindow(markerData)">
+                  </map-marker>
+                }
+
+                @if (selectedMarker && infoWindowPosition) {
+                  <map-info-window [position]="infoWindowPosition">
+                    <div class="info-window-content">
+                      <h6 class="startup-name">{{ selectedMarker.nome }}</h6>
+                      <div class="startup-info">
+                        <p><strong>Setor:</strong> {{ selectedMarker.segmento_copy || selectedMarker.setor_principal }}</p>
+                        <p><strong>Fase:</strong> {{ selectedMarker.fase_startup }}</p>
+                        <p><strong>Público:</strong> {{ selectedMarker.publico_alvo }}</p>
+                        <p class="startup-description">{{ truncate(selectedMarker.solucao, 120) }}</p>
+                      </div>
+                    </div>
+                  </map-info-window>
+                }
+              </google-map>
+            } @else {
+              <div class="map-loading">
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+                <p>Carregando mapa e startups...</p>
+                @if (markers.length === 0 && isGoogleMapsLoaded) {
+                  <p style="font-size: 0.9rem; color: #999;">Nenhuma startup encontrada com coordenadas</p>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Informações -->
       <div class="map-info">
         <div class="card mt-4">
           <div class="card-body">
             <h5 class="card-title">
               <i class="fas fa-map-marked-alt"></i>
-              Sobre o Mapa da Inovação
+              Sobre o Mapa de Startups
             </h5>
             <p class="card-text">
-              O Mapa da Inovação do Uberhub apresenta os principais espaços de inovação, hubs, aceleradoras,
-              incubadoras e outros atores do ecossistema de inovação de Uberlândia e região.
+              Este mapa apresenta a localização das startups do ecossistema de inovação de Uberlândia usando
+              Google Maps para visualização interativa. Clique nos marcadores para ver mais informações sobre cada startup.
             </p>
             <p class="card-text">
-              <strong>Legenda:</strong> Explore o mapa para descobrir startups, empresas de tecnologia,
-              espaços de coworking e eventos do ecossistema local.
+              <strong>Dica:</strong> Use os filtros acima para visualizar startups de setores ou fases específicas.
+              Você pode combinar múltiplos filtros para refinar sua busca. As cores dos pontos representam as diferentes fases das startups.
             </p>
           </div>
         </div>
