@@ -5,7 +5,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts/core';
-import { ScatterChart, EffectScatterChart } from 'echarts/charts';
+import { ScatterChart, EffectScatterChart, TreemapChart } from 'echarts/charts';
 import {
   TitleComponent,
   TooltipComponent,
@@ -23,6 +23,7 @@ import { routes } from './app.routes';
 echarts.use([
   ScatterChart,
   EffectScatterChart,
+  TreemapChart,
   TitleComponent,
   TooltipComponent,
   GridComponent,

@@ -7,7 +7,12 @@
       "Bash(node:*)",
       "Bash(npm install:*)",
       "Bash(npm uninstall:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: adicionar sistema de rotas inteligentes com IA Gemini\n\nImplementação completa de rotas dinâmicas com IA para o Mapa de Inovação:\n\n✨ Funcionalidades principais:\n- Sistema de rotas otimizadas usando Gemini AI 2.0 Flash\n- Interface de chat para criação de rotas em linguagem natural\n- Modo de configuração manual com critérios personalizáveis\n- Visualização de rotas no Google Maps com DirectionsRenderer\n- Suporte a múltiplos critérios: distância, setor, fase, balanceado\n\n🎯 Interface de usuário:\n- Painel lateral deslizante com duas abas (Configuração e Chat IA)\n- Exemplos de prompts clicáveis para facilitar o uso\n- Design moderno com gradientes roxos e animações suaves\n- Totalmente responsivo para mobile e desktop\n\n🔧 Melhorias técnicas:\n- Corrigido problema de layout na tela de login\n- Otimizado carregamento do Google Maps API\n- Implementados filtros multi-select para setores e fases\n- Resolvido problema de InfoWindow ao clicar em marcadores\n- Aumentado budget de CSS para componentes complexos\n\n📦 Novos arquivos:\n- GeminiRoutesService: serviço para integração com Gemini API\n- Interfaces TypeScript para rotas e critérios de otimização\n- Estilos SCSS completos para chat e rotas (680+ linhas)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git checkout:*)",
+      "Bash(git stash:*)",
+      "Bash(npm run build-deploy:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

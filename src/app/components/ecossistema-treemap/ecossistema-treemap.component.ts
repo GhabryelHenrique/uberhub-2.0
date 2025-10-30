@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxEchartsModule } from 'ngx-echarts';
+import type { EChartsOption } from 'echarts';
 import { StartupsService } from '../../services/startups.service';
 import { combineLatest } from 'rxjs';
 
@@ -11,13 +13,13 @@ interface Setor {
 
 @Component({
   selector: 'app-ecossistema-treemap',
-  imports: [CommonModule],
+  imports: [CommonModule, NgxEchartsModule],
   templateUrl: './ecossistema-treemap.component.html',
   styleUrl: './ecossistema-treemap.component.scss'
 })
 export class EcossistemaTreemapComponent implements OnInit {
   totalStartups: number = 0;
-  setores: Setor[] = [];
+  chartOption: EChartsOption = {};
 
   constructor(private startupsService: StartupsService) {}
 
@@ -27,26 +29,65 @@ export class EcossistemaTreemapComponent implements OnInit {
       this.startupsService.getSetoresDistribution()
     ]).subscribe(([total, setores]) => {
       this.totalStartups = total;
-      this.setores = setores;
+      this.updateChart(setores);
     });
   }
 
-  getSetorWidth(valor: number): string {
-    const total = this.setores.reduce((sum, s) => sum + s.valor, 0);
-    const percentage = (valor / total) * 100;
-    return `${percentage}%`;
-  }
+  updateChart(setores: Setor[]): void {
+    this.chartOption = {
+      tooltip: {
+        formatter: (info: any) => {
+          const value = info.value;
+          const treePathInfo = info.treePathInfo;
+          const treePath = [];
 
-  getSetorHeight(valor: number): string {
-    // Ajusta altura baseado no valor
-    if (valor > 40) return '100%';
-    if (valor > 30) return '66%';
-    if (valor > 20) return '50%';
-    if (valor > 10) return '33%';
-    return '25%';
-  }
+          for (let i = 1; i < treePathInfo.length; i++) {
+            treePath.push(treePathInfo[i].name);
+          }
 
-  shouldShowText(valor: number): boolean {
-    return valor > 10;
+          return [
+            '<div class="tooltip-title">' + treePath.join('/') + '</div>',
+            'Startups: ' + value
+          ].join('');
+        }
+      },
+      series: [
+        {
+          type: 'treemap',
+          data: setores.map(setor => ({
+            name: setor.nome,
+            value: setor.valor,
+            itemStyle: {
+              color: setor.cor
+            }
+          })),
+          label: {
+            show: true,
+            formatter: '{b}\n{c}',
+            fontSize: 14,
+            fontWeight: 'bold',
+            color: '#fff'
+          },
+          upperLabel: {
+            show: false
+          },
+          itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 2,
+            gapWidth: 2
+          },
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowColor: 'rgba(0,0,0,0.3)'
+            }
+          },
+          breadcrumb: {
+            show: false
+          },
+          roam: false
+        }
+      ]
+    };
   }
 }
