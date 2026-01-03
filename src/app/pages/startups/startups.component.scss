@@ -1,6 +1,9 @@
 .startups-page {
   padding: 20px;
   animation: fadeIn 0.5s ease-in;
+  background: var(--bg-primary);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -20,7 +23,7 @@
   h1 {
     font-size: 2rem;
     font-weight: 600;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 10px;
   }
 
@@ -33,7 +36,7 @@
       font-size: 0.9rem;
 
       a {
-        color: #6200ea;
+        color: var(--primary-color);
         text-decoration: none;
 
         &:hover {
@@ -42,7 +45,7 @@
       }
 
       &.active {
-        color: #666;
+        color: var(--text-secondary);
       }
     }
   }
@@ -51,11 +54,13 @@
 .card {
   border: none;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-card);
+  transition: all 0.3s ease;
 }
 
 .card-body.bg-light {
-  background-color: #f8f9fa !important;
+  background-color: var(--bg-tertiary) !important;
   padding: 30px;
   border-radius: 12px;
 }
@@ -63,37 +68,39 @@
 // Filtros
 .form-label {
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 8px;
   font-size: 0.9rem;
 }
 
 .form-control {
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  background: var(--bg-input);
+  color: var(--text-primary);
 
   &:focus {
-    border-color: #6200ea;
-    box-shadow: 0 0 0 0.2rem rgba(98, 0, 234, 0.15);
+    border-color: var(--border-focus);
+    box-shadow: var(--focus-ring);
   }
 }
 
 .btn-primary {
-  background-color: #6200ea;
-  border-color: #6200ea;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   border-radius: 8px;
   padding: 10px 20px;
   font-weight: 600;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #5000c7;
-    border-color: #5000c7;
+    background-color: var(--primary-hover-color);
+    border-color: var(--primary-hover-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(98, 0, 234, 0.3);
+    box-shadow: var(--shadow-md);
   }
 
   &:active {
@@ -102,20 +109,21 @@
 }
 
 hr {
-  border-top: 2px solid #dee2e6;
+  border-top: 2px solid var(--border-color);
   margin: 25px 0;
 }
 
 // Startup Cards
 .startup-card {
-  background: white;
+  background: var(--bg-card);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.5s ease-out backwards;
+  border: 1px solid var(--border-color);
 
   @for $i from 1 through 12 {
     &:nth-child(#{$i}) {
@@ -125,7 +133,8 @@ hr {
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(98, 0, 234, 0.15);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
   }
 }
 
@@ -145,8 +154,9 @@ hr {
   justify-content: center;
   align-items: center;
   padding: 30px 20px 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: var(--bg-tertiary);
   min-height: 180px;
+  transition: all 0.3s ease;
 }
 
 .startup-logo {
@@ -168,7 +178,7 @@ hr {
 .startup-nome {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 12px;
   min-height: 50px;
   display: flex;
@@ -187,7 +197,7 @@ hr {
 .info-label {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #6200ea;
+  color: var(--primary-color);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 6px;
@@ -195,13 +205,13 @@ hr {
 
 .info-text {
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin-bottom: 0;
   text-align: justify;
 }
 
-// Paginação
+// Paginaï¿½ï¿½o
 .pagination {
   margin-top: 30px;
   flex-wrap: wrap;
@@ -215,26 +225,27 @@ hr {
     }
 
     &.active .page-link {
-      background-color: #6200ea;
-      border-color: #6200ea;
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
       color: white;
       font-weight: 600;
     }
   }
 
   .page-link {
-    color: #6200ea;
-    border: 1px solid #dee2e6;
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 8px 14px;
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
+    background: var(--bg-card);
 
     &:hover:not(.disabled) {
-      background-color: #f3e5ff;
-      border-color: #6200ea;
-      color: #6200ea;
+      background-color: var(--primary-hover);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
     }
 
     &.disabled {
@@ -245,7 +256,7 @@ hr {
 
 // Mensagem de vazio
 .text-muted {
-  color: #999 !important;
+  color: var(--text-secondary) !important;
   font-size: 1.1rem;
 }
 

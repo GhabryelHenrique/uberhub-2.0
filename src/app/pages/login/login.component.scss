@@ -1,17 +1,20 @@
 .login-container {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-primary);
   overflow-x: hidden;
+  transition: background-color 0.3s ease;
 
   .login-card {
     flex: 1;
     max-width: 500px;
-    background: white;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border-color);
     padding: 60px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: all 0.3s ease;
 
     .login-header {
       text-align: center;
@@ -23,7 +26,7 @@
         h1 {
           font-size: 32px;
           font-weight: 700;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: var(--gradient-primary);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -34,13 +37,13 @@
       h2 {
         font-size: 28px;
         font-weight: 600;
-        color: #333;
+        color: var(--text-primary);
         margin: 0 0 10px 0;
       }
 
       p {
         font-size: 14px;
-        color: #666;
+        color: var(--text-secondary);
         margin: 0;
       }
     }
@@ -58,14 +61,14 @@
         margin-bottom: 30px;
 
         .forgot-password {
-          color: #6200ea;
+          color: var(--primary-color);
           text-decoration: none;
           font-size: 14px;
           font-weight: 500;
           transition: color 0.3s ease;
 
           &:hover {
-            color: #7722ff;
+            color: var(--primary-hover-color);
           }
         }
       }
@@ -75,12 +78,20 @@
         height: 48px;
         font-size: 16px;
         font-weight: 600;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--gradient-primary);
         border: none;
         margin-bottom: 30px;
+        color: white;
+        transition: all 0.3s ease;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
 
         &:disabled {
           opacity: 0.6;
+          cursor: not-allowed;
         }
       }
 
@@ -96,14 +107,14 @@
           left: 0;
           right: 0;
           height: 1px;
-          background: #e0e0e0;
+          background: var(--border-color);
         }
 
         span {
           position: relative;
-          background: white;
+          background: var(--bg-card);
           padding: 0 15px;
-          color: #999;
+          color: var(--text-secondary);
           font-size: 12px;
           font-weight: 600;
         }
@@ -124,7 +135,9 @@
           align-items: center;
           justify-content: center;
           gap: 10px;
-          border: 2px solid #e0e0e0;
+          border: 2px solid var(--border-color);
+          background: var(--bg-input);
+          color: var(--text-primary);
           transition: all 0.3s ease;
 
           i {
@@ -132,13 +145,15 @@
           }
 
           &.google:hover {
-            border-color: #db4437;
-            color: #db4437;
+            border-color: var(--google-color);
+            background: var(--google-hover);
+            color: var(--google-color);
           }
 
           &.github:hover {
-            border-color: #333;
-            color: #333;
+            border-color: var(--text-primary);
+            background: var(--bg-hover);
+            color: var(--text-primary);
           }
         }
       }
@@ -146,17 +161,17 @@
       .register-link {
         text-align: center;
         font-size: 14px;
-        color: #666;
+        color: var(--text-secondary);
 
         a {
-          color: #6200ea;
+          color: var(--primary-color);
           text-decoration: none;
           font-weight: 600;
           margin-left: 5px;
           transition: color 0.3s ease;
 
           &:hover {
-            color: #7722ff;
+            color: var(--primary-hover-color);
           }
         }
       }
@@ -169,6 +184,7 @@
     object-fit: cover;
     object-position: center;
     display: block;
+    filter: brightness(0.8);
   }
 }
 

@@ -11,7 +11,7 @@ import { StartupsComponent } from './pages/startups/startups.component';
 import { MapaInovacaoComponent } from './pages/mapa-inovacao/mapa-inovacao.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
@@ -22,5 +22,5 @@ export const routes: Routes = [
   { path: 'noticias', component: NoticiasComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'admin', component: AdminComponent },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/dashboard' }
 ];

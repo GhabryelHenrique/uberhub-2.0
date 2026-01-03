@@ -3,41 +3,64 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export interface AirtableStartup {
-  STARTUP: string;
-  SOLUÇÃO: string;
-  'Segmento principal': string;
-  'Segmento principal copy': string;
-  'Fase atual da sua startup': string;
-  Colaboradores: string;
-  'Público-alvo': string;
-  'Modelo de negócio da startup': string;
-  'A startup já recebeu investimento?': string;
-  'O investidor foi de Uberlândia ou de fora?': string;
-  'Qual o local ou endereço da sua startup?': string;
-  Site: string;
-  Imagem: string;
-  latitude?: number;
-  longitude?: number;
+export interface EmpresaTech {
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  rating?: number;
+  total_ratings?: number;
+  phone?: string;
+  website?: string;
+  types?: string;
+  place_id?: string;
+  maps_url?: string;
+  opening_hours?: string;
+  // Novos campos do merge
+  solucao?: string;
+  segmento_principal?: string;
+  segmento_copy?: string;
+  fase_atual?: string;
+  colaboradores?: string;
+  publico_alvo?: string;
+  modelo_negocio?: string;
+  recebeu_investimento?: string;
+  investidor_local?: string;
+  imagem?: string;
+  data_source?: string;
+  // Campos de categorização
+  categoria?: string;
+  categoria_emoji?: string;
+  pin_color?: string;
+  icon?: string;
 }
 
 export interface Startup {
   nome: string;
   logo: string;
-  solucao: string;
-  setor_principal: string;
-  segmento_copy: string;
-  fase_startup: string;
-  colaboradores: string;
-  publico_alvo: string;
-  modelo_negocio: string;
-  recebeu_investimento: string;
-  investidor_origem: string;
+  solucao?: string;
+  setor_principal?: string;
+  segmento_copy?: string;
+  fase_startup?: string;
+  colaboradores?: string;
+  publico_alvo?: string;
+  modelo_negocio?: string;
+  recebeu_investimento?: string;
+  investidor_origem?: string;
   endereco: string;
-  site: string;
-  imagem: string;
+  site?: string;
+  imagem?: string;
   latitude?: number;
   longitude?: number;
+  rating?: number;
+  total_ratings?: number;
+  phone?: string;
+  types?: string;
+  // Novos campos de categorização
+  categoria?: string;
+  categoria_emoji?: string;
+  pin_color?: string;
+  icon?: string;
 }
 
 @Injectable({
@@ -51,33 +74,79 @@ export class StartupsService {
     this.loadStartups();
   }
 
+  private inferirSetor(nome: string, types?: string): string {
+    const nomeLC = nome.toLowerCase();
+    const typesLC = types?.toLowerCase() || '';
+
+    // Inferir setor baseado no nome e tipos
+    if (nomeLC.includes('soft') || nomeLC.includes('tech') || nomeLC.includes('sistemas') || nomeLC.includes('dev')) {
+      return 'Desenvolvimento de software';
+    }
+    if (nomeLC.includes('dados') || nomeLC.includes('data') || nomeLC.includes('analytics')) {
+      return 'Análise de dados';
+    }
+    if (nomeLC.includes('academy') || nomeLC.includes('educa') || nomeLC.includes('escola') || nomeLC.includes('curso')) {
+      return 'Edutech (Educação)';
+    }
+    if (nomeLC.includes('health') || nomeLC.includes('saúde') || nomeLC.includes('medical') || nomeLC.includes('clínica')) {
+      return 'Healthtech (Saúde)';
+    }
+    if (nomeLC.includes('finance') || nomeLC.includes('bank') || nomeLC.includes('pagamento') || nomeLC.includes('fintech')) {
+      return 'Fintech (Finanças)';
+    }
+    if (nomeLC.includes('ecommerce') || nomeLC.includes('loja') || nomeLC.includes('marketplace')) {
+      return 'E-commerce';
+    }
+    if (nomeLC.includes('logística') || nomeLC.includes('transport') || nomeLC.includes('entrega')) {
+      return 'Logística';
+    }
+    if (nomeLC.includes('marketing') || nomeLC.includes('publicidade') || nomeLC.includes('mídia')) {
+      return 'Marketing digital';
+    }
+
+    return 'Tecnologia'; // Categoria padrão
+  }
+
   private loadStartups(): void {
-    this.http.get<AirtableStartup[]>('assets/data/airtable_startups.json')
+    this.http.get<EmpresaTech[]>('assets/data/empresas_tech_uberlandia.json')
       .subscribe(data => {
         const mappedStartups: Startup[] = data.map(item => {
-          const nome = item.STARTUP?.trim() || '';
-          const imagem = item.Imagem?.trim() || '';
+          const nome = item.name?.trim() || '';
 
-          // Gera um logo usando UI Avatars caso não tenha imagem
-          const logo = imagem || `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=random&color=fff&size=200&bold=true`;
+          // Usar setor do JSON ou inferir
+          const setor = item.segmento_principal || item.segmento_copy || this.inferirSetor(nome, item.types);
+
+          // Gera um logo usando UI Avatars ou usa a imagem do JSON
+          const logo = item.imagem ||
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=random&color=fff&size=200&bold=true`;
 
           return {
             nome,
             logo,
-            solucao: item.SOLUÇÃO?.trim() || '',
-            setor_principal: item['Segmento principal']?.trim() || '',
-            segmento_copy: item['Segmento principal copy']?.trim() || '',
-            fase_startup: item['Fase atual da sua startup']?.trim() || '',
-            colaboradores: item.Colaboradores?.trim() || '',
-            publico_alvo: item['Público-alvo']?.trim() || '',
-            modelo_negocio: item['Modelo de negócio da startup']?.trim() || '',
-            recebeu_investimento: item['A startup já recebeu investimento?']?.trim() || '',
-            investidor_origem: item['O investidor foi de Uberlândia ou de fora?']?.trim() || '',
-            endereco: item['Qual o local ou endereço da sua startup?']?.trim() || '',
-            site: item.Site?.trim() || '',
-            imagem,
+            endereco: item.address?.trim() || '',
+            site: item.website?.trim() || '',
             latitude: item.latitude,
-            longitude: item.longitude
+            longitude: item.longitude,
+            rating: item.rating,
+            total_ratings: item.total_ratings,
+            phone: item.phone,
+            types: item.types,
+            // Campos do merge
+            solucao: item.solucao,
+            setor_principal: item.segmento_principal || setor,
+            segmento_copy: item.segmento_copy || setor,
+            fase_startup: item.fase_atual,
+            colaboradores: item.colaboradores,
+            publico_alvo: item.publico_alvo,
+            modelo_negocio: item.modelo_negocio,
+            recebeu_investimento: item.recebeu_investimento,
+            investidor_origem: item.investidor_local,
+            imagem: item.imagem,
+            // Campos de categorização
+            categoria: item.categoria,
+            categoria_emoji: item.categoria_emoji,
+            pin_color: item.pin_color,
+            icon: item.icon
           };
         }).filter(startup => startup.nome); // Remove entradas sem nome
 
@@ -142,17 +211,27 @@ export class StartupsService {
   getPublicoAlvoDistribution(): Observable<{ nome: string; valor: number; cor: string; percentual: number }[]> {
     return this.startups$.pipe(
       map(startups => {
-        const publicoCount = new Map<string, number>();
+        // Como não temos mais o campo publico_alvo, retornar distribuição vazia
+        // ou baseada em outro campo (por exemplo, rating)
+        if (startups.length === 0) return [];
 
+        // Categorizar por rating se disponível
+        const categorias = new Map<string, number>();
         startups.forEach(startup => {
-          const publico = startup.publico_alvo || 'Não especificado';
-          publicoCount.set(publico, (publicoCount.get(publico) || 0) + 1);
+          let categoria = 'Sem avaliação';
+          if (startup.rating) {
+            if (startup.rating >= 4.5) categoria = 'Altamente avaliadas (4.5+)';
+            else if (startup.rating >= 4.0) categoria = 'Bem avaliadas (4.0-4.5)';
+            else if (startup.rating >= 3.0) categoria = 'Avaliadas (3.0-4.0)';
+            else categoria = 'Baixa avaliação (<3.0)';
+          }
+          categorias.set(categoria, (categorias.get(categoria) || 0) + 1);
         });
 
         const total = startups.length;
         const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
 
-        return Array.from(publicoCount.entries())
+        return Array.from(categorias.entries())
           .map(([nome, valor], index) => ({
             nome,
             valor,
@@ -167,17 +246,25 @@ export class StartupsService {
   getFasesPorSetor(): Observable<{ nome: string; setores: { nome: string; valor: number; cor: string }[] }[]> {
     return this.startups$.pipe(
       map(startups => {
-        const faseSetorMap = new Map<string, Map<string, number>>();
+        // Como não temos mais o campo fase_startup, vamos criar categorias baseadas em rating
+        const categoriaSetorMap = new Map<string, Map<string, number>>();
 
         startups.forEach(startup => {
-          const fase = startup.fase_startup || 'Não especificado';
-          const setor = startup.segmento_copy || startup.setor_principal || 'Outros';
-
-          if (!faseSetorMap.has(fase)) {
-            faseSetorMap.set(fase, new Map());
+          let categoria = 'Sem avaliação';
+          if (startup.rating) {
+            if (startup.rating >= 4.5) categoria = '★★★★★ (4.5+)';
+            else if (startup.rating >= 4.0) categoria = '★★★★ (4.0-4.5)';
+            else if (startup.rating >= 3.0) categoria = '★★★ (3.0-4.0)';
+            else categoria = '★★ (<3.0)';
           }
 
-          const setorMap = faseSetorMap.get(fase)!;
+          const setor = startup.segmento_copy || startup.setor_principal || 'Outros';
+
+          if (!categoriaSetorMap.has(categoria)) {
+            categoriaSetorMap.set(categoria, new Map());
+          }
+
+          const setorMap = categoriaSetorMap.get(categoria)!;
           setorMap.set(setor, (setorMap.get(setor) || 0) + 1);
         });
 
@@ -189,7 +276,7 @@ export class StartupsService {
         const setorColorMap = new Map<string, string>();
         let colorIndex = 0;
 
-        return Array.from(faseSetorMap.entries()).map(([fase, setorMap]) => {
+        return Array.from(categoriaSetorMap.entries()).map(([categoria, setorMap]) => {
           const setores = Array.from(setorMap.entries()).map(([setor, valor]) => {
             if (!setorColorMap.has(setor)) {
               setorColorMap.set(setor, colors[colorIndex % colors.length]);
@@ -204,7 +291,7 @@ export class StartupsService {
           });
 
           return {
-            nome: fase,
+            nome: categoria,
             setores
           };
         });
