@@ -180,6 +180,31 @@
       }
     }
 
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--navbar-text);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+      flex-shrink: 0;
+
+      .material-icons {
+        font-size: 20px;
+      }
+
+      &:hover {
+        background: var(--bg-hover);
+        color: var(--primary-color);
+        transform: rotate(20deg);
+      }
+    }
+
     .notifications {
       position: relative;
       cursor: pointer;

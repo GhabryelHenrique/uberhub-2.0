@@ -61,6 +61,10 @@
   </nav>
 
   <div class="sidebar-footer">
+    <button class="theme-toggle-btn" (click)="toggleTheme()" [title]="isDarkTheme ? 'Modo claro' : 'Modo escuro'">
+      <span class="material-icons">{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</span>
+    </button>
+
     <div class="notifications">
       <i class="fas fa-bell"></i>
       <span class="badge">2</span>

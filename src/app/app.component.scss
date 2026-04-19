@@ -12,7 +12,7 @@
 .main-content {
   flex: 1;
   margin-left: 0;
-  margin-top: 56px;
+  // margin-top: 56px;
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 56px);
@@ -29,7 +29,7 @@
 
 .content-wrapper {
   flex: 1;
-  margin-top: 0;
+  margin-top: 2rem;
   overflow-y: auto;
   padding: 24px;
 

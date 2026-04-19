@@ -1,0 +1,298 @@
+<!-- NAVBAR -->
+<nav class="landing-nav" [class.scrolled]="navScrolled">
+  <div class="nav-inner">
+    <a class="nav-logo" routerLink="/">
+      <img src="assets/logoube.png" alt="UberHub" class="nav-logo-img" />
+    </a>
+
+    <div class="nav-links" [class.open]="menuOpen">
+      <button class="nav-link" (click)="scrollTo('personas')">Quem somos</button>
+      <button class="nav-link" (click)="scrollTo('ecosystem')">Ecossistema</button>
+      <button class="nav-link" (click)="scrollTo('cidade')">A Cidade</button>
+      <div class="nav-cta-group">
+        <a routerLink="/login" class="btn-outline" (click)="closeMenu()">Entrar</a>
+        <a routerLink="/register" class="btn-primary" (click)="closeMenu()">Fazer parte</a>
+      </div>
+    </div>
+
+    <button class="theme-toggle-btn" (click)="toggleTheme()" [title]="isDarkTheme ? 'Modo claro' : 'Modo escuro'">
+      <span class="material-icons">{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</span>
+    </button>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.active]="menuOpen" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <video #heroVideo class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="assets/videos/hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    @for (p of particles; track $index) {
+      <div class="particle"
+           [style.left]="p.left"
+           [style.top]="p.top"
+           [style.width]="p.size"
+           [style.height]="p.size"
+           [style.animationDelay]="p.delay"
+           [style.animationDuration]="p.duration"
+           [style.opacity]="p.opacity">
+      </div>
+    }
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow animate-on-scroll">
+      <span class="eyebrow-dot"></span>
+      Uberlândia, Minas Gerais
+    </div>
+
+    <h1 class="hero-title animate-on-scroll">
+     Ecossistema
+de Inovação &
+Startups de Uberlândia
+    </h1>
+
+    <div class="hero-actions animate-on-scroll">
+      <button class="hero-btn-secondary" (click)="scrollTo('personas')">
+        <span class="material-icons">expand_more</span>
+        Saiba Mais
+      </button>
+      <a routerLink="/register" class="hero-btn-primary">
+        <span class="material-icons">favorite</span>
+        Venha fazer parte!
+      </a>
+    </div>
+
+    <!-- Member avatars strip -->
+    <div class="members-strip animate-on-scroll">
+      <div class="member-avatars">
+        @for (color of memberAvatarColors; track $index) {
+          <div class="member-avatar" [style.background]="color" [style.zIndex]="memberAvatarColors.length - $index">
+            <span class="material-icons avatar-icon">person</span>
+          </div>
+        }
+        <div class="member-avatar member-avatar-more">+500</div>
+      </div>
+      <p class="members-label">Faça parte do maior ecossistema de inovação de Uberlândia</p>
+    </div>
+
+    <div class="hero-scroll-hint" (click)="scrollTo('stats')">
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      @for (stat of stats; track $index) {
+        <div class="stat-card animate-on-scroll" [attr.data-stat-index]="$index">
+          <div class="stat-icon">
+            <span class="material-icons">{{ stat.icon }}</span>
+          </div>
+          <div class="stat-value">
+            {{ stat.current | number }}{{ stat.suffix }}
+          </div>
+          <div class="stat-label">{{ stat.label }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS — Venha fazer parte -->
+<section class="personas-section" id="personas">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">Venha fazer parte!</span>
+      <h2 class="section-title">O UberHub é para<br /><span class="gradient-text">todo o ecossistema</span></h2>
+      <p class="section-desc">Seja você um empreendedor, investidor, empresa ou profissional de tecnologia — há espaço para você aqui.</p>
+    </div>
+
+    <div class="personas-grid">
+      @for (persona of personas; track $index) {
+        <div class="persona-card animate-on-scroll" [style.animationDelay]="($index * 0.1) + 's'">
+          <div class="persona-icon-wrap" [style.background]="persona.color + '22'" [style.borderColor]="persona.color + '44'">
+            <span class="material-icons persona-icon" [style.color]="persona.color">{{ persona.icon }}</span>
+          </div>
+          <h3 class="persona-title">{{ persona.title }}</h3>
+          <ul class="persona-list">
+            @for (item of persona.items; track $index) {
+              <li>
+                <span class="list-dash" [style.background]="persona.color"></span>
+                {{ item }}
+              </li>
+            }
+          </ul>
+          <a routerLink="/register" class="persona-cta" [style.color]="persona.color">
+            Quero fazer parte <span class="material-icons">arrow_forward</span>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM CATEGORIES -->
+<section class="ecosystem-section" id="ecosystem">
+  <div class="ecosystem-bg-pattern"></div>
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">Ecossistema</span>
+      <h2 class="section-title">9 pilares que formam<br /><span class="gradient-text">a inovação local</span></h2>
+      <p class="section-desc">O mapa completo da rede de inovação de Uberlândia organizado em categorias estratégicas.</p>
+    </div>
+
+    <div class="categories-grid">
+      @for (cat of categories; track $index) {
+        <div class="category-card animate-on-scroll" [style.animationDelay]="($index * 0.07) + 's'">
+          <span class="cat-emoji">{{ cat.emoji }}</span>
+          <div class="cat-info">
+            <span class="cat-name">{{ cat.name }}</span>
+            <span class="cat-count">{{ cat.count }} organizações</span>
+          </div>
+          <div class="cat-badge">{{ cat.count }}</div>
+        </div>
+      }
+    </div>
+
+    <div class="ecosystem-cta animate-on-scroll">
+      <a routerLink="/login" class="hero-btn-primary">
+        <span class="material-icons">map</span>
+        Explorar no mapa
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- A CIDADE -->
+<section class="cidade-section" id="cidade">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">A Cidade</span>
+      <h2 class="section-title">Uberlândia —<br /><span class="gradient-text">referência em inovação</span></h2>
+    </div>
+
+    <div class="cidade-layout">
+      <div class="cidade-image-wrap animate-on-scroll">
+        <img src="assets/images/uberlândia.png" alt="Ecossistema de Inovação de Uberlândia" class="cidade-image" />
+        <div class="cidade-image-overlay">
+          <div class="cidade-badge">
+            <span class="material-icons">location_city</span>
+            Uberlândia, MG
+          </div>
+        </div>
+      </div>
+
+      <div class="cidade-stats animate-on-scroll">
+        @for (stat of cityStats; track $index) {
+          <div class="city-stat-item" [style.animationDelay]="($index * 0.06) + 's'">
+            <span class="city-stat-icon">{{ stat.icon }}</span>
+            <span class="city-stat-text">{{ stat.text }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how-it-works">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">A Plataforma</span>
+      <h2 class="section-title">Acesse o ecossistema<br /><span class="gradient-text">de onde estiver</span></h2>
+    </div>
+
+    <div class="steps-container">
+      @for (step of steps; track $index) {
+        <div class="step animate-on-scroll" [style.animationDelay]="($index * 0.15) + 's'">
+          <div class="step-num">{{ step.num }}</div>
+          <div class="step-icon-wrap">
+            <span class="material-icons step-icon">{{ step.icon }}</span>
+          </div>
+          <h3 class="step-title">{{ step.title }}</h3>
+          <p class="step-desc">{{ step.desc }}</p>
+        </div>
+        @if ($index < steps.length - 1) {
+          <div class="step-connector animate-on-scroll">
+            <div class="connector-line"></div>
+            <span class="material-icons connector-arrow">arrow_forward</span>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-content animate-on-scroll">
+    <h2 class="cta-title">Faça parte do ecossistema<br />de inovação de Uberlândia</h2>
+    <p class="cta-subtitle">Acesse a plataforma, encontre organizações, vagas e eventos — tudo do ecossistema em um só lugar.</p>
+    <div class="cta-actions">
+      <a routerLink="/register" class="hero-btn-primary">
+        <span class="material-icons">favorite</span>
+        Quero fazer parte!
+      </a>
+      <a routerLink="/login" class="hero-btn-secondary">
+        Já tenho conta
+        <span class="material-icons">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="landing-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/logoube.png" alt="UberHub" class="footer-logo-img" />
+        </div>
+        <p class="footer-tagline">A soma de todas as iniciativas,<br />grupos e pessoas que fazem<br />inovação em Uberlândia.</p>
+        <a href="https://github.com/GhabryelHenrique/uberhub-2.0" target="_blank" rel="noopener" class="footer-github">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Plataforma</h4>
+        <a routerLink="/login">Dashboard</a>
+        <a routerLink="/login">Mapa de Inovação</a>
+        <a routerLink="/login">Diretório de Startups</a>
+        <a routerLink="/login">Vagas</a>
+        <a routerLink="/login">Eventos</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>UberHub</h4>
+        <button (click)="scrollTo('personas')">Quem Somos</button>
+        <button (click)="scrollTo('ecosystem')">Ecossistema</button>
+        <button (click)="scrollTo('cidade')">A Cidade</button>
+      </div>
+
+      <div class="footer-col">
+        <h4>Acesso</h4>
+        <a routerLink="/login">Entrar na Plataforma</a>
+        <a routerLink="/register">Criar Conta</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 UberHub · Uberlândia, Minas Gerais</span>
+      <span>Inovação que une pessoas e empresas</span>
+    </div>
+  </div>
+</footer>
