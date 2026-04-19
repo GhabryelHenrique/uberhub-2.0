@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-01-03T18:09:55.303Z",
+  "summary": {
+    "total_records": 619,
+    "merged_records": 15,
+    "empresas_tech_only": 323,
+    "airtable_only": 281
+  },
+  "matches": [
+    {
+      "nome_empresa": "EZ SOFT",
+      "nome_startup": "EZ SOFT"
+    },
+    {
+      "nome_empresa": "Virtux Tech",
+      "nome_startup": "Virtux Tech"
+    },
+    {
+      "nome_empresa": "Code Square",
+      "nome_startup": "Code Square"
+    },
+    {
+      "nome_empresa": "GAP Sistemas",
+      "nome_startup": "GAP SISTEMAS"
+    },
+    {
+      "nome_empresa": "T10",
+      "nome_startup": "T10"
+    },
+    {
+      "nome_empresa": "Udikar",
+      "nome_startup": "Udikar"
+    },
+    {
+      "nome_empresa": "PsicoManager",
+      "nome_startup": "PsicoManager "
+    },
+    {
+      "nome_empresa": "DriverHub",
+      "nome_startup": "DriverHub"
+    },
+    {
+      "nome_empresa": "ASC Brazil",
+      "nome_startup": "ASC BRAZIL"
+    },
+    {
+      "nome_empresa": "Ipê Digital",
+      "nome_startup": "Ipê Digital"
+    },
+    {
+      "nome_empresa": "Kanastra",
+      "nome_startup": "Kanastra"
+    },
+    {
+      "nome_empresa": "Cibus Fidelidade",
+      "nome_startup": "Cibus Fidelidade"
+    },
+    {
+      "nome_empresa": "Chave7",
+      "nome_startup": "Chave7"
+    },
+    {
+      "nome_empresa": "NoCartorio.com",
+      "nome_startup": "NoCartorio.com"
+    },
+    {
+      "nome_empresa": "Zydon",
+      "nome_startup": "Zydon "
+    }
+  ],
+  "empresas_sem_match": [
+    "Cedro Technologies",
+    "Queslo Tecnologia e Inovação - Sistemas e Softwares para academias",
+    "Inteli Software",
+    "Kyros Tecnologia",
+    "Compucenter Software",
+    "Crosoften Tecnologia - Base Tecnológica",
+    "Movimento Sistemas de Gestão - Sistema ERP para empresas que desejam Evoluir sua gestão.",
+    "SysTech",
+    "DNA Soluções",
+    "Udiponto Tecnologia",
+    "iVendas Tecnologia em Informação LTDA",
+    "Ls Software",
+    "Lity Tecnologia",
+    "Tática Solutions",
+    "Mitra Tecnologia",
+    "Rental Dress - Sistema de locação de Roupas",
+    "Khronos Tecnologia - Aplicativo / Software",
+    "AZShip",
+    "Chacara do Maradona",
+    "Saymed IA"
+  ],
+  "startups_sem_match": [
+    " VESP",
+    "3Ponto Web e App",
+    "4ALL Tests",
+    "A Jardins Seguros",
+    "Acadenutri",
+    "Aditi.Care",
+    "Agro One",
+    "Agro10X ",
+    "Agrochuva",
+    "Agroneural",
+    "Agroreserva",
+    "AgroSchool",
+    "Agrosolutions",
+    "Aimirim",
+    "AIRPAY",
+    "AlecrimVi",
+    "Alluagro",
+    "Alpha Safety ",
+    "Alta Aerospace",
+    "Alta Aerospace Ltda"
+  ]
+}
