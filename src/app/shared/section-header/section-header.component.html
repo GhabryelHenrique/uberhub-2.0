@@ -1,0 +1,14 @@
+<div class="section-header" [class.section-header--left]="align === 'left'">
+  @if (tag) {
+    <span class="section-tag">{{ tag }}</span>
+  }
+  <h2 class="section-title">
+    {{ title }}
+    @if (gradientText) {
+      <br /><span class="gradient-text">{{ gradientText }}</span>
+    }
+  </h2>
+  @if (desc) {
+    <p class="section-desc">{{ desc }}</p>
+  }
+</div>

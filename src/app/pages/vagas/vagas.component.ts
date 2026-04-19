@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VagasService, Vaga } from '../../services/vagas.service';
+import { PageHeaderComponent } from '../../shared/page-header/page-header.component';
+import { UiBadgeComponent } from '../../shared/ui-badge/ui-badge.component';
 
 @Component({
   selector: 'app-vagas',
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeaderComponent, UiBadgeComponent],
   templateUrl: './vagas.component.html',
   styleUrl: './vagas.component.scss'
 })

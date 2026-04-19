@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UiBadgeComponent } from '../../shared/ui-badge/ui-badge.component';
 
 interface Deal {
   productName: string;
@@ -13,7 +14,7 @@ interface Deal {
 
 @Component({
   selector: 'app-deals-table',
-  imports: [CommonModule],
+  imports: [CommonModule, UiBadgeComponent],
   templateUrl: './deals-table.component.html',
   styleUrl: './deals-table.component.scss'
 })

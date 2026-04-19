@@ -1,0 +1,17 @@
+<div class="stat-card" [style.--card-accent]="color">
+  <div class="stat-card__icon">
+    <span class="material-icons">{{ icon }}</span>
+  </div>
+  <div class="stat-card__body">
+    <div class="stat-card__value">
+      {{ value }}<span class="stat-card__suffix" *ngIf="suffix">{{ suffix }}</span>
+    </div>
+    <div class="stat-card__label">{{ label }}</div>
+    @if (trend) {
+      <div class="stat-card__trend" [class.stat-card__trend--up]="trend.positive" [class.stat-card__trend--down]="!trend.positive">
+        <span class="material-icons">{{ trend.positive ? 'trending_up' : 'trending_down' }}</span>
+        {{ trend.value }}%
+      </div>
+    }
+  </div>
+</div>

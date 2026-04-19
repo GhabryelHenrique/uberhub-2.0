@@ -1,0 +1,20 @@
+<div class="page-header">
+  @if (breadcrumbs.length) {
+    <nav class="breadcrumb">
+      @for (crumb of breadcrumbs; track $index) {
+        @if (crumb.route) {
+          <a [routerLink]="crumb.route" class="breadcrumb-item">{{ crumb.label }}</a>
+        } @else {
+          <span class="breadcrumb-item breadcrumb-item--active">{{ crumb.label }}</span>
+        }
+        @if ($index < breadcrumbs.length - 1) {
+          <span class="breadcrumb-sep">/</span>
+        }
+      }
+    </nav>
+  }
+  <h1 class="page-title">{{ title }}</h1>
+  @if (subtitle) {
+    <p class="page-subtitle">{{ subtitle }}</p>
+  }
+</div>

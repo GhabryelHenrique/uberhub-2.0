@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { UiInputComponent } from '../../shared/ui-input/ui-input.component';
+import { UiButtonComponent } from '../../shared/ui-button/ui-button.component';
+import { AuthSidePanelComponent } from '../../shared/auth-side-panel/auth-side-panel.component';
 
 const COMUNIDADE_IMAGES = [
   'assets/images/comunidade/1.png',
@@ -18,13 +21,12 @@ const COMUNIDADE_IMAGES = [
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, UiInputComponent, UiButtonComponent, AuthSidePanelComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  hidePassword = true;
   isLoading = false;
   sideImage = COMUNIDADE_IMAGES[Math.floor(Math.random() * COMUNIDADE_IMAGES.length)];
 

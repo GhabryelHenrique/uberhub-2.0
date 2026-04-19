@@ -12,16 +12,16 @@ import { MapaInovacaoComponent } from './pages/mapa-inovacao/mapa-inovacao.compo
 import { LandingComponent } from './pages/landing/landing.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'startups', component: StartupsComponent },
-  { path: 'mapa-inovacao', component: MapaInovacaoComponent },
-  { path: 'vagas', component: VagasComponent },
-  { path: 'eventos', component: EventosComponent },
-  { path: 'noticias', component: NoticiasComponent },
-  { path: 'perfil', component: PerfilComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: '', component: LandingComponent, pathMatch: 'full', title: 'Início' },
+  { path: 'login', component: LoginComponent, title: 'Entrar' },
+  { path: 'register', component: RegisterComponent, title: 'Criar Conta' },
+  { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
+  { path: 'startups', component: StartupsComponent, title: 'Startups' },
+  { path: 'mapa-inovacao', component: MapaInovacaoComponent, title: 'Mapa de Inovação' },
+  { path: 'vagas', component: VagasComponent, title: 'Vagas' },
+  { path: 'eventos', component: EventosComponent, title: 'Eventos' },
+  { path: 'noticias', component: NoticiasComponent, title: 'Notícias' },
+  { path: 'perfil', component: PerfilComponent, title: 'Perfil' },
+  { path: 'admin', component: AdminComponent, title: 'Admin' },
   { path: '**', redirectTo: '/dashboard' }
 ];

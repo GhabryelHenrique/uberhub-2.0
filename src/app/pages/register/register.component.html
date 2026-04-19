@@ -1,37 +1,14 @@
 <div class="auth-page">
-  <!-- Animated background -->
-  <!-- <div class="auth-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="grid-pattern"></div>
-  </div> -->
+  <app-auth-side-panel
+    [image]="sideImage"
+    [benefits]="[
+      'Acesse o mapa com 619+ organizações',
+      'Vagas, eventos e cursos do ecossistema',
+      'Networking com startups e investidores',
+      'Rotas inteligentes com IA (Gemini)'
+    ]"
+  />
 
-  <!-- Side panel -->
-  <div class="auth-side">
-    <img [src]="sideImage" alt="UberHub" class="side-image" />
-    <div class="side-overlay">
-      <a routerLink="/" class="auth-logo">
-        <img src="assets/logoube.png" alt="UberHub" />
-      </a>
-      <div class="side-body">
-        <h2>Junte-se ao ecossistema de inovação de Uberlândia</h2>
-        <ul class="side-benefits">
-          <li><span class="material-icons">check_circle</span> Acesse o mapa com 619+ organizações</li>
-          <li><span class="material-icons">check_circle</span> Vagas, eventos e cursos do ecossistema</li>
-          <li><span class="material-icons">check_circle</span> Networking com startups e investidores</li>
-          <li><span class="material-icons">check_circle</span> Rotas inteligentes com IA (Gemini)</li>
-        </ul>
-      </div>
-      <div class="side-stats">
-        <div class="side-stat"><strong>619+</strong><span>Organizações</span></div>
-        <div class="side-stat"><strong>3.4k+</strong><span>Vagas</span></div>
-        <div class="side-stat"><strong>9</strong><span>Categorias</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Card -->
   <div class="auth-card">
     <a routerLink="/" class="auth-logo mobile-logo">
       <img src="assets/logoube.png" alt="UberHub" />
@@ -44,87 +21,76 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
 
-      <!-- Name + Username -->
       <div class="form-row">
-        <div class="field-group" [class.error]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-          <label>Nome completo</label>
-          <div class="input-wrap">
-            <span class="input-icon material-icons">person</span>
-            <input type="text" formControlName="name" placeholder="João Silva" autocomplete="name" />
-          </div>
-          <span class="field-error" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-            {{ getErrorMessage('name') }}
-          </span>
-        </div>
-
-        <div class="field-group" [class.error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
-          <label>Usuário</label>
-          <div class="input-wrap">
-            <span class="input-icon material-icons">alternate_email</span>
-            <input type="text" formControlName="username" placeholder="joaosilva" autocomplete="username" />
-          </div>
-          <span class="field-error" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
-            {{ getErrorMessage('username') }}
-          </span>
-        </div>
+        <app-ui-input
+          formControlName="name"
+          label="Nome completo"
+          icon="person"
+          type="text"
+          placeholder="João Silva"
+          autocomplete="name"
+          [hasError]="!!(registerForm.get('name')?.invalid && registerForm.get('name')?.touched)"
+          [error]="getErrorMessage('name')"
+        />
+        <app-ui-input
+          formControlName="username"
+          label="Usuário"
+          icon="alternate_email"
+          type="text"
+          placeholder="joaosilva"
+          autocomplete="username"
+          [hasError]="!!(registerForm.get('username')?.invalid && registerForm.get('username')?.touched)"
+          [error]="getErrorMessage('username')"
+        />
       </div>
 
-      <!-- Email -->
-      <div class="field-group" [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-        <label>Email</label>
-        <div class="input-wrap">
-          <span class="input-icon material-icons">mail</span>
-          <input type="email" formControlName="email" placeholder="seu@email.com" autocomplete="email" />
-        </div>
-        <span class="field-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-          {{ getErrorMessage('email') }}
-        </span>
-      </div>
+      <app-ui-input
+        formControlName="email"
+        label="Email"
+        icon="mail"
+        type="email"
+        placeholder="seu@email.com"
+        autocomplete="email"
+        [hasError]="!!(registerForm.get('email')?.invalid && registerForm.get('email')?.touched)"
+        [error]="getErrorMessage('email')"
+      />
 
-      <!-- Phone -->
-      <div class="field-group" [class.error]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-        <label>Telefone</label>
-        <div class="input-wrap">
-          <span class="input-icon material-icons">phone</span>
-          <input type="tel" formControlName="phone" (input)="formatPhone($event)" placeholder="(34) 99999-9999" autocomplete="tel" />
-        </div>
-        <span class="field-error" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-          {{ getErrorMessage('phone') }}
-        </span>
-      </div>
+      <app-ui-input
+        formControlName="phone"
+        label="Telefone"
+        icon="phone"
+        type="tel"
+        placeholder="(34) 99999-9999"
+        autocomplete="tel"
+        [hasError]="!!(registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched)"
+        [error]="getErrorMessage('phone')"
+      />
 
-      <!-- Password + Confirm -->
       <div class="form-row">
-        <div class="field-group" [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-          <label>Senha</label>
-          <div class="input-wrap">
-            <span class="input-icon material-icons">lock</span>
-            <input [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" />
-            <button type="button" class="toggle-pw" (click)="hidePassword = !hidePassword" tabindex="-1">
-              <span class="material-icons">{{ hidePassword ? 'visibility_off' : 'visibility' }}</span>
-            </button>
-          </div>
-          <span class="field-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-            {{ getErrorMessage('password') }}
-          </span>
-        </div>
-
-        <div class="field-group" [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
-          <label>Confirmar senha</label>
-          <div class="input-wrap">
-            <span class="input-icon material-icons">lock_outline</span>
-            <input [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" placeholder="Repita a senha" autocomplete="new-password" />
-            <button type="button" class="toggle-pw" (click)="hideConfirmPassword = !hideConfirmPassword" tabindex="-1">
-              <span class="material-icons">{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</span>
-            </button>
-          </div>
-          <span class="field-error" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
-            {{ getErrorMessage('confirmPassword') }}
-          </span>
-        </div>
+        <app-ui-input
+          formControlName="password"
+          label="Senha"
+          icon="lock"
+          type="password"
+          placeholder="Mínimo 8 caracteres"
+          autocomplete="new-password"
+          [showToggle]="true"
+          [hasError]="!!(registerForm.get('password')?.invalid && registerForm.get('password')?.touched)"
+          [error]="getErrorMessage('password')"
+        />
+        <app-ui-input
+          formControlName="confirmPassword"
+          label="Confirmar senha"
+          icon="lock_outline"
+          type="password"
+          placeholder="Repita a senha"
+          autocomplete="new-password"
+          [showToggle]="true"
+          [hasError]="!!(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched)"
+          [error]="getErrorMessage('confirmPassword')"
+        />
       </div>
 
-      <!-- Password strength -->
       <div class="pw-strength" *ngIf="registerForm.get('password')?.value">
         <div class="pw-bars">
           <div class="pw-bar" [class.active]="hasMinLength()"></div>
@@ -141,7 +107,6 @@
         </div>
       </div>
 
-      <!-- Terms -->
       <div class="field-group terms-group" [class.error]="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched">
         <label class="custom-check">
           <input type="checkbox" formControlName="acceptTerms" />
@@ -153,13 +118,9 @@
         </span>
       </div>
 
-      <!-- Submit -->
-      <button type="submit" class="btn-submit" [disabled]="isLoading">
-        <span *ngIf="!isLoading">Criar conta</span>
-        <span *ngIf="isLoading" class="loading-state">
-          <span class="spinner"></span> Criando conta...
-        </span>
-      </button>
+      <app-ui-button type="submit" variant="primary" size="lg" [fullWidth]="true" [loading]="isLoading" [disabled]="isLoading">
+        Criar conta
+      </app-ui-button>
 
       <p class="auth-switch">
         Já tem uma conta?

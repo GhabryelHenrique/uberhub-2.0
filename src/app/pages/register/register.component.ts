@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { UiInputComponent } from '../../shared/ui-input/ui-input.component';
+import { UiButtonComponent } from '../../shared/ui-button/ui-button.component';
+import { AuthSidePanelComponent } from '../../shared/auth-side-panel/auth-side-panel.component';
 
 const COMUNIDADE_IMAGES = [
   'assets/images/comunidade/1.png',
@@ -18,7 +21,7 @@ const COMUNIDADE_IMAGES = [
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, UiInputComponent, UiButtonComponent, AuthSidePanelComponent],
   standalone: true,
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -46,6 +49,13 @@ export class RegisterComponent implements OnInit {
       acceptTerms: [false, [Validators.requiredTrue]]
     }, {
       validators: this.passwordMatchValidator
+    });
+
+    this.registerForm.get('phone')!.valueChanges.subscribe((val: string) => {
+      const formatted = this.applyPhoneMask(val ?? '');
+      if (formatted !== val) {
+        this.registerForm.get('phone')!.setValue(formatted, { emitEvent: false });
+      }
     });
   }
 
@@ -75,22 +85,12 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
-  formatPhone(event: any) {
-    let value = event.target.value.replace(/\D/g, '');
-
-    if (value.length <= 11) {
-      if (value.length <= 2) {
-        value = value.replace(/^(\d{0,2})/, '($1');
-      } else if (value.length <= 6) {
-        value = value.replace(/^(\d{2})(\d{0,4})/, '($1) $2');
-      } else if (value.length <= 10) {
-        value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-      } else {
-        value = value.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-      }
-    }
-
-    this.registerForm.patchValue({ phone: value }, { emitEvent: false });
+  private applyPhoneMask(raw: string): string {
+    let value = raw.replace(/\D/g, '').slice(0, 11);
+    if (value.length <= 2) return value.replace(/^(\d{0,2})/, '($1');
+    if (value.length <= 6) return value.replace(/^(\d{2})(\d{0,4})/, '($1) $2');
+    if (value.length <= 10) return value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    return value.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
   }
 
   onSubmit() {

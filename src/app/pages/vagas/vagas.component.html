@@ -1,15 +1,8 @@
 <div class="vagas-container">
-  <!-- Header -->
-  <div class="page-header">
-    <div class="breadcrumb">
-      <span class="breadcrumb-item">Home</span>
-      <span class="breadcrumb-separator">/</span>
-      <span class="breadcrumb-item active">Vagas</span>
-    </div>
-    <h1 class="page-title">
-      🔥 Vagas & Oportunidades de Inovação 🔥
-    </h1>
-  </div>
+  <app-page-header
+    title="Vagas & Oportunidades de Inovação"
+    [breadcrumbs]="[{label: 'Home', route: '/'}, {label: 'Vagas'}]"
+  />
 
   <!-- Filtros de Categoria -->
   <div class="categories-section">
@@ -39,8 +32,8 @@
       <!-- Header do Card -->
       <div class="card-header">
         <div class="card-badges">
-          <span class="badge badge-tipo">{{ vaga.tipo }}</span>
-          <span *ngIf="vaga.destacada" class="badge badge-destaque">⭐ Destaque</span>
+          <app-ui-badge [label]="vaga.tipo" variant="info" />
+          <app-ui-badge *ngIf="vaga.destacada" label="Destaque" variant="warning" />
         </div>
       </div>
 

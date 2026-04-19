@@ -1,0 +1,27 @@
+<div class="auth-side">
+  <img [src]="image" alt="UberHub" class="side-image" />
+  <div class="side-overlay">
+    <a routerLink="/" class="side-logo">
+      <img src="assets/logoube.png" alt="UberHub" />
+    </a>
+
+    @if (benefits.length) {
+      <ul class="side-benefits">
+        @for (b of benefits; track $index) {
+          <li><span class="material-icons">check_circle</span> {{ b }}</li>
+        }
+      </ul>
+    } @else {
+      <blockquote class="side-quote">"{{ quote }}"</blockquote>
+    }
+
+    <div class="side-stats">
+      @for (stat of stats; track $index) {
+        <div class="side-stat">
+          <strong>{{ stat.value }}</strong>
+          <span>{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>

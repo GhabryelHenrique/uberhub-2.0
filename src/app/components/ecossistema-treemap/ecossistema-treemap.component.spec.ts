@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EcossistemaTreemapComponent } from './ecossistema-treemap.component';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('EcossistemaTreemapComponent', () => {
   let component: EcossistemaTreemapComponent;
@@ -8,7 +9,11 @@ describe('EcossistemaTreemapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EcossistemaTreemapComponent]
+      imports: [EcossistemaTreemapComponent],
+      providers: [provideHttpClient(),
+        provideEcharts(),]
+
+
     })
     .compileComponents();
 
@@ -21,3 +26,7 @@ describe('EcossistemaTreemapComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+function provideEcharts(): any {
+  throw new Error('Function not implemented.');
+}
+

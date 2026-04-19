@@ -6,20 +6,39 @@
     </a>
 
     <div class="nav-links" [class.open]="menuOpen">
-      <button class="nav-link" (click)="scrollTo('personas')">Quem somos</button>
-      <button class="nav-link" (click)="scrollTo('ecosystem')">Ecossistema</button>
+      <button class="nav-link" (click)="scrollTo('personas')">
+        Quem somos
+      </button>
+      <button class="nav-link" (click)="scrollTo('ecosystem')">
+        Ecossistema
+      </button>
       <button class="nav-link" (click)="scrollTo('cidade')">A Cidade</button>
       <div class="nav-cta-group">
-        <a routerLink="/login" class="btn-outline" (click)="closeMenu()">Entrar</a>
-        <a routerLink="/register" class="btn-primary" (click)="closeMenu()">Fazer parte</a>
+        <a routerLink="/login" class="btn-outline" (click)="closeMenu()"
+          >Entrar</a
+        >
+        <a routerLink="/register" class="btn-primary" (click)="closeMenu()"
+          >Fazer parte</a
+        >
       </div>
     </div>
 
-    <button class="theme-toggle-btn" (click)="toggleTheme()" [title]="isDarkTheme ? 'Modo claro' : 'Modo escuro'">
-      <span class="material-icons">{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</span>
+    <button
+      class="theme-toggle-btn"
+      (click)="toggleTheme()"
+      [title]="isDarkTheme ? 'Modo claro' : 'Modo escuro'"
+    >
+      <span class="material-icons">{{
+        isDarkTheme ? "light_mode" : "dark_mode"
+      }}</span>
     </button>
 
-    <button class="hamburger" (click)="toggleMenu()" [class.active]="menuOpen" aria-label="Menu">
+    <button
+      class="hamburger"
+      (click)="toggleMenu()"
+      [class.active]="menuOpen"
+      aria-label="Menu"
+    >
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -28,20 +47,29 @@
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg">
-    <video #heroVideo class="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="assets/videos/hero-video.mp4" type="video/mp4">
+    <video
+      #heroVideo
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <source src="assets/videos/hero-video.mp4" type="video/mp4" />
     </video>
     <div class="hero-video-overlay"></div>
     @for (p of particles; track $index) {
-      <div class="particle"
-           [style.left]="p.left"
-           [style.top]="p.top"
-           [style.width]="p.size"
-           [style.height]="p.size"
-           [style.animationDelay]="p.delay"
-           [style.animationDuration]="p.duration"
-           [style.opacity]="p.opacity">
-      </div>
+      <div
+        class="particle"
+        [style.left]="p.left"
+        [style.top]="p.top"
+        [style.width]="p.size"
+        [style.height]="p.size"
+        [style.animationDelay]="p.delay"
+        [style.animationDuration]="p.duration"
+        [style.opacity]="p.opacity"
+      ></div>
     }
   </div>
 
@@ -52,9 +80,7 @@
     </div>
 
     <h1 class="hero-title animate-on-scroll">
-     Ecossistema
-de Inovação &
-Startups de Uberlândia
+      Ecossistema de Inovação & Startups de Uberlândia
     </h1>
 
     <div class="hero-actions animate-on-scroll">
@@ -72,13 +98,19 @@ Startups de Uberlândia
     <div class="members-strip animate-on-scroll">
       <div class="member-avatars">
         @for (color of memberAvatarColors; track $index) {
-          <div class="member-avatar" [style.background]="color" [style.zIndex]="memberAvatarColors.length - $index">
+          <div
+            class="member-avatar"
+            [style.background]="color"
+            [style.zIndex]="memberAvatarColors.length - $index"
+          >
             <span class="material-icons avatar-icon">person</span>
           </div>
         }
         <div class="member-avatar member-avatar-more">+500</div>
       </div>
-      <p class="members-label">Faça parte do maior ecossistema de inovação de Uberlândia</p>
+      <p class="members-label">
+        Faça parte do maior ecossistema de inovação de Uberlândia
+      </p>
     </div>
 
     <div class="hero-scroll-hint" (click)="scrollTo('stats')">
@@ -92,7 +124,10 @@ Startups de Uberlândia
   <div class="container">
     <div class="stats-grid">
       @for (stat of stats; track $index) {
-        <div class="stat-card animate-on-scroll" [attr.data-stat-index]="$index">
+        <div
+          class="stat-card animate-on-scroll"
+          [attr.data-stat-index]="$index"
+        >
           <div class="stat-icon">
             <span class="material-icons">{{ stat.icon }}</span>
           </div>
@@ -111,26 +146,51 @@ Startups de Uberlândia
   <div class="container">
     <div class="section-header animate-on-scroll">
       <span class="section-tag">Venha fazer parte!</span>
-      <h2 class="section-title">O UberHub é para<br /><span class="gradient-text">todo o ecossistema</span></h2>
-      <p class="section-desc">Seja você um empreendedor, investidor, empresa ou profissional de tecnologia — há espaço para você aqui.</p>
+      <h2 class="section-title">
+        O UberHub é para<br /><span class="gradient-text"
+          >todo o ecossistema</span
+        >
+      </h2>
+      <p class="section-desc">
+        Seja você um empreendedor, investidor, empresa ou profissional de
+        tecnologia — há espaço para você aqui.
+      </p>
     </div>
 
     <div class="personas-grid">
       @for (persona of personas; track $index) {
-        <div class="persona-card animate-on-scroll" [style.animationDelay]="($index * 0.1) + 's'">
-          <div class="persona-icon-wrap" [style.background]="persona.color + '22'" [style.borderColor]="persona.color + '44'">
-            <span class="material-icons persona-icon" [style.color]="persona.color">{{ persona.icon }}</span>
+        <div
+          class="persona-card animate-on-scroll"
+          [style.animationDelay]="$index * 0.1 + 's'"
+        >
+          <div
+            class="persona-icon-wrap"
+            [style.background]="persona.color + '22'"
+            [style.borderColor]="persona.color + '44'"
+          >
+            <span
+              class="material-icons persona-icon"
+              [style.color]="persona.color"
+              >{{ persona.icon }}</span
+            >
           </div>
           <h3 class="persona-title">{{ persona.title }}</h3>
           <ul class="persona-list">
             @for (item of persona.items; track $index) {
               <li>
-                <span class="list-dash" [style.background]="persona.color"></span>
+                <span
+                  class="list-dash"
+                  [style.background]="persona.color"
+                ></span>
                 {{ item }}
               </li>
             }
           </ul>
-          <a routerLink="/register" class="persona-cta" [style.color]="persona.color">
+          <a
+            routerLink="/register"
+            class="persona-cta"
+            [style.color]="persona.color"
+          >
             Quero fazer parte <span class="material-icons">arrow_forward</span>
           </a>
         </div>
@@ -139,19 +199,28 @@ Startups de Uberlândia
   </div>
 </section>
 
-<!-- ECOSYSTEM CATEGORIES -->
 <section class="ecosystem-section" id="ecosystem">
   <div class="ecosystem-bg-pattern"></div>
   <div class="container">
     <div class="section-header animate-on-scroll">
       <span class="section-tag">Ecossistema</span>
-      <h2 class="section-title">9 pilares que formam<br /><span class="gradient-text">a inovação local</span></h2>
-      <p class="section-desc">O mapa completo da rede de inovação de Uberlândia organizado em categorias estratégicas.</p>
+      <h2 class="section-title">
+        9 pilares que formam<br /><span class="gradient-text"
+          >a inovação local</span
+        >
+      </h2>
+      <p class="section-desc">
+        O mapa completo da rede de inovação de Uberlândia organizado em
+        categorias estratégicas.
+      </p>
     </div>
 
     <div class="categories-grid">
       @for (cat of categories; track $index) {
-        <div class="category-card animate-on-scroll" [style.animationDelay]="($index * 0.07) + 's'">
+        <div
+          class="category-card animate-on-scroll"
+          [style.animationDelay]="$index * 0.07 + 's'"
+        >
           <span class="cat-emoji">{{ cat.emoji }}</span>
           <div class="cat-info">
             <span class="cat-name">{{ cat.name }}</span>
@@ -171,17 +240,183 @@ Startups de Uberlândia
   </div>
 </section>
 
+<!-- COMUNIDADES -->
+<section class="communities-section" id="comunidades">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">Comunidades</span>
+      <h2 class="section-title">As comunidades que<br /><span class="gradient-text">movem o ecossistema</span></h2>
+      <p class="section-desc">Grupos, verticais e comunidades que conectam pessoas em torno de temas específicos de inovação e tecnologia.</p>
+    </div>
+
+    <!-- Featured communities -->
+    <div class="communities-featured animate-on-scroll">
+      @for (c of communities; track $index) {
+        @if (c.featured) {
+          <div class="community-card-featured" [style.--accent]="c.color">
+            <div class="community-logo-wrap" [style.borderColor]="c.color + '33'">
+              @if (c.logo) {
+                <img [src]="c.logo" [alt]="c.name" class="community-logo-img" />
+              } @else {
+                <div class="community-logo-placeholder" [style.background]="c.color + '22'">
+                  <span class="material-icons" [style.color]="c.color">groups</span>
+                </div>
+              }
+            </div>
+            <h3 class="community-name" [style.color]="c.color">{{ c.name }}</h3>
+            <p class="community-desc">{{ c.desc }}</p>
+            @if (c.link) {
+              <a [href]="c.link" target="_blank" rel="noopener" class="community-link" [style.color]="c.color">
+                Fazer parte <span class="material-icons">arrow_forward</span>
+              </a>
+            }
+          </div>
+        }
+      }
+    </div>
+
+    <!-- Other communities -->
+    <div class="communities-others animate-on-scroll">
+      @for (c of communities; track $index) {
+        @if (!c.featured) {
+          <div class="community-pill">
+            @if (c.logo) {
+              <img [src]="c.logo" [alt]="c.name" class="community-pill-logo" />
+            } @else {
+              <span class="material-icons community-pill-icon" [style.color]="c.color">groups</span>
+            }
+            <div class="community-pill-info">
+              <span class="community-pill-name">{{ c.name }}</span>
+              <span class="community-pill-desc">{{ c.desc }}</span>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</section>
+
+<!-- UBERHUB CODE -->
+<section class="code-section" id="uberhub-code">
+  <div class="container">
+    <div class="code-layout animate-on-scroll">
+      <div class="code-content">
+        <div class="code-logo-wrap">
+          <img
+            src="assets/images/logo_Uberhubcode.jpg"
+            alt="UberHub Code"
+            class="code-logo"
+          />
+        </div>
+        <span class="section-tag">Programa de Formação Gratuito</span>
+        <h2 class="section-title" style="text-align: left; margin-top: 12px">
+          Formando os programadores<br /><span class="gradient-text"
+            >de Uberlândia</span
+          >
+        </h2>
+        <p class="code-desc">
+          Curso de extensão gratuito com <strong>180 horas</strong> em 10 meses,
+          de nível superior em tecnologia. Conteúdo baseado em
+          <strong>CS50 de Harvard</strong> e <strong>OBI da Unicamp</strong> —
+          para reduzir o déficit de profissionais de desenvolvimento da cidade.
+        </p>
+
+        <div class="code-stats-grid">
+          <div class="code-stat">
+            <span class="code-stat-value">10.164</span>
+            <span class="code-stat-label">Inscritos desde 2018</span>
+          </div>
+          <div class="code-stat">
+            <span class="code-stat-value">594</span>
+            <span class="code-stat-label">Inscritos em 2026</span>
+          </div>
+          <div class="code-stat">
+            <span class="code-stat-value">31</span>
+            <span class="code-stat-label"
+              >Medalhistas Nacionais<br /><small
+                >OBI, TFC &amp; OII</small
+              ></span
+            >
+          </div>
+          <div class="code-stat">
+            <span class="code-stat-value">27</span>
+            <span class="code-stat-label"
+              >Ciclos realizados<br /><small>desde 2018</small></span
+            >
+          </div>
+        </div>
+
+        <div class="code-tags">
+          <span class="code-tag">Harvard CS50</span>
+          <span class="code-tag">OBI Unicamp</span>
+          <span class="code-tag">180h</span>
+          <span class="code-tag">Gratuito</span>
+          <span class="code-tag">+1500 formados</span>
+        </div>
+
+        <div class="code-cta-row">
+          <a
+            href="https://uberhubcode.org/"
+            target="_blank"
+            rel="noopener"
+            class="code-cta-btn"
+          >
+            <span class="material-icons">open_in_new</span>
+            Conhecer o UberHub Code
+          </a>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px">
+      <div class="code-image-wrap">
+          <img
+            src="assets/images/uberhubcode_imagem.webp"
+            alt="Turma UberHub Code"
+            class="code-image"
+          />
+          <div class="code-image-badge">
+            <span class="material-icons">groups</span>
+            +1.500 alunos formados
+          </div>
+        </div>
+        <div class="code-image-wrap">
+          <img
+            src="assets/images/uberhubcode_imagem1.webp"
+            alt="Turma UberHub Code"
+            class="code-image"
+          />
+          <div class="code-image-badge">
+            <span class="material-symbols-outlined">
+social_leaderboard
+</span>
+            +31 medalhistas nacionais em OBI, TFC e OII
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- A CIDADE -->
 <section class="cidade-section" id="cidade">
   <div class="container">
     <div class="section-header animate-on-scroll">
       <span class="section-tag">A Cidade</span>
-      <h2 class="section-title">Uberlândia —<br /><span class="gradient-text">referência em inovação</span></h2>
+      <h2 class="section-title">
+        Uberlândia —<br /><span class="gradient-text"
+          >referência em inovação</span
+        >
+      </h2>
     </div>
 
     <div class="cidade-layout">
       <div class="cidade-image-wrap animate-on-scroll">
-        <img src="assets/images/uberlândia.png" alt="Ecossistema de Inovação de Uberlândia" class="cidade-image" />
+        <img
+          src="assets/images/uberlândia.png"
+          alt="Ecossistema de Inovação de Uberlândia"
+          class="cidade-image"
+        />
         <div class="cidade-image-overlay">
           <div class="cidade-badge">
             <span class="material-icons">location_city</span>
@@ -192,7 +427,10 @@ Startups de Uberlândia
 
       <div class="cidade-stats animate-on-scroll">
         @for (stat of cityStats; track $index) {
-          <div class="city-stat-item" [style.animationDelay]="($index * 0.06) + 's'">
+          <div
+            class="city-stat-item"
+            [style.animationDelay]="$index * 0.06 + 's'"
+          >
             <span class="city-stat-icon">{{ stat.icon }}</span>
             <span class="city-stat-text">{{ stat.text }}</span>
           </div>
@@ -207,12 +445,19 @@ Startups de Uberlândia
   <div class="container">
     <div class="section-header animate-on-scroll">
       <span class="section-tag">A Plataforma</span>
-      <h2 class="section-title">Acesse o ecossistema<br /><span class="gradient-text">de onde estiver</span></h2>
+      <h2 class="section-title">
+        Acesse o ecossistema<br /><span class="gradient-text"
+          >de onde estiver</span
+        >
+      </h2>
     </div>
 
     <div class="steps-container">
       @for (step of steps; track $index) {
-        <div class="step animate-on-scroll" [style.animationDelay]="($index * 0.15) + 's'">
+        <div
+          class="step animate-on-scroll"
+          [style.animationDelay]="$index * 0.15 + 's'"
+        >
           <div class="step-num">{{ step.num }}</div>
           <div class="step-icon-wrap">
             <span class="material-icons step-icon">{{ step.icon }}</span>
@@ -235,8 +480,13 @@ Startups de Uberlândia
 <section class="cta-section">
   <div class="cta-glow"></div>
   <div class="cta-content animate-on-scroll">
-    <h2 class="cta-title">Faça parte do ecossistema<br />de inovação de Uberlândia</h2>
-    <p class="cta-subtitle">Acesse a plataforma, encontre organizações, vagas e eventos — tudo do ecossistema em um só lugar.</p>
+    <h2 class="cta-title">
+      Faça parte do ecossistema<br />de inovação de Uberlândia
+    </h2>
+    <p class="cta-subtitle">
+      Acesse a plataforma, encontre organizações, vagas e eventos — tudo do
+      ecossistema em um só lugar.
+    </p>
     <div class="cta-actions">
       <a routerLink="/register" class="hero-btn-primary">
         <span class="material-icons">favorite</span>
@@ -258,10 +508,20 @@ Startups de Uberlândia
         <div class="footer-logo">
           <img src="assets/logoube.png" alt="UberHub" class="footer-logo-img" />
         </div>
-        <p class="footer-tagline">A soma de todas as iniciativas,<br />grupos e pessoas que fazem<br />inovação em Uberlândia.</p>
-        <a href="https://github.com/GhabryelHenrique/uberhub-2.0" target="_blank" rel="noopener" class="footer-github">
+        <p class="footer-tagline">
+          A soma de todas as iniciativas,<br />grupos e pessoas que fazem<br />inovação
+          em Uberlândia.
+        </p>
+        <a
+          href="https://github.com/GhabryelHenrique/uberhub-2.0"
+          target="_blank"
+          rel="noopener"
+          class="footer-github"
+        >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            <path
+              d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+            />
           </svg>
           GitHub
         </a>

@@ -1,9 +1,10 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, TitleStrategy } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEchartsCore } from 'ngx-echarts';
+import { CustomTitleStrategy } from './core/title.strategy';
 import * as echarts from 'echarts/core';
 import { ScatterChart, EffectScatterChart, TreemapChart } from 'echarts/charts';
 import {
@@ -41,6 +42,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(),
-    provideEchartsCore({ echarts })
+    provideEchartsCore({ echarts }),
+    { provide: TitleStrategy, useClass: CustomTitleStrategy }
   ]
 };

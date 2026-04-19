@@ -33,13 +33,10 @@
           <td>{{ deal.price }}</td>
           <td class="amount">{{ deal.amount }}</td>
           <td>
-            <span class="status-badge" [ngClass]="{
-              'status-delivered': deal.status === 'Delivered',
-              'status-pending': deal.status === 'Pending',
-              'status-cancelled': deal.status === 'Cancelled'
-            }">
-              {{ deal.status }}
-            </span>
+            <app-ui-badge
+              [label]="deal.status"
+              [variant]="deal.status === 'Delivered' ? 'success' : deal.status === 'Pending' ? 'warning' : 'danger'"
+            />
           </td>
         </tr>
       </tbody>

@@ -1,0 +1,100 @@
+:host {
+  display: contents;
+}
+
+.auth-side {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.side-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.4) saturate(0.8);
+}
+
+.side-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102 16 242 / 0.35) 0%, rgba(10 7 24 / 0.55) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px 52px;
+  gap: 24px;
+}
+
+.side-logo {
+  position: absolute;
+  top: 40px;
+  left: 52px;
+  img {
+    height: 40px;
+    width: auto;
+    border-radius: 8px;
+  }
+}
+
+.side-quote {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  font-style: italic;
+  opacity: 0.92;
+  max-width: 480px;
+}
+
+.side-benefits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: rgba(255 255 255 / 0.9);
+    font-weight: 500;
+  }
+
+  .material-icons {
+    font-size: 20px;
+    color: #34d399;
+    flex-shrink: 0;
+  }
+}
+
+.side-stats {
+  display: flex;
+  gap: 32px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255 255 255 / 0.15);
+}
+
+.side-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  strong {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  span {
+    font-size: 0.75rem;
+    color: rgba(255 255 255 / 0.55);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}

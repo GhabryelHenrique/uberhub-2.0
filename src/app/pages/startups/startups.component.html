@@ -1,13 +1,8 @@
 <div class="startups-page">
-  <div class="pagetitle">
-    <h1>Startups do Ecossistema</h1>
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-        <li class="breadcrumb-item active">Startups</li>
-      </ol>
-    </nav>
-  </div>
+  <app-page-header
+    title="Startups do Ecossistema"
+    [breadcrumbs]="[{label: 'Home', route: '/'}, {label: 'Startups'}]"
+  />
 
   <section class="section">
     <div class="container">

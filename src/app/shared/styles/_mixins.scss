@@ -1,0 +1,79 @@
+// ─── SHARED MIXINS ────────────────────────────────────────────────────────────
+
+@mixin card-base {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+@mixin card-hover {
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+@mixin glassmorphism($opacity: 0.04) {
+  background: rgba(255 255 255 / #{$opacity});
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255 255 255 / 0.08);
+}
+
+@mixin gradient-text {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-pale));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin input-base {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(133 64 245 / 0.12);
+  }
+}
+
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s, background 0.2s;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+}
+
+@mixin section-tag {
+  display: inline-block;
+  background: rgba(133 64 245 / 0.15);
+  border: 1px solid rgba(133 64 245 / 0.25);
+  border-radius: 100px;
+  padding: 4px 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}

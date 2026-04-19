@@ -1,0 +1,6 @@
+<span class="badge" [class]="'badge--' + variant" [style.background]="variant === 'custom' && color ? color + '22' : null" [style.color]="variant === 'custom' && color ? color : null" [style.borderColor]="variant === 'custom' && color ? color + '55' : null">
+  @if (dot) {
+    <span class="badge__dot"></span>
+  }
+  {{ label }}
+</span>
