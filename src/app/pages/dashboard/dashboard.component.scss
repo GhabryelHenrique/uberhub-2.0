@@ -1,18 +1,21 @@
 .dashboard-page {
-  padding: 30px;
+  padding: 0;
   max-width: 100%;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 
   .page-header {
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+    padding: 24px 0 0;
 
     .breadcrumb {
       font-size: 13px;
-      color: #999;
+      color: var(--text-secondary);
       margin-bottom: 8px;
 
       .breadcrumb-item {
         &.active {
-          color: #333;
+          color: var(--text-primary);
           font-weight: 500;
         }
       }
@@ -25,7 +28,7 @@
     .page-title {
       font-size: 28px;
       font-weight: 600;
-      color: #333;
+      color: var(--text-primary);
       margin: 0;
     }
   }

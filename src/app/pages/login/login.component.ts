@@ -2,24 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+
+const COMUNIDADE_IMAGES = [
+  'assets/images/comunidade/1.png',
+  'assets/images/comunidade/2.jpeg',
+  'assets/images/comunidade/3.jpg',
+  'assets/images/comunidade/4.jpg',
+  'assets/images/comunidade/5.jpg',
+  'assets/images/comunidade/6.jpg',
+  'assets/images/comunidade/7.png',
+  'assets/images/comunidade/8.png',
+  'assets/images/comunidade/9.jpg',
+  'assets/images/comunidade/10.jpg',
+];
 
 @Component({
   selector: 'app-login',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCheckboxModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -27,6 +26,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   hidePassword = true;
   isLoading = false;
+  sideImage = COMUNIDADE_IMAGES[Math.floor(Math.random() * COMUNIDADE_IMAGES.length)];
 
   constructor(
     private fb: FormBuilder,

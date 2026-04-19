@@ -1,11 +1,10 @@
-import { Component, OnInit, HostListener, ViewChild, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, HostListener, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { GoogleMapsModule, MapInfoWindow, MapMarker, MapDirectionsRenderer } from '@angular/google-maps';
-import { StartupsService, Startup } from '../../services/startups.service';
-import { GeminiRoutesService, RouteResponse, RouteOptimizationCriteria } from '../../services/gemini-routes.service';
-import { environment } from '../../../environments/environment';
+import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { RouterModule } from '@angular/router';
+import { GeminiRoutesService, RouteOptimizationCriteria, RouteResponse } from '../../services/gemini-routes.service';
+import { Startup, StartupsService } from '../../services/startups.service';
 
 @Component({
   selector: 'app-mapa-inovacao',
@@ -20,9 +19,9 @@ export class MapaInovacaoComponent implements OnInit {
   startups: Startup[] = [];
   filteredStartups: Startup[] = [];
   selectedSetores: string[] = [];
-  selectedFases: string[] = [];
+  selectedCategorias: string[] = [];
   setores: string[] = [];
-  fases: string[] = [];
+  categorias: string[] = [];
   showSetorDropdown: boolean = false;
   showFaseDropdown: boolean = false;
   lastClickedMarkerIndex: number = -1;
@@ -46,14 +45,26 @@ export class MapaInovacaoComponent implements OnInit {
   selectedMarker: Startup | null = null;
   infoWindowPosition: google.maps.LatLngLiteral | null = null;
 
-  // Mapeamento de cores por fase
-  private faseColors: { [key: string]: string } = {
-    'Ideação': '#FF6B6B',
-    'Validação': '#4ECDC4',
-    'Operação': '#45B7D1',
-    'Tração': '#FFA07A',
-    'Escala': '#98D8C8'
-  };
+  // Mapeamento de cores por categoria
+  getColorByCategory(categoria?: string, pinColor?: string): string {
+    // Se tiver cor do pin definida, usar ela
+    if (pinColor) return pinColor;
+
+    // Cores padrão por categoria
+    const categoryColors: { [key: string]: string } = {
+      'Empresas de base tecnológica': '#4A90E2',
+      'Startups': '#FF6B6B',
+      'Coworkings, salas empresariais e espaços de inovação': '#FFA07A',
+      'Polos de Tecnologia & ICT´s': '#9B59B6',
+      'Aceleradoras, Incubadoras e ventures (VC, VB e outros)': '#E74C3C',
+      'Entidades/iniciativas de representação e apoio': '#3498DB',
+      'Academia/Instituições de ensino': '#2ECC71',
+      'Programas de Capacitação / Formação de talentos': '#F39C12',
+      'Corporates/Grandes empresas que relacionam com ecossistema': '#34495E'
+    };
+
+    return categoria ? (categoryColors[categoria] || '#999999') : '#999999';
+  }
 
   // Rotas inteligentes
   showRoutesPanel: boolean = false;
@@ -108,24 +119,26 @@ export class MapaInovacaoComponent implements OnInit {
           console.warn('⚠️ [MapaInovacao] Nenhuma startup com coordenadas válidas encontrada!');
         }
 
-        // Extrair setores e fases únicos
+        // Extrair setores e categorias únicos
         const setoresSet = new Set<string>();
-        const fasesSet = new Set<string>();
+        const categoriasSet = new Set<string>();
 
         this.startups.forEach(startup => {
           if (startup.segmento_copy || startup.setor_principal) {
-            setoresSet.add(startup.segmento_copy || startup.setor_principal);
+            setoresSet.add(startup.segmento_copy || startup.setor_principal || 'Outros');
           }
-          if (startup.fase_startup) {
-            fasesSet.add(startup.fase_startup);
+
+          // Adicionar categorias do ecossistema
+          if (startup.categoria) {
+            categoriasSet.add(startup.categoria);
           }
         });
 
         this.setores = Array.from(setoresSet).sort();
-        this.fases = Array.from(fasesSet).sort();
+        this.categorias = Array.from(categoriasSet).sort();
 
         console.log('🟢 [MapaInovacao] Setores únicos:', this.setores.length);
-        console.log('🟢 [MapaInovacao] Fases únicas:', this.fases.length);
+        console.log('🟢 [MapaInovacao] Categorias únicas:', this.categorias.length);
 
         // Wait for Google Maps to load before creating markers
         if (this.startups.length > 0) {
@@ -209,7 +222,7 @@ export class MapaInovacaoComponent implements OnInit {
     try {
       console.log('📍 [MapaInovacao] Criando marcadores...');
       this.markers = this.filteredStartups.map((startup, index) => {
-        const color = this.faseColors[startup.fase_startup] || '#999999';
+        const color = this.getColorByCategory(startup.categoria, startup.pin_color);
         // Criar ID único baseado no índice, nome e coordenadas
         const uniqueId = `${index}-${startup.nome.replace(/\s+/g, '-')}-${startup.latitude}-${startup.longitude}`;
 
@@ -219,7 +232,7 @@ export class MapaInovacaoComponent implements OnInit {
             nome: startup.nome,
             lat: startup.latitude,
             lng: startup.longitude,
-            fase: startup.fase_startup,
+            categoria: startup.categoria,
             color: color
           });
         }
@@ -307,12 +320,12 @@ export class MapaInovacaoComponent implements OnInit {
     this.applyFilters();
   }
 
-  toggleFase(fase: string): void {
-    const index = this.selectedFases.indexOf(fase);
+  toggleCategoria(categoria: string): void {
+    const index = this.selectedCategorias.indexOf(categoria);
     if (index > -1) {
-      this.selectedFases.splice(index, 1);
+      this.selectedCategorias.splice(index, 1);
     } else {
-      this.selectedFases.push(fase);
+      this.selectedCategorias.push(categoria);
     }
     this.applyFilters();
   }
@@ -321,20 +334,21 @@ export class MapaInovacaoComponent implements OnInit {
     return this.selectedSetores.includes(setor);
   }
 
-  isFaseSelected(fase: string): boolean {
-    return this.selectedFases.includes(fase);
+  isCategoriaSelected(categoria: string): boolean {
+    return this.selectedCategorias.includes(categoria);
   }
 
   applyFilters(): void {
     this.filteredStartups = this.startups.filter(startup => {
       const setorMatch = this.selectedSetores.length === 0 ||
-        this.selectedSetores.includes(startup.setor_principal) ||
-        this.selectedSetores.includes(startup.segmento_copy);
+        this.selectedSetores.includes(startup.setor_principal || '') ||
+        this.selectedSetores.includes(startup.segmento_copy || '');
 
-      const faseMatch = this.selectedFases.length === 0 ||
-        this.selectedFases.includes(startup.fase_startup);
+      // Filtrar por categoria do ecossistema
+      const categoriaMatch = this.selectedCategorias.length === 0 ||
+        this.selectedCategorias.includes(startup.categoria || '');
 
-      return setorMatch && faseMatch;
+      return setorMatch && categoriaMatch;
     });
 
     this.updateMarkers();
@@ -342,7 +356,7 @@ export class MapaInovacaoComponent implements OnInit {
 
   resetFilters(): void {
     this.selectedSetores = [];
-    this.selectedFases = [];
+    this.selectedCategorias = [];
     this.filteredStartups = this.startups;
     this.updateMarkers();
   }
@@ -354,7 +368,7 @@ export class MapaInovacaoComponent implements OnInit {
     }
   }
 
-  toggleFaseDropdown(): void {
+  toggleCategoriaDropdown(): void {
     this.showFaseDropdown = !this.showFaseDropdown;
     if (this.showFaseDropdown) {
       this.showSetorDropdown = false;
@@ -372,8 +386,14 @@ export class MapaInovacaoComponent implements OnInit {
     }
   }
 
-  getFaseColor(fase: string): string {
-    return this.faseColors[fase] || '#999999';
+  getCategoriaColor(categoria: string): string {
+    return this.getColorByCategory(categoria);
+  }
+
+  getCategoriaEmoji(categoria: string): string {
+    // Encontrar o emoji da categoria
+    const startup = this.startups.find(s => s.categoria === categoria);
+    return startup?.categoria_emoji || '';
   }
 
   truncate(text: string, maxLength: number): string {
@@ -402,7 +422,7 @@ export class MapaInovacaoComponent implements OnInit {
         priority: this.routePriority,
         maxStops: this.maxStops,
         sectors: this.selectedSetores.length > 0 ? this.selectedSetores : undefined,
-        phases: this.selectedFases.length > 0 ? this.selectedFases : undefined
+        phases: this.selectedCategorias.length > 0 ? this.selectedCategorias : undefined
       };
 
       this.geminiRoutesService.generateOptimizedRoute(this.filteredStartups, criteria)

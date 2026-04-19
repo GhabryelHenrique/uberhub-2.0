@@ -1,10 +1,149 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Custom theme colors matching the design
-$primary-purple: #6200ea;
-$dark-purple: #4a00c8;
-$light-purple: #7722ff;
-$accent-purple: #bb86fc;
+// ============================================
+// VARIÁVEIS CSS PARA TEMA CLARO E ESCURO
+// PALETA ROXA #6610f2
+// ============================================
+
+// Tema Claro
+:root, .light-theme {
+  // === CORES PRINCIPAIS ROXAS ===
+  --primary-color: #6610f2;           // Roxo principal
+  --primary-dark: #5209c7;            // Roxo escuro
+  --primary-light: #8540f5;           // Roxo claro
+  --primary-lighter: #a370f7;         // Roxo muito claro
+  --primary-pale: #d4b5fd;            // Roxo pálido
+
+  // === CORES SECUNDÁRIAS ===
+  --secondary-color: #7c3aed;         // Roxo violeta
+  --accent-color: #a78bfa;            // Lavanda
+  --accent-light: #c4b5fd;            // Lavanda claro
+
+  // === BACKGROUNDS ===
+  --bg-primary: #faf8ff;              // Branco com toque roxo
+  --bg-secondary: #ffffff;            // Branco puro
+  --bg-tertiary: #f5f3ff;             // Roxo muito claro
+  --bg-card: #ffffff;                 // Cards brancos
+  --bg-hover: #f5f3ff;                // Hover roxo suave
+  --bg-input: #ffffff;                // Inputs brancos
+  --bg-purple-light: #ede9fe;         // Roxo ultra claro para destaques
+
+  // === BORDERS ===
+  --border-color: #e9d5ff;            // Borda roxa clara
+  --border-hover: #d8b4fe;            // Borda roxa hover
+  --border-focus: #c4b5fd;            // Borda roxa focus
+
+  // === TEXT ===
+  --text-primary: #1e1b4b;            // Roxo escuro para texto
+  --text-secondary: #4c1d95;          // Roxo médio para texto
+  --text-tertiary: #7c3aed;           // Roxo claro para texto
+  --text-muted: #a78bfa;              // Roxo pálido para texto
+  --text-inverse: #ffffff;            // Branco
+
+  // === NAVBAR ===
+  --navbar-bg: #ffffff;               // Navbar branca
+  --navbar-text: #1e1b4b;             // Texto roxo escuro
+  --navbar-border: #e9d5ff;           // Borda roxa clara
+  --navbar-hover: #f5f3ff;            // Hover roxo suave
+
+  // === SIDEBAR ===
+  --sidebar-bg: linear-gradient(180deg, #6610f2 0%, #5209c7 100%);
+  --sidebar-text: #ffffff;
+
+  // === SHADOWS (com toque roxo) ===
+  --shadow-sm: 0 1px 3px rgba(102, 16, 242, 0.12);
+  --shadow-md: 0 2px 8px rgba(102, 16, 242, 0.15);
+  --shadow-lg: 0 4px 16px rgba(102, 16, 242, 0.20);
+  --shadow-purple: 0 4px 20px rgba(102, 16, 242, 0.25);
+
+  // === GRADIENTES ===
+  --gradient-primary: linear-gradient(135deg, #6610f2 0%, #8540f5 100%);
+  --gradient-secondary: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  --gradient-soft: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+
+  // === SCROLLBAR ===
+  --scrollbar-track: #f5f3ff;
+  --scrollbar-thumb: #c4b5fd;
+  --scrollbar-thumb-hover: #a78bfa;
+
+  // === ESTADOS ===
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+}
+
+// Tema Escuro
+.dark-theme {
+  // === CORES PRINCIPAIS ROXAS ===
+  --primary-color: #8540f5;           // Roxo mais claro para contraste
+  --primary-dark: #6610f2;            // Roxo médio
+  --primary-light: #a370f7;           // Roxo claro
+  --primary-lighter: #c4b5fd;         // Roxo muito claro
+  --primary-pale: #d4b5fd;            // Roxo pálido
+
+  // === CORES SECUNDÁRIAS ===
+  --secondary-color: #a78bfa;         // Lavanda
+  --accent-color: #c4b5fd;            // Lavanda clara
+  --accent-light: #ddd6fe;            // Lavanda muito clara
+
+  // === BACKGROUNDS ===
+  --bg-primary: #0f0a1e;              // Roxo escuro profundo
+  --bg-secondary: #1a1333;            // Roxo escuro médio
+  --bg-tertiary: #251c47;             // Roxo escuro claro
+  --bg-card: #1a1333;                 // Cards roxos escuros
+  --bg-hover: #251c47;                // Hover roxo escuro
+  --bg-input: #1a1333;                // Inputs roxos escuros
+  --bg-purple-dark: #2d2057;          // Roxo escuro para destaques
+
+  // === BORDERS ===
+  --border-color: #3d2d6b;            // Borda roxa
+  --border-hover: #4c3a82;            // Borda roxa hover
+  --border-focus: #6610f2;            // Borda roxa focus
+
+  // === TEXT ===
+  --text-primary: #f5f3ff;            // Branco com toque roxo
+  --text-secondary: #d4b5fd;          // Roxo claro
+  --text-tertiary: #a78bfa;           // Roxo médio
+  --text-muted: #7c3aed;              // Roxo escuro para texto
+  --text-inverse: #0f0a1e;            // Roxo muito escuro
+
+  // === NAVBAR ===
+  --navbar-bg: #1a1333;               // Navbar roxa escura
+  --navbar-text: #f5f3ff;             // Texto claro
+  --navbar-border: #3d2d6b;           // Borda roxa
+  --navbar-hover: #251c47;            // Hover roxo escuro
+
+  // === SIDEBAR ===
+  --sidebar-bg: #1a1333;              // Sidebar roxa escura
+  --sidebar-text: #f5f3ff;            // Texto claro
+
+  // === SHADOWS (com brilho roxo) ===
+  --shadow-sm: 0 1px 3px rgba(102, 16, 242, 0.3);
+  --shadow-md: 0 2px 8px rgba(102, 16, 242, 0.4);
+  --shadow-lg: 0 4px 16px rgba(102, 16, 242, 0.5);
+  --shadow-purple: 0 8px 32px rgba(133, 64, 245, 0.4);
+
+  // === GRADIENTES ===
+  --gradient-primary: linear-gradient(135deg, #6610f2 0%, #8540f5 100%);
+  --gradient-secondary: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  --gradient-dark: linear-gradient(135deg, #1a1333 0%, #251c47 100%);
+
+  // === SCROLLBAR ===
+  --scrollbar-track: #1a1333;
+  --scrollbar-thumb: #4c3a82;
+  --scrollbar-thumb-hover: #6610f2;
+
+  // === ESTADOS ===
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
+}
+
+// ============================================
+// ESTILOS GLOBAIS
+// ============================================
 
 html, body {
   height: 100%;
@@ -14,10 +153,31 @@ html, body {
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * {
   box-sizing: border-box;
+}
+
+// Scrollbar com variáveis CSS
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
 }

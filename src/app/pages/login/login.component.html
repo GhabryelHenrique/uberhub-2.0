@@ -1,67 +1,127 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="login-header">
-      <h2>Bem-vindo de volta!</h2>
-      <p>Entre com sua conta para continuar</p>
+<div class="auth-page">
+  <!-- Animated background -->
+  <div class="auth-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-pattern"></div>
+  </div>
+
+  <!-- Card -->
+  <div class="auth-card">
+    <!-- Logo -->
+    <a routerLink="/" class="auth-logo">
+      <img src="assets/logoube.png" alt="UberHub" />
+    </a>
+
+    <div class="auth-header">
+      <h1>Bem-vindo de volta</h1>
+      <p>Entre com sua conta para acessar o ecossistema</p>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" placeholder="seu@email.com">
-        <mat-icon matPrefix>email</mat-icon>
-        <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
+
+      <!-- Email -->
+      <div class="field-group" [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        <label for="email">Email</label>
+        <div class="input-wrap">
+          <span class="input-icon material-icons">alternate_email</span>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="seu@email.com"
+            autocomplete="email"
+          />
+        </div>
+        <span class="field-error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
           {{ getErrorMessage('email') }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Senha</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Sua senha">
-        <mat-icon matPrefix>lock</mat-icon>
-        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
-          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-        <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-          {{ getErrorMessage('password') }}
-        </mat-error>
-      </mat-form-field>
-
-      <div class="form-options">
-        <mat-checkbox formControlName="rememberMe" color="primary">
-          Lembrar-me
-        </mat-checkbox>
-        <a href="#" class="forgot-password">Esqueceu a senha?</a>
+        </span>
       </div>
 
-      <button mat-raised-button color="primary" type="submit" class="login-button" [disabled]="isLoading">
-        <span *ngIf="!isLoading" style="color: white;">Entrar</span>
-        <span *ngIf="isLoading" style="color: white;">
-          <i class="fas fa-spinner fa-spin"></i> Entrando...
+      <!-- Password -->
+      <div class="field-group" [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        <label for="password">Senha</label>
+        <div class="input-wrap">
+          <span class="input-icon material-icons">lock</span>
+          <input
+            id="password"
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Sua senha"
+            autocomplete="current-password"
+          />
+          <button type="button" class="toggle-pw" (click)="hidePassword = !hidePassword" tabindex="-1">
+            <span class="material-icons">{{ hidePassword ? 'visibility_off' : 'visibility' }}</span>
+          </button>
+        </div>
+        <span class="field-error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          {{ getErrorMessage('password') }}
+        </span>
+      </div>
+
+      <!-- Options -->
+      <div class="form-options">
+        <label class="custom-check">
+          <input type="checkbox" formControlName="rememberMe" />
+          <span class="checkmark"></span>
+          Lembrar-me
+        </label>
+        <a href="#" class="link-subtle">Esqueceu a senha?</a>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Entrar</span>
+        <span *ngIf="isLoading" class="loading-state">
+          <span class="spinner"></span> Entrando...
         </span>
       </button>
 
-      <div class="divider">
-        <span>OU</span>
+      <!-- Divider -->
+      <div class="divider"><span>ou continue com</span></div>
+
+      <!-- Social -->
+      <div class="social-row">
+        <button type="button" class="btn-social">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.413 1.575l3.286-3.286A11.944 11.944 0 0 0 12 0C7.392 0 3.397 2.6 1.386 6.411l3.88 3.354Z"/><path fill="#34A853" d="M16.04 18.013A7.08 7.08 0 0 1 12 19.09c-2.872 0-5.354-1.702-6.614-4.19l-3.918 3.021C3.505 21.452 7.446 24 12 24c3.059 0 5.842-1.154 7.961-3.039l-3.92-2.948Z"/><path fill="#FBBC05" d="M19.961 20.961C22.445 18.668 24 15.525 24 12c0-.961-.116-1.897-.332-2.8H12v5.455h6.728c-.315 1.552-1.185 2.883-2.453 3.79l3.686 3.516Z"/><path fill="#4285F4" d="M5.386 14.9A7.148 7.148 0 0 1 4.909 12c0-.998.176-1.961.477-2.858L1.386 5.788A11.934 11.934 0 0 0 0 12c0 1.93.457 3.754 1.266 5.371L5.386 14.9Z"/></svg>
+          Google
+        </button>
+        <button type="button" class="btn-social">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </button>
       </div>
 
-      <div class="social-login">
-        <button mat-stroked-button type="button" class="social-button google">
-          <i class="fab fa-google"></i>
-          Continuar com Google
-        </button>
-        <button mat-stroked-button type="button" class="social-button github">
-          <i class="fab fa-github"></i>
-          Continuar com GitHub
-        </button>
-      </div>
-
-      <div class="register-link">
+      <p class="auth-switch">
         Não tem uma conta?
-        <a routerLink="/register">Cadastre-se</a>
-      </div>
+        <a routerLink="/register">Criar conta grátis</a>
+      </p>
+
     </form>
   </div>
 
-  <img class="login-illustration" src="assets/images/uberhub_wallpaper.jpeg" alt="Logo do Uberhub e background ilustrativo">
+  <!-- Side illustration -->
+  <div class="auth-side">
+    <img [src]="sideImage" alt="UberHub" class="side-image" />
+    <div class="side-overlay">
+      <blockquote class="side-quote">
+        "A soma de todas as iniciativas, grupos e pessoas que fazem inovação em Uberlândia."
+      </blockquote>
+      <div class="side-stats">
+        <div class="side-stat">
+          <strong>619+</strong>
+          <span>Organizações</span>
+        </div>
+        <div class="side-stat">
+          <strong>9</strong>
+          <span>Categorias</span>
+        </div>
+        <div class="side-stat">
+          <strong>3.4k+</strong>
+          <span>Vagas</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

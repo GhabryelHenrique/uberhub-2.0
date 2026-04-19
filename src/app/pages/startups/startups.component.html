@@ -68,19 +68,24 @@
                   <h5 class="startup-nome">{{ startup.nome }}</h5>
                   <hr>
 
-                  <div class="info-section">
-                    <h6 class="info-label">SOLUÇÃO</h6>
-                    <p class="info-text">{{ truncateText(startup.solucao) }}</p>
+                  <div class="info-section" *ngIf="startup.endereco">
+                    <h6 class="info-label">ENDEREÇO</h6>
+                    <p class="info-text">{{ truncateText(startup.endereco) }}</p>
                   </div>
 
-                  <div class="info-section">
+                  <div class="info-section" *ngIf="startup.setor_principal">
                     <h6 class="info-label">SEGMENTO PRINCIPAL</h6>
                     <p class="info-text">{{ startup.setor_principal }}</p>
                   </div>
 
-                  <div class="info-section">
-                    <h6 class="info-label">FASE</h6>
-                    <p class="info-text">{{ startup.fase_startup }}</p>
+                  <div class="info-section" *ngIf="startup.rating">
+                    <h6 class="info-label">AVALIAÇÃO</h6>
+                    <p class="info-text">★ {{ startup.rating }} ({{ startup.total_ratings }} avaliações)</p>
+                  </div>
+
+                  <div class="info-section" *ngIf="startup.phone">
+                    <h6 class="info-label">TELEFONE</h6>
+                    <p class="info-text">{{ startup.phone }}</p>
                   </div>
 
                   <div class="info-section">

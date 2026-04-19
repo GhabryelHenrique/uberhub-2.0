@@ -1,7 +1,8 @@
 .perfil-container {
   padding: 2rem;
-  background: #f8f9fa;
+  background: var(--bg-primary);
   min-height: 100vh;
+  transition: background-color 0.3s ease;
 }
 
 // Header com Avatar

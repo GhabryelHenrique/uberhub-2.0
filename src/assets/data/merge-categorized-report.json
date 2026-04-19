@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-01-03T18:18:39.447Z",
+  "summary": {
+    "total_records": 619,
+    "merged_records": 15,
+    "empresas_tech_only": 323,
+    "airtable_only": 281
+  },
+  "categories": {
+    "🏢 Empresas de base tecnológica": 262,
+    "🚀 Startups": 275,
+    "🏠 Coworkings, salas empresariais e espaços de inovação": 6,
+    "🏦 Polos de Tecnologia & ICT´s": 1,
+    "🔥 Aceleradoras, Incubadoras e ventures (VC, VB e outros)": 1,
+    "🤝 Entidades/iniciativas de representação e apoio": 2,
+    "📚 Academia/Instituições de ensino": 9,
+    "👩🏻‍💻 Programas de Capacitação / Formação de talentos": 22,
+    "👔 Corporates/Grandes empresas que relacionam com ecossistema": 41
+  },
+  "color_legend": [
+    {
+      "categoria": "🏢 Empresas de base tecnológica",
+      "cor": "#4A90E2",
+      "icon": "building"
+    },
+    {
+      "categoria": "🚀 Startups",
+      "cor": "#FF6B6B",
+      "icon": "rocket"
+    },
+    {
+      "categoria": "🏠 Coworkings, salas empresariais e espaços de inovação",
+      "cor": "#FFA07A",
+      "icon": "home"
+    },
+    {
+      "categoria": "🏦 Polos de Tecnologia & ICT´s",
+      "cor": "#9B59B6",
+      "icon": "landmark"
+    },
+    {
+      "categoria": "🔥 Aceleradoras, Incubadoras e ventures (VC, VB e outros)",
+      "cor": "#E74C3C",
+      "icon": "fire"
+    },
+    {
+      "categoria": "🤝 Entidades/iniciativas de representação e apoio",
+      "cor": "#3498DB",
+      "icon": "handshake"
+    },
+    {
+      "categoria": "📚 Academia/Instituições de ensino",
+      "cor": "#2ECC71",
+      "icon": "book"
+    },
+    {
+      "categoria": "👩🏻‍💻 Programas de Capacitação / Formação de talentos",
+      "cor": "#F39C12",
+      "icon": "laptop-code"
+    },
+    {
+      "categoria": "👔 Corporates/Grandes empresas que relacionam com ecossistema",
+      "cor": "#34495E",
+      "icon": "briefcase"
+    }
+  ],
+  "matches": [
+    {
+      "nome_empresa": "EZ SOFT",
+      "nome_startup": "EZ SOFT"
+    },
+    {
+      "nome_empresa": "Virtux Tech",
+      "nome_startup": "Virtux Tech"
+    },
+    {
+      "nome_empresa": "Code Square",
+      "nome_startup": "Code Square"
+    },
+    {
+      "nome_empresa": "GAP Sistemas",
+      "nome_startup": "GAP SISTEMAS"
+    },
+    {
+      "nome_empresa": "T10",
+      "nome_startup": "T10"
+    },
+    {
+      "nome_empresa": "Udikar",
+      "nome_startup": "Udikar"
+    },
+    {
+      "nome_empresa": "PsicoManager",
+      "nome_startup": "PsicoManager "
+    },
+    {
+      "nome_empresa": "DriverHub",
+      "nome_startup": "DriverHub"
+    },
+    {
+      "nome_empresa": "ASC Brazil",
+      "nome_startup": "ASC BRAZIL"
+    },
+    {
+      "nome_empresa": "Ipê Digital",
+      "nome_startup": "Ipê Digital"
+    },
+    {
+      "nome_empresa": "Kanastra",
+      "nome_startup": "Kanastra"
+    },
+    {
+      "nome_empresa": "Cibus Fidelidade",
+      "nome_startup": "Cibus Fidelidade"
+    },
+    {
+      "nome_empresa": "Chave7",
+      "nome_startup": "Chave7"
+    },
+    {
+      "nome_empresa": "NoCartorio.com",
+      "nome_startup": "NoCartorio.com"
+    },
+    {
+      "nome_empresa": "Zydon",
+      "nome_startup": "Zydon "
+    }
+  ]
+}

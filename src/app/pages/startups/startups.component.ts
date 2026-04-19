@@ -40,11 +40,19 @@ export class StartupsComponent implements OnInit {
       const setoresSet = new Set<string>();
 
       startups.forEach(startup => {
-        if (startup.fase_startup) {
-          fasesSet.add(startup.fase_startup);
+        // Criar categorias baseadas em rating
+        if (startup.rating !== undefined) {
+          if (startup.rating >= 4.5) fasesSet.add('★★★★★ (4.5+)');
+          else if (startup.rating >= 4.0) fasesSet.add('★★★★ (4.0-4.5)');
+          else if (startup.rating >= 3.0) fasesSet.add('★★★ (3.0-4.0)');
+          else fasesSet.add('★★ (<3.0)');
+        } else {
+          fasesSet.add('Sem avaliação');
         }
-        if (startup.segmento_copy || startup.setor_principal) {
-          setoresSet.add(startup.segmento_copy || startup.setor_principal);
+
+        const setor = startup.segmento_copy || startup.setor_principal;
+        if (setor) {
+          setoresSet.add(setor);
         }
       });
 
