@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicoAlvoChartComponent } from './publico-alvo-chart.component';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('PublicoAlvoChartComponent', () => {
   let component: PublicoAlvoChartComponent;
@@ -8,7 +9,9 @@ describe('PublicoAlvoChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PublicoAlvoChartComponent]
+      imports: [PublicoAlvoChartComponent],
+            providers: [provideHttpClient()]
+
     })
     .compileComponents();
 

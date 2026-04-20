@@ -8,7 +8,6 @@ describe('StartupsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient()]
-
     });
     service = TestBed.inject(StartupsService);
   });

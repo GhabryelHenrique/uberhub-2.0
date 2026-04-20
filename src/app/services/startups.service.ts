@@ -246,18 +246,10 @@ export class StartupsService {
   getFasesPorSetor(): Observable<{ nome: string; setores: { nome: string; valor: number; cor: string }[] }[]> {
     return this.startups$.pipe(
       map(startups => {
-        // Como não temos mais o campo fase_startup, vamos criar categorias baseadas em rating
         const categoriaSetorMap = new Map<string, Map<string, number>>();
 
         startups.forEach(startup => {
-          let categoria = 'Sem avaliação';
-          if (startup.rating) {
-            if (startup.rating >= 4.5) categoria = '★★★★★ (4.5+)';
-            else if (startup.rating >= 4.0) categoria = '★★★★ (4.0-4.5)';
-            else if (startup.rating >= 3.0) categoria = '★★★ (3.0-4.0)';
-            else categoria = '★★ (<3.0)';
-          }
-
+          const categoria = startup.fase_startup || 'Não informada';
           const setor = startup.segmento_copy || startup.setor_principal || 'Outros';
 
           if (!categoriaSetorMap.has(categoria)) {

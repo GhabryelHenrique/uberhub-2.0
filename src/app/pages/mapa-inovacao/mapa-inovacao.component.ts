@@ -90,101 +90,45 @@ export class MapaInovacaoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('🔵 [MapaInovacao] ngOnInit iniciado');
-    console.log('🔵 [MapaInovacao] Verificando Google Maps API:', typeof google !== 'undefined');
+    this.showRoutesPanel = true;
 
     this.startupsService.getStartups().subscribe({
       next: (startups) => {
-        console.log('🟢 [MapaInovacao] Startups recebidas:', startups.length);
-
-        // Filtrar startups com coordenadas válidas
         this.startups = startups.filter(s =>
-          s.latitude &&
-          s.longitude &&
-          !isNaN(s.latitude) &&
-          !isNaN(s.longitude) &&
-          s.latitude !== 0 &&
-          s.longitude !== 0
+          s.latitude && s.longitude &&
+          !isNaN(s.latitude) && !isNaN(s.longitude) &&
+          s.latitude !== 0 && s.longitude !== 0
         );
         this.filteredStartups = this.startups;
 
-        console.log('🟢 [MapaInovacao] Total startups com coordenadas válidas:', this.startups.length);
-        if (this.startups.length > 0) {
-          console.log('🟢 [MapaInovacao] Exemplo de startup:', {
-            nome: this.startups[0].nome,
-            lat: this.startups[0].latitude,
-            lng: this.startups[0].longitude
-          });
-        } else {
-          console.warn('⚠️ [MapaInovacao] Nenhuma startup com coordenadas válidas encontrada!');
-        }
-
-        // Extrair setores e categorias únicos
         const setoresSet = new Set<string>();
         const categoriasSet = new Set<string>();
-
         this.startups.forEach(startup => {
           if (startup.segmento_copy || startup.setor_principal) {
             setoresSet.add(startup.segmento_copy || startup.setor_principal || 'Outros');
           }
-
-          // Adicionar categorias do ecossistema
-          if (startup.categoria) {
-            categoriasSet.add(startup.categoria);
-          }
+          if (startup.categoria) categoriasSet.add(startup.categoria);
         });
-
         this.setores = Array.from(setoresSet).sort();
         this.categorias = Array.from(categoriasSet).sort();
 
-        console.log('🟢 [MapaInovacao] Setores únicos:', this.setores.length);
-        console.log('🟢 [MapaInovacao] Categorias únicas:', this.categorias.length);
-
-        // Wait for Google Maps to load before creating markers
-        if (this.startups.length > 0) {
-          console.log('🔵 [MapaInovacao] Iniciando espera pelo Google Maps...');
-          this.waitForGoogleMaps();
-        } else {
-          console.error('🔴 [MapaInovacao] Não há startups para exibir no mapa');
-        }
+        // Inicializa o mapa vazio — marcadores só aparecem após rota IA
+        this.waitForGoogleMaps();
       },
       error: (error) => {
-        console.error('🔴 [MapaInovacao] Erro ao carregar startups:', error);
+        console.error('Erro ao carregar startups:', error);
       }
     });
   }
 
   private waitForGoogleMaps(): void {
     this.waitAttempts++;
-    console.log(`🔍 [MapaInovacao] waitForGoogleMaps - Tentativa ${this.waitAttempts}/${this.maxWaitAttempts}`);
-    console.log('🔍 [MapaInovacao] typeof google:', typeof google);
-
-    if (typeof google !== 'undefined') {
-      console.log('🔍 [MapaInovacao] google existe');
-      console.log('🔍 [MapaInovacao] google.maps:', !!google.maps);
-      if (google.maps) {
-        console.log('🔍 [MapaInovacao] google.maps.MapTypeId:', !!google.maps.MapTypeId);
-        console.log('🔍 [MapaInovacao] google.maps.SymbolPath:', !!google.maps.SymbolPath);
-      }
-    }
-
-    if (typeof google !== 'undefined' &&
-        google.maps &&
-        google.maps.MapTypeId &&
-        google.maps.SymbolPath) {
-      console.log('✅ [MapaInovacao] Google Maps totalmente carregado!');
+    if (typeof google !== 'undefined' && google.maps?.MapTypeId && google.maps?.SymbolPath) {
       this.isGoogleMapsLoaded = true;
-      console.log('✅ [MapaInovacao] isGoogleMapsLoaded definido como true');
       this.configureMapOptions();
-      this.updateMarkers();
-      console.log('✅ [MapaInovacao] Marcadores criados:', this.markers.length);
+      // Mapa inicia vazio — marcadores só aparecem após rota IA
     } else {
-      if (this.waitAttempts >= this.maxWaitAttempts) {
-        console.error('🔴 [MapaInovacao] Timeout: Google Maps não foi carregado após 5 segundos');
-        console.error('🔴 [MapaInovacao] Verifique se a API Key está correta e se o script foi carregado no index.html');
-        return;
-      }
-      console.log(`⏳ [MapaInovacao] Google Maps ainda não está pronto. Tentando novamente em 100ms... (${this.waitAttempts}/${this.maxWaitAttempts})`);
+      if (this.waitAttempts >= this.maxWaitAttempts) return;
       setTimeout(() => this.waitForGoogleMaps(), 100);
     }
   }
@@ -209,40 +153,50 @@ export class MapaInovacaoComponent implements OnInit {
     console.log('⚙️ [MapaInovacao] Opções do mapa configuradas:', this.mapOptions);
   }
 
-  private updateMarkers(): void {
-    console.log('📍 [MapaInovacao] updateMarkers iniciado');
-    console.log('📍 [MapaInovacao] isGoogleMapsLoaded:', this.isGoogleMapsLoaded);
-    console.log('📍 [MapaInovacao] filteredStartups.length:', this.filteredStartups.length);
+  private updateRouteMarkers(): void {
+    if (!this.currentRoute || !this.isGoogleMapsLoaded) return;
 
-    if (!this.isGoogleMapsLoaded) {
-      console.error('🔴 [MapaInovacao] Google Maps ainda não carregado - abortando updateMarkers');
+    this.markers = this.currentRoute.route.map((point, index) => ({
+      id: `route-stop-${index}`,
+      position: { lat: point.startup.latitude!, lng: point.startup.longitude! },
+      title: `${point.order}. ${point.startup.nome}`,
+      options: {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 14,
+          fillColor: '#6200ea',
+          fillOpacity: 1,
+          strokeColor: '#fff',
+          strokeWeight: 2.5
+        },
+        label: {
+          text: String(point.order),
+          color: '#fff',
+          fontSize: '11px',
+          fontWeight: 'bold'
+        },
+        zIndex: 1000 + point.order
+      },
+      startup: point.startup
+    }));
+  }
+
+  private updateFilterMarkers(): void {
+    if (!this.isGoogleMapsLoaded) return;
+
+    const hasFilters = this.selectedSetores.length > 0 || this.selectedCategorias.length > 0;
+    if (!hasFilters) {
+      this.markers = [];
       return;
     }
 
-    try {
-      console.log('📍 [MapaInovacao] Criando marcadores...');
-      this.markers = this.filteredStartups.map((startup, index) => {
+    this.markers = this.filteredStartups
+      .filter(s => s.latitude && s.longitude)
+      .map((startup, index) => {
         const color = this.getColorByCategory(startup.categoria, startup.pin_color);
-        // Criar ID único baseado no índice, nome e coordenadas
-        const uniqueId = `${index}-${startup.nome.replace(/\s+/g, '-')}-${startup.latitude}-${startup.longitude}`;
-
-        if (index < 3) {
-          console.log(`📍 [MapaInovacao] Criando marcador ${index + 1}:`, {
-            id: uniqueId,
-            nome: startup.nome,
-            lat: startup.latitude,
-            lng: startup.longitude,
-            categoria: startup.categoria,
-            color: color
-          });
-        }
-
         return {
-          id: uniqueId,
-          position: {
-            lat: startup.latitude!,
-            lng: startup.longitude!
-          },
+          id: `filter-${index}`,
+          position: { lat: startup.latitude!, lng: startup.longitude! },
           title: startup.nome,
           options: {
             icon: {
@@ -252,23 +206,12 @@ export class MapaInovacaoComponent implements OnInit {
               fillOpacity: 0.9,
               strokeColor: '#fff',
               strokeWeight: 2
-            }
+            },
+            zIndex: 100
           },
-          startup: startup
+          startup
         };
       });
-
-      console.log('✅ [MapaInovacao] Marcadores criados com sucesso!');
-      console.log('✅ [MapaInovacao] Total de marcadores:', this.markers.length);
-      if (this.markers.length > 0) {
-        console.log('✅ [MapaInovacao] Primeiro marcador:', {
-          position: this.markers[0].position,
-          title: this.markers[0].title
-        });
-      }
-    } catch (error) {
-      console.error('🔴 [MapaInovacao] Erro ao criar marcadores:', error);
-    }
   }
 
   openInfoWindow(index: number): void {
@@ -343,22 +286,27 @@ export class MapaInovacaoComponent implements OnInit {
       const setorMatch = this.selectedSetores.length === 0 ||
         this.selectedSetores.includes(startup.setor_principal || '') ||
         this.selectedSetores.includes(startup.segmento_copy || '');
-
-      // Filtrar por categoria do ecossistema
       const categoriaMatch = this.selectedCategorias.length === 0 ||
         this.selectedCategorias.includes(startup.categoria || '');
-
       return setorMatch && categoriaMatch;
     });
-
-    this.updateMarkers();
+    // Se houver rota ativa, limpa pois o conjunto mudou; senão mostra marcadores dos filtros
+    if (this.currentRoute) {
+      this.clearRoute();
+    } else {
+      this.updateFilterMarkers();
+    }
   }
 
   resetFilters(): void {
     this.selectedSetores = [];
     this.selectedCategorias = [];
     this.filteredStartups = this.startups;
-    this.updateMarkers();
+    if (this.currentRoute) {
+      this.clearRoute();
+    } else {
+      this.markers = [];
+    }
   }
 
   toggleSetorDropdown(): void {
@@ -428,18 +376,14 @@ export class MapaInovacaoComponent implements OnInit {
       this.geminiRoutesService.generateOptimizedRoute(this.filteredStartups, criteria)
         .subscribe({
           next: async (route) => {
-            console.log('✅ [MapaInovacao] Rota gerada:', route);
             this.currentRoute = route;
-
-            // Mapear os IDs das startups para os objetos completos
             this.currentRoute.route = route.route.map(rp => ({
               ...rp,
               startup: this.filteredStartups[(rp as any).startupId]
             }));
 
-            // Gerar direções no Google Maps
+            this.updateRouteMarkers();
             await this.displayRouteOnMap();
-
             this.isGeneratingRoute = false;
           },
           error: (error) => {
@@ -496,7 +440,7 @@ export class MapaInovacaoComponent implements OnInit {
   clearRoute(): void {
     this.currentRoute = null;
     this.directionsResult = null;
-    console.log('🗑️ [MapaInovacao] Rota limpa');
+    this.markers = [];
   }
 
   getRouteStartups(): Startup[] {
@@ -540,9 +484,8 @@ export class MapaInovacaoComponent implements OnInit {
         }))
       };
 
-      console.log('✅ [MapaInovacao] Rota gerada do chat:', this.currentRoute);
-
       // Exibe a rota no mapa
+      this.updateRouteMarkers();
       await this.displayRouteOnMap();
 
       // Limpa o prompt e desativa o modo chat

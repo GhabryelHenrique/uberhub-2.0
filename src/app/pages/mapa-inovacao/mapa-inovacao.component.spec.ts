@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MapaInovacaoComponent } from './mapa-inovacao.component';
 import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { MapaInovacaoComponent } from './mapa-inovacao.component';
 
 describe('MapaInovacaoComponent', () => {
   let component: MapaInovacaoComponent;
@@ -10,8 +10,7 @@ describe('MapaInovacaoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MapaInovacaoComponent],
-      providers: [provideHttpClient()]
-
+      providers: [provideHttpClient(), provideRouter([])]
     })
     .compileComponents();
 

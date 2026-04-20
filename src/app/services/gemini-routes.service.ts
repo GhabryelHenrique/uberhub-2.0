@@ -50,7 +50,7 @@ export interface RouteOptimizationCriteria {
 })
 export class GeminiRoutesService {
   private apiKey: string;
-  private apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+  private apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
   constructor(private http: HttpClient) {
     this.apiKey = environment.GEMINI_API_KEY;
@@ -87,75 +87,32 @@ export class GeminiRoutesService {
     startups: Startup[],
     criteria: RouteOptimizationCriteria
   ): string {
-    const startupsData = startups.map((s, idx) => ({
+    const maxStops = criteria.maxStops || 10;
+
+    // Limit startups sent to AI to control token count — prefer variety by setor
+    const capped = startups.slice(0, 150);
+    const startupsData = capped.map((s, idx) => ({
       id: idx,
-      nome: s.nome,
-      setor: s.segmento_copy || s.setor_principal,
-      fase: s.fase_startup,
-      latitude: s.latitude,
-      longitude: s.longitude,
-      endereco: s.endereco,
-      solucao: s.solucao,
-      publico_alvo: s.publico_alvo
+      n: s.nome,
+      st: s.segmento_copy || s.setor_principal || '',
+      lat: s.latitude,
+      lng: s.longitude
     }));
 
-    let priorityDescription = '';
-    switch (criteria.priority) {
-      case 'distance':
-        priorityDescription = 'Priorize a menor distância total entre as startups, criando uma rota geograficamente eficiente.';
-        break;
-      case 'sector':
-        priorityDescription = `Priorize startups dos setores: ${criteria.sectors?.join(', ')}. Agrupe startups do mesmo setor quando possível.`;
-        break;
-      case 'phase':
-        priorityDescription = `Priorize startups nas fases: ${criteria.phases?.join(', ')}. Crie uma jornada que mostre a evolução das startups.`;
-        break;
-      case 'balanced':
-        priorityDescription = 'Crie uma rota balanceada considerando distância, diversidade de setores e fases das startups.';
-        break;
-    }
+    const priorityMap: Record<string, string> = {
+      distance: 'Minimize total travel distance.',
+      sector: `Focus on sectors: ${criteria.sectors?.join(', ')}.`,
+      phase: `Focus on phases: ${criteria.phases?.join(', ')}.`,
+      balanced: 'Balance distance, sector diversity and startup phases.'
+    };
 
-    return `Você é um especialista em criar rotas de visitação para ecossistemas de inovação. Sua tarefa é criar uma rota otimizada para visitar startups em Uberlândia.
+    return `Crie uma rota otimizada de visitação com ${maxStops} startups do ecossistema de inovação de Uberlândia.
 
-**Contexto:**
-- Estamos criando rotas interativas para o UberHub, mapa de inovação de Uberlândia
-- As rotas devem ser educativas, eficientes e interessantes
-- Cada rota deve contar uma história sobre o ecossistema de inovação local
+Prioridade: ${priorityMap[criteria.priority]}
+Startups (id,nome,setor,lat,lng): ${JSON.stringify(startupsData)}
 
-**Dados das Startups:**
-${JSON.stringify(startupsData, null, 2)}
-
-**Critérios de Otimização:**
-- ${priorityDescription}
-- Número máximo de paradas: ${criteria.maxStops || 10}
-${criteria.startLocation ? `- Ponto de partida: ${criteria.startLocation.lat}, ${criteria.startLocation.lng}` : ''}
-
-**Instruções:**
-1. Analise todas as startups disponíveis
-2. Selecione as startups mais relevantes baseado nos critérios
-3. Ordene as startups criando uma rota lógica e eficiente
-4. Para cada startup na rota, explique por que ela foi incluída
-
-**Formato de Resposta (JSON):**
-{
-  "route": [
-    {
-      "startupId": 0,
-      "order": 1,
-      "reason": "Razão para incluir esta startup nesta posição"
-    }
-  ],
-  "description": "Descrição geral da rota e seu propósito",
-  "totalDistance": "Estimativa de distância total (ex: '15 km')",
-  "estimatedTime": "Tempo estimado de visitação (ex: '4 horas')",
-  "highlights": [
-    "Destaque 1 da rota",
-    "Destaque 2 da rota"
-  ],
-  "optimizationCriteria": "Resumo do critério usado na otimização"
-}
-
-Responda APENAS com o JSON, sem texto adicional.`;
+Responda APENAS com JSON válido, sem markdown, em português do Brasil:
+{"route":[{"startupId":0,"order":1,"reason":"motivo breve em pt-BR"}],"description":"resumo da rota em pt-BR","totalDistance":"X km","estimatedTime":"X horas","highlights":["destaque 1","destaque 2"],"optimizationCriteria":"critério utilizado em pt-BR"}`;
   }
 
   /**
@@ -165,41 +122,23 @@ Responda APENAS com o JSON, sem texto adicional.`;
     startups: Startup[],
     theme: string
   ): string {
-    const startupsData = startups.map((s, idx) => ({
+    const capped = startups.slice(0, 150);
+    const startupsData = capped.map((s, idx) => ({
       id: idx,
-      nome: s.nome,
-      setor: s.segmento_copy || s.setor_principal,
-      fase: s.fase_startup,
-      latitude: s.latitude,
-      longitude: s.longitude,
-      solucao: s.solucao
+      n: s.nome,
+      st: s.segmento_copy || s.setor_principal || '',
+      lat: s.latitude,
+      lng: s.longitude
     }));
 
-    return `Você é um curador de experiências de inovação. Crie 3 rotas temáticas diferentes para visitar startups em Uberlândia.
+    return `Crie 3 rotas temáticas de visitação às startups de Uberlândia sobre o tema: "${theme}".
 
-**Tema Solicitado:** ${theme}
+Startups (id,nome,setor,lat,lng): ${JSON.stringify(startupsData)}
 
-**Dados das Startups:**
-${JSON.stringify(startupsData, null, 2)}
+Rotas: 1=Iniciante (5 paradas), 2=Especializada (6 paradas), 3=Inovadora (5 paradas).
 
-**Instruções:**
-Crie 3 rotas com diferentes abordagens:
-1. Rota Iniciante: Para quem está começando a conhecer o ecossistema
-2. Rota Especializada: Focada profundamente no tema
-3. Rota Inovadora: Startups mais disruptivas e em estágio avançado
-
-Para cada rota, use o mesmo formato JSON da função anterior.
-
-**Formato de Resposta:**
-{
-  "routes": [
-    { /* Rota 1 */ },
-    { /* Rota 2 */ },
-    { /* Rota 3 */ }
-  ]
-}
-
-Responda APENAS com o JSON, sem texto adicional.`;
+Responda APENAS com JSON válido em português do Brasil:
+{"routes":[{rota com mesmo schema da rota individual},{...},{...}]}`;
   }
 
   /**
@@ -222,9 +161,8 @@ Responda APENAS com o JSON, sem texto adicional.`;
           }],
           generationConfig: {
             temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 2048,
+            maxOutputTokens: 4096,
+            thinkingConfig: { thinkingBudget: 0 }
           }
         })
       });
@@ -275,7 +213,7 @@ Responda APENAS com o JSON, sem texto adicional.`;
             temperature: 0.8,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 4096,
+
           }
         })
       });
@@ -369,68 +307,22 @@ Responda em texto corrido, não em JSON.`;
     prompt: string,
     startups: Startup[]
   ): Promise<RouteResponseAPI> {
-    const startupsData = startups.map((s, idx) => ({
+    const capped = startups.slice(0, 150);
+    const startupsData = capped.map((s, idx) => ({
       id: idx,
-      nome: s.nome,
-      setor: s.segmento_copy || s.setor_principal,
-      fase: s.fase_startup,
-      latitude: s.latitude,
-      longitude: s.longitude,
-      endereco: s.endereco,
-      solucao: s.solucao,
-      publico_alvo: s.publico_alvo,
-      colaboradores: s.colaboradores
+      n: s.nome,
+      st: s.segmento_copy || s.setor_principal || '',
+      lat: s.latitude,
+      lng: s.longitude
     }));
 
-    const systemPrompt = `Você é um assistente especializado em criar rotas de visitação para o ecossistema de startups de Uberlândia.
+    const systemPrompt = `Crie uma rota de visitação às startups de Uberlândia com base no pedido do usuário.
 
-**Sua tarefa:**
-Analise o pedido do usuário e crie uma rota otimizada de visitação às startups.
+Pedido: "${prompt}"
+Startups (id,nome,setor,lat,lng): ${JSON.stringify(startupsData)}
 
-**Dados das Startups Disponíveis:**
-${JSON.stringify(startupsData, null, 2)}
-
-**Pedido do Usuário:**
-"${prompt}"
-
-**Instruções:**
-1. Interprete o pedido do usuário identificando:
-   - Número de startups desejadas
-   - Região/localização preferida (centro, bairro específico, etc)
-   - Setor de interesse (se mencionado)
-   - Fase das startups (se mencionado)
-   - Qualquer outro critério específico
-
-2. Selecione as startups mais adequadas baseado nos critérios identificados
-
-3. Ordene as startups criando uma rota geograficamente eficiente
-
-4. Se o usuário não especificar quantidade, sugira entre 5-7 startups
-
-5. Se o usuário mencionar uma região mas você não tiver dados precisos de bairros,
-   use as coordenadas para identificar startups próximas geograficamente
-
-**Formato de Resposta (JSON):**
-{
-  "route": [
-    {
-      "startupId": 0,
-      "order": 1,
-      "reason": "Razão para incluir esta startup (mencione como atende ao critério do usuário)"
-    }
-  ],
-  "description": "Descrição da rota explicando como ela atende ao pedido do usuário",
-  "totalDistance": "Estimativa de distância total (ex: '8 km')",
-  "estimatedTime": "Tempo estimado de visitação (ex: '3 horas')",
-  "highlights": [
-    "Destaque 1 da rota",
-    "Destaque 2 da rota",
-    "Destaque 3 da rota"
-  ],
-  "optimizationCriteria": "Resumo de como você interpretou e atendeu o pedido do usuário"
-}
-
-Responda APENAS com o JSON, sem texto adicional.`;
+Selecione 5-7 startups (ou a quantidade pedida), ordene geograficamente e responda APENAS com JSON válido em português do Brasil:
+{"route":[{"startupId":0,"order":1,"reason":"motivo em pt-BR"}],"description":"resumo da rota em pt-BR","totalDistance":"X km","estimatedTime":"X horas","highlights":["destaque 1","destaque 2","destaque 3"],"optimizationCriteria":"como o pedido foi interpretado em pt-BR"}`;
 
     try {
       console.log('🤖 [Gemini] Processando prompt do usuário:', prompt);
@@ -450,7 +342,7 @@ Responda APENAS com o JSON, sem texto adicional.`;
             temperature: 0.8,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 2048,
+            maxOutputTokens: 4096,
           }
         })
       });
