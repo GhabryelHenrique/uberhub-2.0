@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  googleMapsApiKey: 'AIzaSyDlcNndgjXpD4hgAAGsS8in2SsGBkIbbNM',
-  GEMINI_API_KEY: "AIzaSyDlcNndgjXpD4hgAAGsS8in2SsGBkIbbNM",
+  googleMapsApiKey: 'GEMINI_API_KEY',
+  GEMINI_API_KEY: "GEMINI_API_KEY",
   // apiUrl: 'http://localhost:3000',
   apiVersion: 'v1'
 };
